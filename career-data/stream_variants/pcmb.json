@@ -1,0 +1,9 @@
+{
+  "id": "variant:pcmb",
+  "type": "stream_variant",
+  "display_name": "PCMB (Physics, Chemistry, Math, Biology)",
+  "subjects": ["Physics", "Chemistry", "Mathematics", "Biology"],
+  "eligible_after": "education:class_10",
+  "description": "All four subjects - maximum flexibility but high academic pressure. Students can pursue either engineering or medical paths.",
+  "metadata": { "source": ["design:team"], "last_reviewed": "2026-01-14", "version": 1 }
+}

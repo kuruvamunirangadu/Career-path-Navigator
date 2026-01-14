@@ -1,0 +1,565 @@
+[
+  {
+    "id": "career:software_engineer",
+    "type": "career",
+    "display_name": "Software Engineer",
+    "attributes": { "course_ids": ["course:engineering_btech", "course:bsc"], "career_type": "Private", "nature": "Technical", "stream_paths": ["variant:mpc", "variant:pcmb"] },
+    "skills": ["skill:problem_solving", "skill:coding_basics"],
+    "metadata": { "source": ["industry_consensus"], "last_reviewed": "2026-01-14", "version": 1 }
+  },
+  {
+    "id": "career:data_scientist",
+    "type": "career",
+    "display_name": "Data Scientist / AI Engineer",
+    "attributes": { "course_ids": ["course:engineering_btech", "course:bsc"], "career_type": "Private", "nature": "Technical", "stream_paths": ["variant:mpc", "variant:pcmb"] },
+    "skills": ["skill:problem_solving", "skill:statistical_analysis", "skill:coding_basics"],
+    "metadata": { "source": ["industry_consensus"], "last_reviewed": "2026-01-14", "version": 1 }
+  },
+  {
+    "id": "career:ai_engineer",
+    "type": "career",
+    "display_name": "AI / Machine Learning Engineer",
+    "attributes": { "course_ids": ["course:engineering_btech", "course:bsc"], "career_type": "Private", "nature": "Technical", "stream_paths": ["variant:mpc", "variant:pcmb"] },
+    "skills": ["skill:problem_solving", "skill:coding_basics", "skill:statistical_analysis"],
+    "metadata": { "source": ["industry_consensus"], "last_reviewed": "2026-01-14", "version": 1 }
+  },
+  {
+    "id": "career:core_engineer",
+    "type": "career",
+    "display_name": "Core Engineer (Mechanical / Electrical / Civil)",
+    "attributes": { "course_ids": ["course:engineering_btech"], "career_type": "Private/Government", "nature": "Technical", "stream_paths": ["variant:mpc", "variant:pcmb"] },
+    "skills": ["skill:technical_design", "skill:problem_solving"],
+    "metadata": { "source": ["industry_consensus"], "last_reviewed": "2026-01-14", "version": 1 }
+  },
+  {
+    "id": "career:psu_officer",
+    "type": "career",
+    "display_name": "PSU / Government Engineer",
+    "attributes": { "course_ids": ["course:engineering_btech"], "career_type": "Government", "nature": "Technical", "stream_paths": ["variant:mpc", "variant:pcmb"] },
+    "skills": ["skill:technical_knowledge", "skill:public_service"],
+    "metadata": { "source": ["industry_consensus"], "last_reviewed": "2026-01-14", "version": 1 }
+  },
+  {
+    "id": "career:architect",
+    "type": "career",
+    "display_name": "Architect / Architectural Professional",
+    "short_description": "Design and plan buildings and structures with creativity and technical precision",
+    "attributes": { 
+      "course_ids": ["course:barch"], 
+      "career_type": "Private/Government", 
+      "nature": "Design & Technical", 
+      "stream_paths": ["variant:mpc"],
+      "mandatory_subjects": ["Architectural Design", "Building Materials", "Structural Systems", "Urban Planning"],
+      "entry_exams": ["NATA", "JEE Paper 2"]
+    },
+    "skills": ["skill:design_thinking", "skill:technical_design", "skill:problem_solving", "skill:creativity"],
+    "why_path": "Architect / Architectural Professional typically follows the course: B.Arch (Bachelor of Architecture) and focuses on building design, planning, and construction.",
+    "what_to_study": "Subjects and courses: B.Arch, Architectural Design, Building Materials, Structural Systems, Urban Planning",
+    "roadmap": {
+      "short_term": "MPC background, Prepare for NATA / JEE Paper 2",
+      "mid_term": "Complete B.Arch (5 years), Internships under licensed architects",
+      "long_term": "Licensed Architect, Urban Planner / Interior Architect, Higher studies (M.Arch)"
+    },
+    "metadata": { "source": ["industry_consensus"], "last_reviewed": "2026-01-14", "version": 1 }
+  },
+  {
+    "id": "career:doctor",
+    "type": "career",
+    "display_name": "Doctor / Medical Professional",
+    "short_description": "Provide medical care and treatment to patients with expertise and compassion",
+    "attributes": { "course_ids": ["course:mbbs"], "career_type": "Private/Government", "nature": "Medical", "stream_paths": ["variant:bipc", "variant:pcmb"], "mandatory_subjects": ["Anatomy", "Physiology", "Pathology", "Pharmacology"], "entry_exams": ["NEET"] },
+    "skills": ["skill:biology_knowledge", "skill:patient_care", "skill:medical_knowledge", "skill:communication"],
+    "why_path": "Doctor typically follows the course: MBBS (Bachelor of Medicine, Bachelor of Surgery) and focuses on diagnosing and treating diseases.",
+    "what_to_study": "Subjects and courses: MBBS, Anatomy, Physiology, Pathology, Pharmacology, Medicine, Surgery",
+    "roadmap": {
+      "short_term": "BiPC subjects, Prepare for NEET",
+      "mid_term": "Complete MBBS (5.5 years including internship)",
+      "long_term": "Medical Practice, Specialization (MD/MS), Hospital / Clinic setup"
+    },
+    "metadata": { "source": ["industry_consensus"], "last_reviewed": "2026-01-14", "version": 1 }
+  },
+  {
+    "id": "career:pharmacist",
+    "type": "career",
+    "display_name": "Pharmacist / Pharmaceutical Professional",
+    "short_description": "Dispense medications and provide pharmaceutical advice to ensure safe and effective medication use",
+    "attributes": { "course_ids": ["course:bpharm"], "career_type": "Private/Government", "nature": "Medical", "stream_paths": ["variant:bipc", "variant:pcmb"], "mandatory_subjects": ["Chemistry", "Pharmaceutics", "Pharmacology", "Biochemistry"], "entry_exams": ["NEET"] },
+    "skills": ["skill:chemistry_knowledge", "skill:patient_care", "skill:medical_knowledge", "skill:communication"],
+    "why_path": "Pharmacist typically follows the course: B.Pharm (Bachelor of Pharmacy) and focuses on medication and pharmaceutical care.",
+    "what_to_study": "Subjects and courses: B.Pharm, Chemistry, Pharmaceutics, Pharmacology, Biochemistry, Pharmaceutical Analysis",
+    "roadmap": {
+      "short_term": "BiPC subjects, Prepare for NEET",
+      "mid_term": "Complete B.Pharm (4 years)",
+      "long_term": "Pharmacist, M.Pharm (Specialization), Hospital Pharmacy / Industry / Govt Jobs"
+    },
+    "metadata": { "source": ["industry_consensus"], "last_reviewed": "2026-01-14", "version": 1 }
+  },
+  {
+    "id": "career:dental_surgeon",
+    "type": "career",
+    "display_name": "Dental Surgeon",
+    "short_description": "Provide oral healthcare and perform dental procedures with precision and care",
+    "attributes": { 
+      "course_ids": ["course:bds"], 
+      "career_type": "Private/Government", 
+      "nature": "Medical", 
+      "stream_paths": ["variant:bipc", "variant:pcmb"],
+      "mandatory_subjects": ["Oral Anatomy", "Dental Materials", "Prosthodontics", "Orthodontics"],
+      "entry_exams": ["NEET"]
+    },
+    "skills": ["skill:biology_knowledge", "skill:patient_care", "skill:precision", "skill:communication"],
+    "why_path": "Dental Surgeon typically follows the course: BDS (Bachelor of Dental Surgery) and focuses on oral health and dental care.",
+    "what_to_study": "Subjects and courses: BDS, Oral Anatomy, Dental Materials, Prosthodontics, Orthodontics",
+    "roadmap": {
+      "short_term": "BiPC subjects, Prepare for NEET",
+      "mid_term": "Complete BDS (5 years including internship)",
+      "long_term": "Dental Practice, MDS (Specialization), Hospital / Clinic setup"
+    },
+    "metadata": { "source": ["industry_consensus"], "last_reviewed": "2026-01-14", "version": 1 }
+  },
+  {
+    "id": "career:registered_nurse",
+    "type": "career",
+    "display_name": "Registered Nurse",
+    "short_description": "Provide compassionate patient care and clinical services in healthcare settings",
+    "attributes": { 
+      "course_ids": ["course:nursing"], 
+      "career_type": "Private/Government", 
+      "nature": "Medical/Healthcare", 
+      "stream_paths": ["variant:bipc", "variant:pcmb"],
+      "mandatory_subjects": ["Anatomy & Physiology", "Medical-Surgical Nursing", "Community Health Nursing"],
+      "entry_exams": ["State/National Entrance Exams"]
+    },
+    "skills": ["skill:patient_care", "skill:medical_knowledge", "skill:empathy", "skill:communication"],
+    "why_path": "Registered Nurse typically follows the course: B.Sc Nursing and focuses on patient care and clinical services.",
+    "what_to_study": "Subjects and courses: B.Sc Nursing, Anatomy & Physiology, Medical-Surgical Nursing, Community Health Nursing",
+    "roadmap": {
+      "short_term": "BiPC background, Entrance exams (State / National)",
+      "mid_term": "Complete B.Sc Nursing (4 years)",
+      "long_term": "Hospital Nurse, Nurse Educator, M.Sc Nursing / Govt Jobs"
+    },
+    "metadata": { "source": ["industry_consensus"], "last_reviewed": "2026-01-14", "version": 1 }
+  },
+  {
+    "id": "career:research_scientist",
+    "type": "career",
+    "display_name": "Research Scientist",
+    "short_description": "Conduct scientific research and experiments to advance knowledge in your field",
+    "attributes": { "course_ids": ["course:bsc", "course:mbbs", "course:engineering_btech"], "career_type": "Academic/Government", "nature": "Research", "stream_paths": ["variant:mpc", "variant:bipc", "variant:pcmb"] },
+    "skills": ["skill:research_methodology", "skill:analytical_thinking", "skill:critical_thinking"],
+    "why_path": "Research Scientist requires strong foundational knowledge from Science or Engineering degrees and advanced study through PhD or postdoctoral research.",
+    "what_to_study": "B.Sc in Physics/Chemistry/Biology, M.Sc, and PhD in relevant specialization",
+    "roadmap": {
+      "short_term": "Choose science specialization in Class 11-12",
+      "mid_term": "Complete B.Sc and M.Sc (5-6 years)",
+      "long_term": "PhD research, Publications, Research positions in labs/universities"
+    },
+    "metadata": { "source": ["industry_consensus"], "last_reviewed": "2026-01-14", "version": 1 }
+  },
+  {
+    "id": "career:healthcare_manager",
+    "type": "career",
+    "display_name": "Healthcare Manager / Hospital Administrator",
+    "short_description": "Oversee hospital operations and healthcare facility management with leadership and strategic planning",
+    "attributes": { "course_ids": ["course:mbbs", "course:bpharm"], "career_type": "Private/Government", "nature": "Medical", "stream_paths": ["variant:bipc", "variant:pcmb"] },
+    "skills": ["skill:management", "skill:patient_care", "skill:leadership"],
+    "why_path": "Healthcare Manager combines medical knowledge with management skills, typically after a degree in medicine or pharmacy plus management certification.",
+    "what_to_study": "MBBS/B.Pharm + Hospital Management or MBA in Healthcare Management",
+    "roadmap": {
+      "short_term": "Complete MBBS/B.Pharm degree",
+      "mid_term": "Work as doctor/pharmacist + Management certification",
+      "long_term": "Hospital Administrator, Healthcare Consultant, Health Policy roles"
+    },
+    "metadata": { "source": ["industry_consensus"], "last_reviewed": "2026-01-14", "version": 1 }
+  },
+  {
+    "id": "career:auditor",
+    "type": "career",
+    "display_name": "Auditor / Audit Professional",
+    "short_description": "Examine financial records and ensure compliance with accounting standards",
+    "attributes": { "course_ids": ["course:ca", "course:bcom"], "career_type": "Private/Government", "nature": "Finance", "stream_paths": ["variant:mec"], "mandatory_subjects": ["Accounting", "Auditing", "Taxation"], "entry_exams": ["CA Examination"] },
+    "skills": ["skill:accounting_basics", "skill:analytical_thinking", "skill:compliance_knowledge", "skill:attention_to_detail"],
+    "why_path": "Auditor requires detailed knowledge of accounting and financial regulations, typically obtained through CA or equivalent professional qualifications.",
+    "what_to_study": "B.Com followed by CA (Chartered Accountant) or similar professional certification",
+    "roadmap": {
+      "short_term": "Commerce stream, prepare for professional exams",
+      "mid_term": "Complete CA articles/training (4.5 years)",
+      "long_term": "Auditor, Audit Partner, Compliance Officer"
+    },
+    "metadata": { "source": ["industry_consensus"], "last_reviewed": "2026-01-14", "version": 1 }
+  },
+  {
+    "id": "career:financial_analyst",
+    "type": "career",
+    "display_name": "Financial Analyst",
+    "attributes": { "course_ids": ["course:bcom", "course:bba", "course:ca", "course:ba_economics", "course:ba_public_admin"], "career_type": "Private", "nature": "Finance", "stream_paths": ["variant:mec", "variant:cec", "variant:hec_commerce"] },
+    "skills": ["skill:statistical_analysis", "skill:financial_modeling", "skill:numeracy"],
+    "metadata": { "source": ["industry_consensus"], "last_reviewed": "2026-01-14", "version": 1 }
+  },
+  {
+    "id": "career:corporate_lawyer",
+    "type": "career",
+    "display_name": "Corporate Lawyer / Legal Professional",
+    "attributes": { "course_ids": ["course:cs", "course:bcom"], "career_type": "Private/Government", "nature": "Legal/Business", "stream_paths": ["variant:mec"] },
+    "skills": ["skill:legal_knowledge", "skill:communication", "skill:analytical_thinking"],
+    "metadata": { "source": ["industry_consensus"], "last_reviewed": "2026-01-14", "version": 1 }
+  },
+  {
+    "id": "career:cfo_consultant",
+    "type": "career",
+    "display_name": "CFO / Financial Consultant",
+    "attributes": { "course_ids": ["course:ca", "course:mba", "course:mcom"], "career_type": "Private", "nature": "Finance/Management", "stream_paths": ["variant:mec"] },
+    "skills": ["skill:financial_strategy", "skill:leadership", "skill:accounting_basics"],
+    "metadata": { "source": ["industry_consensus"], "last_reviewed": "2026-01-14", "version": 1 }
+  },
+  {
+    "id": "career:banker",
+    "type": "career",
+    "display_name": "Banker / Banking Professional",
+    "attributes": { "course_ids": ["course:bcom", "course:bba", "course:ba_economics", "course:ba_public_admin"], "career_type": "Private/Government", "nature": "Finance", "stream_paths": ["variant:mec", "variant:cec", "variant:hec_commerce"] },
+    "skills": ["skill:customer_service", "skill:numeracy", "skill:financial_knowledge"],
+    "metadata": { "source": ["industry_consensus"], "last_reviewed": "2026-01-14", "version": 1 }
+  },
+  {
+    "id": "career:finance_professional",
+    "type": "career",
+    "display_name": "Finance Professional / Accountant",
+    "attributes": { "course_ids": ["course:bcom", "course:ca", "course:cma", "course:ba_economics", "course:ba_public_admin"], "career_type": "Private/Government", "nature": "Finance", "stream_paths": ["variant:mec", "variant:cec", "variant:hec_commerce"] },
+    "skills": ["skill:accounting_basics", "skill:financial_planning", "skill:numeracy"],
+    "metadata": { "source": ["industry_consensus"], "last_reviewed": "2026-01-14", "version": 1 }
+  },
+  {
+    "id": "career:business_manager",
+    "type": "career",
+    "display_name": "Business Manager / Operations Manager",
+    "attributes": { "course_ids": ["course:bba", "course:mba"], "career_type": "Private", "nature": "Management", "stream_paths": ["variant:mec"] },
+    "skills": ["skill:leadership", "skill:management", "skill:strategic_thinking"],
+    "metadata": { "source": ["industry_consensus"], "last_reviewed": "2026-01-14", "version": 1 }
+  },
+  {    
+    "id": "career:management_professional",
+    "type": "career",
+    "display_name": "Management Professional",
+    "short_description": "Lead teams and drive business growth through strategic management and leadership",
+    "attributes": { 
+      "course_ids": ["course:bms", "course:bba"], 
+      "career_type": "Private", 
+      "nature": "Management", 
+      "stream_paths": ["variant:mec", "variant:cec"],
+      "mandatory_subjects": ["Management Principles", "Marketing", "Finance", "Human Resources"],
+      "entry_exams": ["Entrance tests (if required)"]
+    },
+    "skills": ["skill:leadership", "skill:management", "skill:communication", "skill:analytical_thinking"],
+    "why_path": "Management Professional typically follows the course: BMS (Bachelor of Management Studies) and focuses on business, leadership, and management.",
+    "what_to_study": "Subjects and courses: BMS, Management Principles, Marketing, Finance, Human Resources",
+    "roadmap": {
+      "short_term": "Commerce / Any stream, Entrance tests (if required)",
+      "mid_term": "Complete BMS (3 years)",
+      "long_term": "Corporate Manager, MBA, Entrepreneurship"
+    },
+    "metadata": { "source": ["industry_consensus"], "last_reviewed": "2026-01-14", "version": 1 }
+  },
+  {    "id": "career:entrepreneur",
+    "type": "career",
+    "display_name": "Entrepreneur / Business Owner",
+    "attributes": { "course_ids": ["course:bba", "course:mba", "course:bcom"], "career_type": "Self-Employed", "nature": "Business", "stream_paths": ["variant:mec"] },
+    "skills": ["skill:entrepreneurship", "skill:financial_planning", "skill:leadership"],
+    "metadata": { "source": ["industry_consensus"], "last_reviewed": "2026-01-14", "version": 1 }
+  },
+  {
+    "id": "career:accountant",
+    "type": "career",
+    "display_name": "Accountant / Finance Professional",
+    "attributes": { "course_ids": ["course:degree", "course:bcom"], "career_type": "Private", "nature": "Business/Finance" },
+    "skills": ["skill:numeracy", "skill:accounting_basics"],
+    "metadata": { "source": ["industry_consensus"], "last_reviewed": "2026-01-14", "version": 1 }
+  },
+  {
+    "id": "career:ias_officer",
+    "type": "career",
+    "display_name": "IAS Officer / Civil Administrator",
+    "attributes": { "course_ids": ["course:ba_humanities"], "career_type": "Government", "nature": "Civil Service", "stream_paths": ["variant:humanities"], "exam_required": "exam:upsc" },
+    "skills": ["skill:leadership", "skill:public_service", "skill:analytical_thinking", "skill:communication"],
+    "metadata": { "source": ["industry_consensus"], "last_reviewed": "2026-01-14", "version": 1 }
+  },
+  {
+    "id": "career:ips_officer",
+    "type": "career",
+    "display_name": "IPS Officer / Police Commissioner",
+    "attributes": { "course_ids": ["course:ba_humanities"], "career_type": "Government", "nature": "Civil Service", "stream_paths": ["variant:humanities"], "exam_required": "exam:upsc" },
+    "skills": ["skill:leadership", "skill:public_service", "skill:decision_making", "skill:physical_fitness"],
+    "metadata": { "source": ["industry_consensus"], "last_reviewed": "2026-01-14", "version": 1 }
+  },
+  {
+    "id": "career:ifs_officer",
+    "type": "career",
+    "display_name": "IFS Officer / Forest Administrator",
+    "attributes": { "course_ids": ["course:ba_humanities"], "career_type": "Government", "nature": "Civil Service", "stream_paths": ["variant:humanities"], "exam_required": "exam:upsc" },
+    "skills": ["skill:environmental_knowledge", "skill:public_service", "skill:leadership", "skill:conservation_expertise"],
+    "metadata": { "source": ["industry_consensus"], "last_reviewed": "2026-01-14", "version": 1 }
+  },
+  {
+    "id": "career:policy_analyst",
+    "type": "career",
+    "display_name": "Policy Analyst / Think Tank Researcher",
+    "attributes": { "course_ids": ["course:ba_humanities", "course:ba_political_science", "course:ba_economics", "course:ba_public_admin"], "career_type": "Government/NGO/Private", "nature": "Research/Policy", "stream_paths": ["variant:humanities", "variant:hpc", "variant:heg", "variant:language_based"] },
+    "skills": ["skill:research_methodology", "skill:analytical_thinking", "skill:public_policy_knowledge"],
+    "metadata": { "source": ["industry_consensus"], "last_reviewed": "2026-01-14", "version": 1 }
+  },
+  {
+    "id": "career:state_officer",
+    "type": "career",
+    "display_name": "State Civil Services Officer",
+    "attributes": { "course_ids": ["course:ba_humanities"], "career_type": "Government", "nature": "Civil Service", "stream_paths": ["variant:humanities"], "exam_required": "exam:state_psc" },
+    "skills": ["skill:leadership", "skill:public_service", "skill:analytical_thinking"],
+    "metadata": { "source": ["industry_consensus"], "last_reviewed": "2026-01-14", "version": 1 }
+  },
+  {
+    "id": "career:state_police",
+    "type": "career",
+    "display_name": "State Police Officer / Superintendent of Police",
+    "attributes": { "course_ids": ["course:ba_humanities"], "career_type": "Government", "nature": "Civil Service", "stream_paths": ["variant:humanities"], "exam_required": "exam:state_psc" },
+    "skills": ["skill:leadership", "skill:public_service", "skill:physical_fitness"],
+    "metadata": { "source": ["industry_consensus"], "last_reviewed": "2026-01-14", "version": 1 }
+  },
+  {
+    "id": "career:lawyer",
+    "type": "career",
+    "display_name": "Lawyer / Advocate",
+    "attributes": { "course_ids": ["course:ba_llb", "course:llb"], "career_type": "Private/Government", "nature": "Legal", "stream_paths": ["variant:humanities"] },
+    "skills": ["skill:legal_knowledge", "skill:communication", "skill:analytical_thinking", "skill:persuasion"],
+    "metadata": { "source": ["industry_consensus"], "last_reviewed": "2026-01-14", "version": 1 }
+  },
+  {
+    "id": "career:judge",
+    "type": "career",
+    "display_name": "Judge / Judicial Officer",
+    "attributes": { "course_ids": ["course:ba_llb", "course:llb"], "career_type": "Government", "nature": "Legal/Judiciary", "stream_paths": ["variant:humanities"] },
+    "skills": ["skill:legal_knowledge", "skill:judgment", "skill:ethical_reasoning", "skill:decision_making"],
+    "metadata": { "source": ["industry_consensus"], "last_reviewed": "2026-01-14", "version": 1 }
+  },
+  {
+    "id": "career:journalist",
+    "type": "career",
+    "display_name": "Journalist / News Reporter",
+    "attributes": { "course_ids": ["course:bjmc"], "career_type": "Private/Government/NGO", "nature": "Media", "stream_paths": ["variant:humanities"] },
+    "skills": ["skill:communication", "skill:research_methodology", "skill:writing", "skill:critical_thinking"],
+    "metadata": { "source": ["industry_consensus"], "last_reviewed": "2026-01-14", "version": 1 }
+  },
+  {
+    "id": "career:professor_researcher",
+    "type": "career",
+    "display_name": "Professor / University Researcher",
+    "attributes": { "course_ids": ["course:ba_humanities", "course:ba_psychology", "course:ba_political_science", "course:ba_history", "course:ba_sociology", "course:ba_geography", "course:ba_literature", "course:ba_economics"], "career_type": "Academic", "nature": "Research/Education", "stream_paths": ["variant:humanities", "variant:hpc", "variant:hsp", "variant:heg", "variant:psychology_based", "variant:language_based"] },
+    "skills": ["skill:research_methodology", "skill:teaching", "skill:analytical_thinking", "skill:publication_writing"],
+    "metadata": { "source": ["industry_consensus"], "last_reviewed": "2026-01-14", "version": 1 }
+  },
+  {
+    "id": "career:iti_technician",
+    "type": "career",
+    "display_name": "ITI Technician / Skilled Worker",
+    "attributes": { "course_ids": ["course:iti"], "career_type": "Private/Government", "nature": "Technical/Trade", "stream_paths": ["variant:technical_skills"] },
+    "skills": ["skill:technical_knowledge", "skill:hands_on_skills", "skill:mechanical_aptitude"],
+    "metadata": { "source": ["industry_consensus"], "last_reviewed": "2026-01-14", "version": 1 }
+  },
+  {
+    "id": "career:polytechnic_engineer",
+    "type": "career",
+    "display_name": "Diploma Engineer / Junior Engineer Track",
+    "attributes": { "course_ids": ["course:polytechnic"], "career_type": "Private/Government", "nature": "Technical", "stream_paths": ["variant:technical_skills"], "lateral_entry": "B.Tech" },
+    "skills": ["skill:technical_design", "skill:project_management", "skill:team_supervision"],
+    "metadata": { "source": ["industry_consensus"], "last_reviewed": "2026-01-14", "version": 1 }
+  },
+  {
+    "id": "career:junior_engineer",
+    "type": "career",
+    "display_name": "Junior Engineer (JE) / Diploma Engineer Govt",
+    "attributes": { "course_ids": ["course:polytechnic"], "career_type": "Government", "nature": "Technical", "stream_paths": ["variant:technical_skills"], "exam_required": "exam:je_diploma" },
+    "skills": ["skill:technical_knowledge", "skill:problem_solving"],
+    "metadata": { "source": ["industry_consensus"], "last_reviewed": "2026-01-14", "version": 1 }
+  },
+  {
+    "id": "career:counselor",
+    "type": "career",
+    "display_name": "Counselor / Psychology Practitioner",
+    "attributes": { "course_ids": ["course:ba_psychology"], "career_type": "Private/Government", "nature": "Psychology/Practice", "stream_paths": ["variant:psychology_based"] },
+    "skills": ["skill:empathy", "skill:counseling", "skill:communication"],
+    "metadata": { "source": ["industry_consensus"], "last_reviewed": "2026-01-14", "version": 1 }
+  },
+  {
+    "id": "career:hr_trainer",
+    "type": "career",
+    "display_name": "HR / Training Professional",
+    "attributes": { "course_ids": ["course:ba_psychology", "course:ba_sociology"], "career_type": "Private", "nature": "People/Training", "stream_paths": ["variant:psychology_based", "variant:hsp"] },
+    "skills": ["skill:communication", "skill:facilitation", "skill:people_management"],
+    "metadata": { "source": ["industry_consensus"], "last_reviewed": "2026-01-14", "version": 1 }
+  },
+  {
+    "id": "career:social_worker",
+    "type": "career",
+    "display_name": "Social Worker / NGO Professional",
+    "attributes": { "course_ids": ["course:ba_social_work", "course:ba_sociology"], "career_type": "NGO/Government", "nature": "Social Impact", "stream_paths": ["variant:hsp"] },
+    "skills": ["skill:community_engagement", "skill:empathy", "skill:program_management"],
+    "metadata": { "source": ["industry_consensus"], "last_reviewed": "2026-01-14", "version": 1 }
+  },
+  {
+    "id": "career:urban_planner",
+    "type": "career",
+    "display_name": "Urban Planner / Development Officer",
+    "attributes": { "course_ids": ["course:ba_geography", "course:ba_economics"], "career_type": "Government/Private", "nature": "Planning/Infrastructure", "stream_paths": ["variant:heg"] },
+    "skills": ["skill:spatial_analysis", "skill:planning", "skill:policy_knowledge"],
+    "metadata": { "source": ["industry_consensus"], "last_reviewed": "2026-01-14", "version": 1 }
+  },
+  {
+    "id": "career:gis_specialist",
+    "type": "career",
+    "display_name": "GIS / Mapping Specialist",
+    "attributes": { "course_ids": ["course:ba_geography"], "career_type": "Private/Government", "nature": "Geospatial", "stream_paths": ["variant:heg"] },
+    "skills": ["skill:gis_tools", "skill:spatial_analysis", "skill:data_visualization"],
+    "metadata": { "source": ["industry_consensus"], "last_reviewed": "2026-01-14", "version": 1 }
+  },
+  {
+    "id": "career:translator",
+    "type": "career",
+    "display_name": "Translator / Language Specialist",
+    "attributes": { "course_ids": ["course:ba_literature"], "career_type": "Private/Government", "nature": "Language/Content", "stream_paths": ["variant:language_based"] },
+    "skills": ["skill:language_proficiency", "skill:writing", "skill:accuracy"],
+    "metadata": { "source": ["industry_consensus"], "last_reviewed": "2026-01-14", "version": 1 }
+  },
+  {
+    "id": "career:content_writer",
+    "type": "career",
+    "display_name": "Content Writer / Digital Media",
+    "attributes": { "course_ids": ["course:ba_literature", "course:bjmc"], "career_type": "Private/Freelance", "nature": "Media/Content", "stream_paths": ["variant:language_based", "variant:humanities"] },
+    "skills": ["skill:writing", "skill:research_methodology", "skill:communication"],
+    "metadata": { "source": ["industry_consensus"], "last_reviewed": "2026-01-14", "version": 1 }
+  },
+  {
+    "id": "career:technician_supervisor",
+    "type": "career",
+    "display_name": "Technician Supervisor / Foreman",
+    "attributes": { "course_ids": ["course:iti", "course:polytechnic"], "career_type": "Private/Government", "nature": "Technical/Management", "stream_paths": ["variant:technical_skills"], "experience_required": "3-5 years" },
+    "skills": ["skill:team_supervision", "skill:technical_knowledge", "skill:leadership"],
+    "metadata": { "source": ["industry_consensus"], "last_reviewed": "2026-01-14", "version": 1 }
+  },
+  {
+    "id": "career:vocational_entrepreneur",
+    "type": "career",
+    "display_name": "Entrepreneur / Small Business Owner",
+    "attributes": { "course_ids": ["course:iti", "course:polytechnic"], "career_type": "Self-Employed", "nature": "Business/Technical", "stream_paths": ["variant:technical_skills"], "examples": ["Plumbing shop", "Electrical services", "Automotive repair"] },
+    "skills": ["skill:entrepreneurship", "skill:technical_knowledge", "skill:business_management"],
+    "metadata": { "source": ["industry_consensus"], "last_reviewed": "2026-01-14", "version": 1 }
+  },
+  {
+    "id": "career:designer",
+    "type": "career",
+    "display_name": "Graphic / Web Designer",
+    "attributes": { "course_ids": ["course:graphic_design"], "career_type": "Private/Freelance", "nature": "Creative", "stream_paths": ["variant:creative_service_skills"] },
+    "skills": ["skill:design_software", "skill:creativity", "skill:communication"],
+    "metadata": { "source": ["industry_consensus"], "last_reviewed": "2026-01-14", "version": 1 }
+  },
+  {
+    "id": "career:hospitality_professional",
+    "type": "career",
+    "display_name": "Hotel Manager / Tourism Professional",
+    "attributes": { "course_ids": ["course:hospitality"], "career_type": "Private", "nature": "Service/Hospitality", "stream_paths": ["variant:creative_service_skills"] },
+    "skills": ["skill:customer_service", "skill:management", "skill:communication"],
+    "metadata": { "source": ["industry_consensus"], "last_reviewed": "2026-01-14", "version": 1 }
+  },
+  {
+    "id": "career:healthcare_support",
+    "type": "career",
+    "display_name": "Healthcare Support / Nursing Assistant",
+    "attributes": { "course_ids": ["course:healthcare_assistant"], "career_type": "Private/Government", "nature": "Healthcare", "stream_paths": ["variant:creative_service_skills"] },
+    "skills": ["skill:patient_care", "skill:medical_knowledge", "skill:empathy"],
+    "metadata": { "source": ["industry_consensus"], "last_reviewed": "2026-01-14", "version": 1 }
+  },
+  {
+    "id": "career:agri_technician",
+    "type": "career",
+    "display_name": "Agriculture Technician / Field Supervisor",
+    "attributes": { "course_ids": ["course:agri_diploma"], "career_type": "Private/Government", "nature": "Agriculture/Field", "stream_paths": ["variant:technical_skills"] },
+    "skills": ["skill:agriculture_basics", "skill:field_operations", "skill:equipment_handling"],
+    "metadata": { "source": ["industry_consensus"], "last_reviewed": "2026-01-14", "version": 1 }
+  },
+  {
+    "id": "career:agri_entrepreneur",
+    "type": "career",
+    "display_name": "Agri Entrepreneur / Farm Business Owner",
+    "attributes": { "course_ids": ["course:agri_diploma", "course:degree"], "career_type": "Self-Employed", "nature": "Agribusiness", "stream_paths": ["variant:technical_skills"], "examples": ["Organic farming", "Agri-tech services", "Input supply"] },
+    "skills": ["skill:entrepreneurship", "skill:agriculture_basics", "skill:business_management"],
+    "metadata": { "source": ["industry_consensus"], "last_reviewed": "2026-01-14", "version": 1 }
+  },
+  {
+    "id": "career:retail_associate",
+    "type": "career",
+    "display_name": "Retail Associate / Store Executive",
+    "attributes": { "course_ids": ["course:retail_skills"], "career_type": "Private", "nature": "Service/Retail", "stream_paths": ["variant:creative_service_skills"] },
+    "skills": ["skill:customer_service", "skill:communication"],
+    "metadata": { "source": ["industry_consensus"], "last_reviewed": "2026-01-14", "version": 1 }
+  },
+  {
+    "id": "career:tourism_executive",
+    "type": "career",
+    "display_name": "Tourism / Travel Executive",
+    "attributes": { "course_ids": ["course:tourism_skills", "course:hospitality"], "career_type": "Private", "nature": "Tourism/Hospitality", "stream_paths": ["variant:creative_service_skills"] },
+    "skills": ["skill:customer_service", "skill:communication", "skill:planning"],
+    "metadata": { "source": ["industry_consensus"], "last_reviewed": "2026-01-14", "version": 1 }
+  },
+  {
+    "id": "career:lab_technician",
+    "type": "career",
+    "display_name": "Medical Laboratory Technician (MLT)",
+    "attributes": { "course_ids": ["course:mlt_diploma"], "career_type": "Private/Government", "nature": "Healthcare/Diagnostics", "stream_paths": ["variant:creative_service_skills"] },
+    "skills": ["skill:medical_knowledge", "skill:lab_procedures"],
+    "metadata": { "source": ["industry_consensus"], "last_reviewed": "2026-01-14", "version": 1 }
+  },
+  {
+    "id": "career:anm_nurse",
+    "type": "career",
+    "display_name": "ANM Nurse / Auxiliary Nurse Midwife",
+    "attributes": { "course_ids": ["course:anm"], "career_type": "Private/Government", "nature": "Healthcare/Nursing", "stream_paths": ["variant:creative_service_skills"] },
+    "skills": ["skill:patient_care", "skill:medical_knowledge", "skill:empathy"],
+    "why_path": "ANM (Auxiliary Nurse Midwifery) is a 2-year diploma program ideal for those passionate about healthcare and community service. ANM nurses work in primary health centers, rural health facilities, maternity homes, and provide basic nursing care, maternal and child health services, immunization, and health education. This career offers job security in government health departments and opportunities in private clinics and hospitals.",
+    "what_to_study": "During the 2-year ANM program, you'll study nursing fundamentals, anatomy and physiology, nutrition, community health nursing, midwifery, child health, and health center management. The curriculum includes practical training in hospitals and community health centers.",
+    "roadmap": [
+      { "phase": "Short Term", "description": "Complete Class 10, choose Creative/Service Skills stream variant" },
+      { "phase": "Mid Term", "description": "Complete ANM 2-year diploma with clinical training in maternal and child health" },
+      { "phase": "Career Entry", "description": "Register with State Nursing Council, work as ANM in PHCs, rural health centers, or maternity homes" },
+      { "phase": "Growth", "description": "Upgrade to GNM (bridge course) or B.Sc Nursing, specialize in midwifery or community health" }
+    ],
+    "metadata": { "source": ["industry_consensus"], "last_reviewed": "2026-01-15", "version": 1 }
+  },
+  {
+    "id": "career:gnm_nurse",
+    "type": "career",
+    "display_name": "GNM Nurse / Staff Nurse",
+    "attributes": { "course_ids": ["course:gnm"], "career_type": "Private/Government", "nature": "Healthcare/Nursing", "stream_paths": ["variant:creative_service_skills"] },
+    "skills": ["skill:patient_care", "skill:medical_knowledge", "skill:empathy"],
+    "why_path": "GNM (General Nursing & Midwifery) is a 3-year diploma program that prepares you to become a professional staff nurse in hospitals, clinics, and healthcare facilities. GNM nurses provide comprehensive patient care, assist doctors during procedures, manage wards, administer medications, and support patient recovery. This career offers excellent job opportunities in both government and private hospitals, with potential for specialization and career advancement.",
+    "what_to_study": "During the 3-year GNM program, you'll study advanced nursing fundamentals, medical-surgical nursing, anatomy and physiology, pharmacology, microbiology, psychology, community health nursing, pediatric nursing, and obstetrics & gynecology. The curriculum includes extensive clinical rotations in hospital departments and hands-on patient care training.",
+    "roadmap": [
+      { "phase": "Short Term", "description": "Complete Class 10, choose Creative/Service Skills stream variant" },
+      { "phase": "Mid Term", "description": "Complete GNM 3-year diploma with clinical training across all hospital departments" },
+      { "phase": "Career Entry", "description": "Register with State/Indian Nursing Council, work as Staff Nurse in hospitals or clinics" },
+      { "phase": "Growth", "description": "Pursue B.Sc Nursing (bridge course), specialize in ICU/OT/Emergency, or advance to nursing management roles" }
+    ],
+    "metadata": { "source": ["industry_consensus"], "last_reviewed": "2026-01-15", "version": 1 }
+  },
+  {
+    "id": "career:emt_technician",
+    "type": "career",
+    "display_name": "Emergency Medical Technician (EMT)",
+    "attributes": { "course_ids": ["course:emt"], "career_type": "Private/Government", "nature": "Healthcare/Emergency", "stream_paths": ["variant:creative_service_skills"] },
+    "skills": ["skill:emergency_response", "skill:patient_care"],
+    "metadata": { "source": ["industry_consensus"], "last_reviewed": "2026-01-14", "version": 1 }
+  },
+  {
+    "id": "career:it_support_technician",
+    "type": "career",
+    "display_name": "IT Support Technician / Helpdesk",
+    "attributes": { "course_ids": ["course:nsqf_it_basics"], "career_type": "Private", "nature": "IT/Support", "stream_paths": ["variant:technical_skills"] },
+    "skills": ["skill:it_support", "skill:communication"],
+    "metadata": { "source": ["industry_consensus"], "last_reviewed": "2026-01-14", "version": 1 }
+  }
+]
