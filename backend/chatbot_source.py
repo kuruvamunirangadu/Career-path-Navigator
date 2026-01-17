@@ -27,14 +27,22 @@ class AnswerSource:
         Fetch verified career data from versioned JSON
         """
         # Try loading from versioned data
+        print(f"🔍 fetch_career_data: Trying to load career_id='{career_id}'")
         career_data = load_career(career_id)
         
         if career_data:
+            print(f"✅ Loaded career data: {career_data.get('display_name', 'N/A')}")
             return career_data
         
         # Try with career: prefix
         if not career_id.startswith('career:'):
+            print(f"🔍 Trying with prefix: 'career:{career_id}'")
             career_data = load_career(f'career:{career_id}')
+            if career_data:
+                print(f"✅ Loaded with prefix: {career_data.get('display_name', 'N/A')}")
+        
+        if not career_data:
+            print(f"❌ Failed to load career: {career_id}")
         
         return career_data
     
@@ -140,8 +148,36 @@ class AnswerSource:
             'failure_safe_paths': career.get('failure_safe_paths', []),
             'exams_required': exams_required,
             'stream': stream,
-            'variant': variant
+            'variant': variant,
+            'skills_needed': self._generate_career_skills(career)
         }
+    
+    def _generate_career_skills(self, career: Dict) -> list:
+        """Generate relevant skills for a career based on its field"""
+        stream = career.get('stream', '')
+        career_id = career.get('career_id', '')
+        
+        # Define skills by career type
+        skills_map = {
+            'barch_architecture': ['Creativity and design thinking', 'Technical drawing', '3D modeling (AutoCAD, SketchUp)', 'Building codes knowledge', 'Project management'],
+            'software_engineer': ['Programming (Python, Java, C++)', 'Data structures & algorithms', 'Problem-solving', 'Software development lifecycle', 'Version control (Git)'],
+            'doctor': ['Medical knowledge', 'Clinical skills', 'Patient care', 'Critical thinking', 'Communication skills'],
+            'chartered_accountant': ['Accounting & taxation', 'Financial analysis', 'Audit procedures', 'Attention to detail', 'Business communication'],
+            'company_secretary': ['Corporate law', 'Compliance management', 'Corporate governance', 'Legal drafting', 'Business ethics'],
+            'cost_management_accountant': ['Cost accounting', 'Financial management', 'Business analysis', 'Strategic planning', 'Excel & analytics tools']
+        }
+        
+        # Return career-specific skills or generic based on stream
+        if career_id in skills_map:
+            return skills_map[career_id]
+        elif stream == 'science':
+            return ['Analytical thinking', 'Problem-solving', 'Technical skills', 'Research abilities', 'Practical application']
+        elif stream == 'commerce':
+            return ['Financial literacy', 'Business acumen', 'Numerical skills', 'Communication', 'Analytical thinking']
+        elif stream == 'arts':
+            return ['Critical thinking', 'Communication', 'Research skills', 'Cultural awareness', 'Writing abilities']
+        else:
+            return ['Relevant technical skills', 'Communication', 'Problem-solving', 'Continuous learning']
     
     def get_career_roadmap(self, career_id: str) -> Dict:
         """

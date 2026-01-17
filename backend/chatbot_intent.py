@@ -11,6 +11,8 @@ INTENTS = [
     "career_overview",
     "eligibility_check", 
     "career_steps",
+    "career_skills",
+    "failure_paths",
     "exam_info",
     "roadmap",
     "stream_guidance",
@@ -47,6 +49,22 @@ def classify_intent(query: str) -> Dict[str, any]:
     
     # Rule-based classification (DETERMINISTIC)
     
+    # Skills-related questions
+    if any(word in q for word in ['skill', 'skills', 'ability', 'abilities', 'competenc', 'what should i learn']) and entities.get('career'):
+        return {
+            'intent': 'career_skills',
+            'entities': entities,
+            'confidence': 0.95
+        }
+    
+    # Failure/alternative path questions
+    if any(word in q for word in ['fail', 'don\'t work', 'doesn\'t work', 'alternative', 'backup', 'plan b', 'what if']) and entities.get('career'):
+        return {
+            'intent': 'failure_paths',
+            'entities': entities,
+            'confidence': 0.95
+        }
+    
     # Eligibility checks
     if any(word in q for word in ['eligible', 'eligibility', 'qualify', 'requirement', 'without degree', 'need degree']):
         return {
@@ -57,8 +75,8 @@ def classify_intent(query: str) -> Dict[str, any]:
     
     # Career steps / How to start / Want to be
     # Check if asking about becoming a specific career
-    has_career_keyword = any(word in q for word in ['become', 'career', 'ca', 'engineer', 'doctor', 'lawyer', 'teacher', 'nurse', 'mbbs'])
-    has_action_word = any(word in q for word in ['how', 'start', 'want', 'like', 'interested'])
+    has_career_keyword = any(word in q for word in ['become', 'career', 'ca', 'engineer', 'doctor', 'lawyer', 'teacher', 'nurse', 'mbbs', 'architect'])
+    has_action_word = any(word in q for word in ['how', 'start', 'want', 'like', 'interested', 'steps', 'what to do'])
     
     if has_career_keyword and has_action_word:
         return {
@@ -166,17 +184,29 @@ def extract_entities(query: str) -> Dict[str, any]:
         ('lawyer', 'lawyer'),
         ('teacher', 'teacher'),
         ('ias', 'civil_services'),
-        ('ca', 'chartered_accountant'),  # Put 'ca' last to avoid matching in 'accountant' or 'can'
+        ('company secretary', 'company_secretary'),
+        ('ca', 'chartered_accountant'),
         ('cs', 'company_secretary'),
         ('cma', 'cost_management_accountant'),
         ('nurse', 'registered_nurse')
     ]
     
+    # Check each career keyword
     for keyword, career_id in careers:
-        # Use word boundary matching to avoid false positives
-        if re.search(r'\b' + re.escape(keyword) + r'\b', query):
-            entities['career'] = career_id
-            break
+        # For single letter abbreviations, be more strict
+        if len(keyword) <= 2:
+            # Use strict word boundary matching
+            pattern = r'\b' + re.escape(keyword) + r'\b'
+            if re.search(pattern, query, re.IGNORECASE):
+                entities['career'] = career_id
+                print(f"🔍 Entity detected: '{keyword}' → {career_id}")
+                break
+        else:
+            # For longer keywords, use simple containment
+            if keyword in query:
+                entities['career'] = career_id
+                print(f"🔍 Entity detected: '{keyword}' → {career_id}")
+                break
     
     # Stream detection
     streams = ['science', 'commerce', 'arts', 'pcm', 'pcb', 'mpc', 'bipc', 'pcmb']

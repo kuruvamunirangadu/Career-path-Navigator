@@ -1,0 +1,270 @@
+import React, { useState, useRef, useEffect } from 'react'
+
+const API_BASE = import.meta.env.VITE_API_BASE || 'http://127.0.0.1:8000'
+
+export default function CareerChatbot() {
+  const [isOpen, setIsOpen] = useState(false)
+  const [messages, setMessages] = useState([
+    {
+      role: 'assistant',
+      content: 'Hi! I\'m your Career Assistant. Ask me anything about career paths, courses, or guidance!'
+    }
+  ])
+  const [input, setInput] = useState('')
+  const [loading, setLoading] = useState(false)
+  const messagesEndRef = useRef(null)
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
+  }
+
+  useEffect(() => {
+    scrollToBottom()
+  }, [messages])
+
+  const handleSend = async () => {
+    if (!input.trim() || loading) return
+
+    const userMessage = input.trim()
+    setInput('')
+    
+    // Add user message
+    setMessages(prev => [...prev, { role: 'user', content: userMessage }])
+    setLoading(true)
+
+    try {
+      console.log('Sending request to:', `${API_BASE}/chatbot/ask`)
+      const response = await fetch(`${API_BASE}/chatbot/ask`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ question: userMessage })
+      })
+
+      console.log('Response status:', response.status)
+      if (!response.ok) {
+        const errorText = await response.text()
+        console.error('Response error:', errorText)
+        throw new Error(`Failed to get response: ${response.status}`)
+      }
+
+      const data = await response.json()
+      console.log('Received data:', data)
+      
+      // Enhanced response with metadata
+      const answerContent = data.answer || 'Sorry, I couldn\'t process that request.'
+      
+      // Add verified badge if response is from verified data
+      const verifiedBadge = data.verified ? ' ✓' : ''
+      const gptEnhanced = data.metadata?.gpt_enhanced ? ' 🤖' : ''
+      
+      setMessages(prev => [...prev, { 
+        role: 'assistant', 
+        content: answerContent,
+        verified: data.verified,
+        type: data.type,
+        intent: data.intent,
+        badges: verifiedBadge + gptEnhanced
+      }])
+    } catch (error) {
+      console.error('Chatbot error:', error)
+      setMessages(prev => [...prev, { 
+        role: 'assistant', 
+        content: 'Sorry, I\'m having trouble connecting. Please try again later.' 
+      }])
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault()
+      handleSend()
+    }
+  }
+
+  return (
+    <>
+      {/* Floating Chat Button */}
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className="chatbot-toggle"
+        style={{
+          position: 'fixed',
+          bottom: '24px',
+          right: '24px',
+          width: '60px',
+          height: '60px',
+          borderRadius: '50%',
+          background: 'linear-gradient(135deg, var(--primary), var(--secondary))',
+          border: 'none',
+          color: 'white',
+          fontSize: '28px',
+          cursor: 'pointer',
+          boxShadow: '0 4px 12px rgba(0,0,0,0.3)',
+          zIndex: 1000,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          transition: 'transform 0.3s ease, box-shadow 0.3s ease'
+        }}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.transform = 'scale(1.1)'
+          e.currentTarget.style.boxShadow = '0 6px 20px rgba(0,0,0,0.4)'
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.transform = 'scale(1)'
+          e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.3)'
+        }}
+      >
+        {isOpen ? '✕' : '💬'}
+      </button>
+
+      {/* Chat Window */}
+      {isOpen && (
+        <div
+          className="chatbot-window"
+          style={{
+            position: 'fixed',
+            bottom: '100px',
+            right: '24px',
+            width: '380px',
+            height: '500px',
+            background: 'linear-gradient(135deg, #1e293b 0%, #0f172a 100%)',
+            borderRadius: '16px',
+            boxShadow: '0 8px 32px rgba(0,0,0,0.5)',
+            zIndex: 1000,
+            display: 'flex',
+            flexDirection: 'column',
+            overflow: 'hidden',
+            animation: 'slideInUp 0.3s ease',
+            border: '1px solid rgba(255,255,255,0.1)'
+          }}
+        >
+          {/* Header */}
+          <div
+            style={{
+              background: 'linear-gradient(135deg, var(--primary), var(--secondary))',
+              padding: '16px 20px',
+              color: 'white',
+              fontWeight: '600',
+              fontSize: '18px',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '10px'
+            }}
+          >
+            <span>💼</span>
+            Career Assistant
+          </div>
+
+          {/* Messages */}
+          <div
+            style={{
+              flex: 1,
+              overflowY: 'auto',
+              padding: '16px',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '12px'
+            }}
+          >
+            {messages.map((msg, idx) => (
+              <div
+                key={idx}
+                style={{
+                  alignSelf: msg.role === 'user' ? 'flex-end' : 'flex-start',
+                  maxWidth: '75%',
+                  padding: '10px 14px',
+                  borderRadius: '12px',
+                  background: msg.role === 'user' 
+                    ? 'linear-gradient(135deg, var(--primary), var(--secondary))'
+                    : msg.verified 
+                      ? 'rgba(34, 197, 94, 0.15)'  // Green tint for verified
+                      : 'rgba(255,255,255,0.1)',
+                  border: msg.verified ? '1px solid rgba(34, 197, 94, 0.3)' : 'none',
+                  color: 'white',
+                  fontSize: '14px',
+                  lineHeight: '1.5',
+                  wordWrap: 'break-word',
+                  animation: 'fadeIn 0.3s ease',
+                  whiteSpace: 'pre-wrap'
+                }}
+              >
+                {msg.content}
+                {msg.badges && (
+                  <span style={{ fontSize: '12px', marginLeft: '6px', opacity: 0.8 }}>
+                    {msg.badges}
+                  </span>
+                )}
+              </div>
+            ))}
+            {loading && (
+              <div
+                style={{
+                  alignSelf: 'flex-start',
+                  padding: '10px 14px',
+                  borderRadius: '12px',
+                  background: 'rgba(255,255,255,0.1)',
+                  color: 'white',
+                  fontSize: '14px'
+                }}
+              >
+                <span className="typing-indicator">●●●</span>
+              </div>
+            )}
+            <div ref={messagesEndRef} />
+          </div>
+
+          {/* Input */}
+          <div
+            style={{
+              padding: '16px',
+              borderTop: '1px solid rgba(255,255,255,0.1)',
+              display: 'flex',
+              gap: '8px'
+            }}
+          >
+            <input
+              type="text"
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              onKeyPress={handleKeyPress}
+              placeholder="Ask about careers..."
+              disabled={loading}
+              style={{
+                flex: 1,
+                padding: '10px 14px',
+                borderRadius: '20px',
+                border: '1px solid rgba(255,255,255,0.2)',
+                background: 'rgba(255,255,255,0.05)',
+                color: 'white',
+                fontSize: '14px',
+                outline: 'none'
+              }}
+            />
+            <button
+              onClick={handleSend}
+              disabled={loading || !input.trim()}
+              style={{
+                padding: '10px 20px',
+                borderRadius: '20px',
+                border: 'none',
+                background: input.trim() && !loading
+                  ? 'linear-gradient(135deg, var(--primary), var(--secondary))'
+                  : 'rgba(255,255,255,0.1)',
+                color: 'white',
+                cursor: input.trim() && !loading ? 'pointer' : 'not-allowed',
+                fontSize: '14px',
+                fontWeight: '600',
+                transition: 'all 0.2s ease'
+              }}
+            >
+              Send
+            </button>
+          </div>
+        </div>
+      )}
+    </>
+  )
+}

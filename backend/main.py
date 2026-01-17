@@ -288,6 +288,12 @@ def chatbot_ask(req: ChatbotRequest):
     elif intent == 'career_steps' and entities.get('career'):
         fetched_data = answer_source.get_career_steps(entities['career'])
     
+    elif intent == 'career_skills' and entities.get('career'):
+        fetched_data = answer_source.get_career_steps(entities['career'])
+    
+    elif intent == 'failure_paths' and entities.get('career'):
+        fetched_data = answer_source.get_career_steps(entities['career'])
+    
     elif intent == 'roadmap' and entities.get('career'):
         fetched_data = answer_source.get_career_roadmap(entities['career'])
     
@@ -310,7 +316,7 @@ def chatbot_ask(req: ChatbotRequest):
         # STEP 5: Format response based on intent
         if intent == 'eligibility_check':
             formatted = ResponseFormatter.format_eligibility(fetched_data)
-        elif intent in ['career_steps', 'career_overview']:
+        elif intent in ['career_steps', 'career_overview', 'career_skills', 'failure_paths']:
             formatted = ResponseFormatter.format_career_steps(fetched_data)
         elif intent == 'roadmap':
             formatted = ResponseFormatter.format_roadmap(fetched_data, decision['allow_gpt_explain'])

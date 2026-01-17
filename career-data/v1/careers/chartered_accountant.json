@@ -2,7 +2,7 @@
   "career_id": "chartered_accountant",
   "display_name": "Chartered Accountant (CA)",
   "stream": "commerce",
-  "variant": "mec",
+  "variant": "hec",
   "status": "active",
   "last_verified": "2025-12",
   "entry_paths": ["ca_foundation"],

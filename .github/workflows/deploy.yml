@@ -1,0 +1,126 @@
+name: Deploy Career App to Azure
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'backend/**'
+      - 'frontend/**'
+      - 'career-data/**'
+      - '.github/workflows/deploy.yml'
+  workflow_dispatch:
+
+env:
+  REGISTRY_NAME: careerappregistry
+  RESOURCE_GROUP: career-app-rg
+  BACKEND_NAME: career-backend
+  FRONTEND_NAME: career-frontend
+  LOCATION: eastus
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+      
+      - name: Set image tags
+        run: |
+          echo "BACKEND_IMAGE=${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.BACKEND_NAME }}:${{ github.sha }}" >> $GITHUB_ENV
+          echo "FRONTEND_IMAGE=${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.FRONTEND_NAME }}:${{ github.sha }}" >> $GITHUB_ENV
+          echo "BACKEND_IMAGE_LATEST=${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.BACKEND_NAME }}:latest" >> $GITHUB_ENV
+          echo "FRONTEND_IMAGE_LATEST=${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.FRONTEND_NAME }}:latest" >> $GITHUB_ENV
+      
+      - name: Build and push backend image
+        run: |
+          az acr build \
+            --registry ${{ env.REGISTRY_NAME }} \
+            --image "${{ env.BACKEND_IMAGE }}" \
+            --image "${{ env.BACKEND_IMAGE_LATEST }}" \
+            --file backend/Dockerfile .
+      
+      - name: Build and push frontend image
+        run: |
+          az acr build \
+            --registry ${{ env.REGISTRY_NAME }} \
+            --image "${{ env.FRONTEND_IMAGE }}" \
+            --image "${{ env.FRONTEND_IMAGE_LATEST }}" \
+            --file frontend/Dockerfile .
+      
+      - name: Deploy backend container app
+        run: |
+          az containerapp update \
+            --resource-group ${{ env.RESOURCE_GROUP }} \
+            --name ${{ env.BACKEND_NAME }} \
+            --image "${{ env.BACKEND_IMAGE }}" || \
+          az containerapp create \
+            --resource-group ${{ env.RESOURCE_GROUP }} \
+            --name ${{ env.BACKEND_NAME }} \
+            --image "${{ env.BACKEND_IMAGE }}" \
+            --environment "${{ env.BACKEND_NAME }}-env" \
+            --ingress external \
+            --target-port 8000 \
+            --cpu 0.5 \
+            --memory 1.0Gi
+      
+      - name: Deploy frontend container app
+        run: |
+          az containerapp update \
+            --resource-group ${{ env.RESOURCE_GROUP }} \
+            --name ${{ env.FRONTEND_NAME }} \
+            --image "${{ env.FRONTEND_IMAGE }}" || \
+          az containerapp create \
+            --resource-group ${{ env.RESOURCE_GROUP }} \
+            --name ${{ env.FRONTEND_NAME }} \
+            --image "${{ env.FRONTEND_IMAGE }}" \
+            --environment "${{ env.BACKEND_NAME }}-env" \
+            --ingress external \
+            --target-port 3000 \
+            --cpu 0.5 \
+            --memory 1.0Gi
+      
+      - name: Get deployment URLs
+        id: urls
+        run: |
+          BACKEND_URL=$(az containerapp show -g ${{ env.RESOURCE_GROUP }} -n ${{ env.BACKEND_NAME }} --query "properties.configuration.ingress.fqdn" -o tsv)
+          FRONTEND_URL=$(az containerapp show -g ${{ env.RESOURCE_GROUP }} -n ${{ env.FRONTEND_NAME }} --query "properties.configuration.ingress.fqdn" -o tsv)
+          echo "backend_url=https://$BACKEND_URL" >> $GITHUB_OUTPUT
+          echo "frontend_url=https://$FRONTEND_URL" >> $GITHUB_OUTPUT
+      
+      - name: Post deployment status
+        uses: actions/github-script@v6
+        if: always()
+        with:
+          script: |
+            const status = '${{ job.status }}' === 'success' ? '✅ Success' : '❌ Failed';
+            const backendUrl = '${{ steps.urls.outputs.backend_url }}';
+            const frontendUrl = '${{ steps.urls.outputs.frontend_url }}';
+            
+            const body = `## 🚀 Deployment Status: ${status}
+            
+            **Commit:** ${context.sha.substring(0, 7)}
+            **Branch:** ${context.ref}
+            
+            ### 📍 Live URLs
+            - **Backend API:** ${backendUrl || 'Deploying...'}
+            - **Frontend App:** ${frontendUrl || 'Deploying...'}
+            
+            ### 🔗 View Details
+            [View Workflow Run](${context.payload.repository.html_url}/actions/runs/${context.runId})
+            `;
+            
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: body
+            }).catch(() => console.log('Could not post comment'));
