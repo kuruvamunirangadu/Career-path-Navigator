@@ -2,11 +2,15 @@
 
 > A comprehensive career guidance platform with 25 careers, versioned data system, and instant rollback capability.
 
-**Status**: ✅ **Production Ready** | **25 Careers Live** | **Versioning System Active**
+**Status**: ✅ **Production Ready** | **25 Careers Live** | **Versioning System Active** | **🚀 Deployment Ready**
 
----
+### 🚀 Ready to Deploy? 
+- **[DEPLOYMENT_QUICK_START.md](DEPLOYMENT_QUICK_START.md)** - Visual 3-path deployment guide (20 mins → Live!)
+- **[LIVE_DEPLOYMENT_SUMMARY.md](LIVE_DEPLOYMENT_SUMMARY.md)** - Complete overview
+- **[DEPLOYMENT_READY.md](DEPLOYMENT_READY.md)** - Detailed instructions
+- **[.azure/DEPLOYMENT_GUIDE.md](.azure/DEPLOYMENT_GUIDE.md)** - Full technical walkthrough
 
-## ⚡ Quick Start
+### ⚡ Quick Start
 
 ### 1. Install & Run (30 seconds)
 
