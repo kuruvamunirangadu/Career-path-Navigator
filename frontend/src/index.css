@@ -607,3 +607,65 @@ button[class*="border-"]:focus {
     text-align: center;
   }
 }
+
+/* Chatbot Animations */
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.typing-indicator {
+  display: inline-block;
+  animation: typing 1.4s infinite;
+}
+
+@keyframes typing {
+  0%, 100% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+/* Chatbot scroll styles */
+.chatbot-window > div:nth-child(2)::-webkit-scrollbar {
+  width: 6px;
+}
+
+.chatbot-window > div:nth-child(2)::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+}
+
+.chatbot-window > div:nth-child(2)::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+}
+
+.chatbot-window > div:nth-child(2)::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* Mobile responsiveness for chatbot */
+@media (max-width: 640px) {
+  .chatbot-window {
+    width: calc(100vw - 32px) !important;
+    height: calc(100vh - 140px) !important;
+    right: 16px !important;
+    bottom: 90px !important;
+  }
+  
+  .chatbot-toggle {
+    width: 56px !important;
+    height: 56px !important;
+    bottom: 16px !important;
+    right: 16px !important;
+  }
+}

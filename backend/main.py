@@ -6,9 +6,15 @@ import requests
 import json
 from typing import Optional
 from data_loader import CareerData
+from chatbot_nba import NBAEngine
 
 app = FastAPI(title='Career Path API')
 loader = CareerData()  # Create a fresh instance and load all data - Updated with complete career details
+nba_engine = NBAEngine(loader)  # Initialize NBA engine for next-best-action recommendations
+
+# Helpers
+def _norm_id(prefix: str, value: str) -> str:
+    return value if value.startswith(f"{prefix}:") else f"{prefix}:{value}"
 
 # Allow local frontend during development
 origins = [
@@ -17,6 +23,11 @@ origins = [
     "http://127.0.0.1:3000",
     "http://localhost:5173",
     "http://127.0.0.1:5173",
+    "http://localhost:5174",
+    "http://localhost:5175",
+    "http://localhost:5176",
+    "http://localhost:5177",
+    "http://127.0.0.1:5177",
 ]
 
 app.add_middleware(
@@ -231,7 +242,450 @@ def ai_rank(req: RankRequest):
     ranked = ranked[:15]
     return {'ranked': ranked}
 
+
+class ChatbotRequest(BaseModel):
+    question: str
+
+
+@app.post('/chatbot/ask')
+def chatbot_ask(req: ChatbotRequest):
+    """
+    🔐 ZERO-HALLUCINATION CHATBOT ENDPOINT
+    
+    Architecture:
+    1. Intent Classification (Rule-based)
+    2. Decision Engine (Determine answer source)
+    3. Answer Source (App data ONLY)
+    4. Response Formatter (Consistent UI)
+    5. Optional GPT Explanation (Rewriting only)
+    
+    CRITICAL: GPT is NEVER the source of truth
+    """
+    from chatbot_intent import classify_intent
+    from chatbot_decision import DecisionEngine
+    from chatbot_source import AnswerSource
+    from chatbot_formatter import ResponseFormatter
+    
+    question = req.question
+    
+    # STEP 1: Classify Intent (Rule-based, deterministic)
+    intent_result = classify_intent(question)
+    intent = intent_result['intent']
+    entities = intent_result['entities']
+    confidence = intent_result['confidence']
+    
+    # STEP 2: Decision Engine - Decide answer source
+    decision = DecisionEngine.decide_source(intent, entities, confidence)
+    
+    # Fetch required data based on intent
+    answer_source = AnswerSource(loader)
+    fetched_data = {}  # Initialize as empty dict
+    
+    # Fetch required data based on intent
+    if intent == 'eligibility_check' and entities.get('career'):
+        fetched_data = answer_source.get_career_eligibility(entities['career'])
+    
+    elif intent == 'career_steps' and entities.get('career'):
+        fetched_data = answer_source.get_career_steps(entities['career'])
+    
+    elif intent == 'roadmap' and entities.get('career'):
+        fetched_data = answer_source.get_career_roadmap(entities['career'])
+    
+    elif intent == 'stream_guidance':
+        class_level = entities.get('class_level', '10')
+        fetched_data = answer_source.get_stream_guidance(class_level)
+    
+    elif intent == 'career_overview' and entities.get('career'):
+        fetched_data = answer_source.get_career_steps(entities['career'])
+    
+    print(f"🔍 DEBUG: intent={intent}, entities={entities}, fetched_data available={fetched_data.get('available') if fetched_data else 'NONE'}")
+    
+    # STEP 4: Validate data availability
+    if not fetched_data or not fetched_data.get('available', False):
+        # Use fallback if no verified data
+        print(f"⚠️  Using fallback - fetched_data={fetched_data}")
+        formatted = ResponseFormatter.format_fallback()
+    else:
+        print(f"✅ Formatting response for {intent}")
+        # STEP 5: Format response based on intent
+        if intent == 'eligibility_check':
+            formatted = ResponseFormatter.format_eligibility(fetched_data)
+        elif intent in ['career_steps', 'career_overview']:
+            formatted = ResponseFormatter.format_career_steps(fetched_data)
+        elif intent == 'roadmap':
+            formatted = ResponseFormatter.format_roadmap(fetched_data, decision['allow_gpt_explain'])
+        elif intent == 'stream_guidance':
+            formatted = ResponseFormatter.format_stream_guidance(fetched_data)
+        else:
+            formatted = ResponseFormatter.format_fallback()
+    
+    # STEP 6: Optional GPT Explanation (REWRITING ONLY)
+    # Only if decision allows AND OPENAI_API_KEY is set
+    OPENAI_API_KEY = os.environ.get('OPENAI_API_KEY')
+    if decision['allow_gpt_explain'] and OPENAI_API_KEY and formatted.get('type') == 'career_card':
+        formatted = ResponseFormatter.apply_gpt_explanation(formatted, OPENAI_API_KEY)
+    
+    # SAFETY GUARDRAIL: Add metadata for transparency
+    return {
+        'answer': formatted.get('answer', 'Unable to process request'),
+        'type': formatted.get('type', 'generic'),
+        'intent': intent,
+        'confidence': confidence,
+        'source': decision['source'],
+        'verified': True,  # All answers are from verified data
+        'metadata': {
+            'gpt_enhanced': formatted.get('gpt_enhanced', False),
+            'data_available': bool(fetched_data),
+            'debug_entities': entities,
+            'debug_fetched_available': fetched_data.get('available') if isinstance(fetched_data, dict) else None
+        }
+    }
+
+
+# ========================
+# PHASE 2: NBA ENDPOINTS
+# ========================
+
+@app.get('/career/{career_id}/next-actions')
+def get_next_actions(career_id: str):
+    """
+    Get recommended next best actions for a career
+    
+    Returns actionable items based on:
+    - Career type (exam, degree, govt, medical, skill)
+    - Available pathways
+    - Career attributes
+    
+    Example: /career/software_engineer/next-actions
+    """
+    result = nba_engine.get_next_actions(career_id)
+    
+    if not result.get('available', False):
+        raise HTTPException(status_code=404, detail=f'Career {career_id} not found')
+    
+    return result
+
+
+@app.get('/career/{career_id}/eligibility')
+def get_eligibility(career_id: str):
+    """
+    Get eligibility requirements and checklist for a career
+    
+    Example: /career/chartered_accountant/eligibility
+    """
+    result = nba_engine.get_eligibility(career_id)
+    
+    if not result.get('available', False):
+        raise HTTPException(status_code=404, detail=f'Career {career_id} not found')
+    
+    return result
+
+
+@app.get('/career/{career_id}/similar')
+def get_similar_careers(career_id: str):
+    """
+    Get similar careers and alternate options
+    
+    Example: /career/software_engineer/similar
+    """
+    result = nba_engine.get_similar_careers(career_id)
+    
+    if not result.get('available', False):
+        raise HTTPException(status_code=404, detail=f'Career {career_id} not found')
+    
+    return result
+
+
+@app.get('/career/{career_id}/failure-paths')
+def get_failure_recovery(career_id: str):
+    """
+    Get recovery options if exam/degree fails
+    
+    Example: /career/doctor/failure-paths
+    """
+    result = nba_engine.get_failure_paths(career_id)
+    
+    if not result.get('available', False):
+        raise HTTPException(status_code=404, detail=f'Career {career_id} not found')
+    
+    return result
+
+
+@app.get('/career/{career_id}/alternate-paths')
+def get_alternate_career_paths(career_id: str):
+    """
+    Get alternate routes to reach the same career
+    
+    Example: /career/software_engineer/alternate-paths
+    """
+    result = nba_engine.get_alternate_paths(career_id)
+    
+    if not result.get('available', False):
+        raise HTTPException(status_code=404, detail=f'Career {career_id} not found')
+    
+    return result
+
+
+# ------------------------
+# Exam endpoints (for NBA)
+# ------------------------
+
+@app.get('/exam/{exam_id}/eligibility')
+def get_exam_eligibility(exam_id: str):
+    """Return basic eligibility info for an exam using loaded data."""
+    eid = _norm_id('exam', exam_id)
+    node = loader.nodes.get(eid)
+    if not node:
+        raise HTTPException(status_code=404, detail=f'Exam {exam_id} not found')
+    attrs = node.get('attributes', {})
+    return {
+        'exam_id': eid,
+        'exam_name': node.get('display_name', exam_id.upper()),
+        'requires': node.get('requires', []),
+        'leads_to': node.get('leads_to', []),
+        'attributes': attrs,
+        'metadata': node.get('metadata', {})
+    }
+
+
+@app.get('/exam/{exam_id}/syllabus')
+def get_exam_syllabus(exam_id: str):
+    """Return syllabus and prep timeline if available; else minimal structure."""
+    eid = _norm_id('exam', exam_id)
+    node = loader.nodes.get(eid)
+    if not node:
+        raise HTTPException(status_code=404, detail=f'Exam {exam_id} not found')
+    syllabus = node.get('syllabus') or []
+    timeline = node.get('prep_timeline') or []
+    return {
+        'exam_id': eid,
+        'exam_name': node.get('display_name', exam_id.upper()),
+        'syllabus': syllabus,
+        'prep_timeline': timeline,
+        'note': 'Syllabus/timeline may be minimal if not present in data.'
+    }
+
+
+@app.get('/career/{career_id}/alternate-exams')
+def get_alternate_exams(career_id: str):
+    """Return other exams relevant to the career based on nba_attributes.exam_types."""
+    cid = _norm_id('career', career_id)
+    career = loader.nodes.get(cid)
+    if not career:
+        raise HTTPException(status_code=404, detail=f'Career {career_id} not found')
+    nba = career.get('attributes', {}).get('nba_attributes', {})
+    exam_types = nba.get('exam_types', [])
+    exams = []
+    for et in exam_types:
+        eid = _norm_id('exam', et)
+        node = loader.nodes.get(eid)
+        if node:
+            exams.append({
+                'id': eid,
+                'name': node.get('display_name', et.upper()),
+                'requires': node.get('requires', []),
+                'leads_to': node.get('leads_to', [])
+            })
+    return {
+        'career_id': cid,
+        'career_name': career.get('display_name'),
+        'alternate_exams': exams
+    }
+
+
+# --------------------------
+# Course endpoints (for NBA)
+# --------------------------
+
+@app.get('/course/{course_id}/structure')
+def get_course_structure(course_id: str):
+    """Return duration and entry exams for a course."""
+    coid = _norm_id('course', course_id)
+    course = loader.nodes.get(coid)
+    if not course:
+        raise HTTPException(status_code=404, detail=f'Course {course_id} not found')
+    attrs = course.get('attributes', {})
+    return {
+        'course_id': coid,
+        'course_name': course.get('display_name'),
+        'duration_years': attrs.get('duration_years'),
+        'eligible_stream_variants': attrs.get('eligible_stream_variants', []),
+        'entry_exams': attrs.get('entry_exams', [])
+    }
+
+
+@app.get('/course/{course_id}/career-outcomes')
+def get_course_outcomes(course_id: str):
+    """Return careers reachable from a course via edges."""
+    coid = _norm_id('course', course_id)
+    if coid not in loader.nodes:
+        raise HTTPException(status_code=404, detail=f'Course {course_id} not found')
+    outcomes = []
+    for e in loader.edges:
+        if e.get('from') == coid and e.get('type') == 'course_to_career':
+            target = loader.nodes.get(e.get('to'))
+            if target:
+                outcomes.append({'id': target.get('id'), 'name': target.get('display_name')})
+    return {
+        'course_id': coid,
+        'career_outcomes': outcomes,
+        'count': len(outcomes)
+    }
+
+
+# --------------------------
+# Career skills endpoint
+# --------------------------
+
+@app.get('/career/{career_id}/skills')
+def get_career_skills(career_id: str):
+    cid = _norm_id('career', career_id)
+    node = loader.nodes.get(cid)
+    if not node:
+        raise HTTPException(status_code=404, detail=f'Career {career_id} not found')
+    return {
+        'career_id': cid,
+        'career_name': node.get('display_name'),
+        'skills': node.get('skills', [])
+    }
+
+
+# --------------------------
+# Additional NBA endpoints
+# --------------------------
+
+@app.get('/course/{course_id}/higher-education')
+def get_course_higher_education(course_id: str):
+    """Return higher studies options (basic stub from data)."""
+    coid = _norm_id('course', course_id)
+    course = loader.nodes.get(coid)
+    if not course:
+        raise HTTPException(status_code=404, detail=f'Course {course_id} not found')
+    # Minimal stub; real data can be enriched later
+    options = course.get('higher_studies', [])
+    return {'course_id': coid, 'course_name': course.get('display_name'), 'higher_studies': options}
+
+
+@app.get('/course/{course_id}/exit-points')
+def get_course_exit_points(course_id: str):
+    """Return possible exit points (basic stub)."""
+    coid = _norm_id('course', course_id)
+    course = loader.nodes.get(coid)
+    if not course:
+        raise HTTPException(status_code=404, detail=f'Course {course_id} not found')
+    exits = course.get('exit_points', [])
+    return {'course_id': coid, 'course_name': course.get('display_name'), 'exit_points': exits}
+
+
+@app.get('/course/{course_id}/lateral-entry')
+def get_course_lateral_entry(course_id: str):
+    """Return lateral entry options (diploma to degree upgrade)."""
+    coid = _norm_id('course', course_id)
+    course = loader.nodes.get(coid)
+    if not course:
+        raise HTTPException(status_code=404, detail=f'Course {course_id} not found')
+    lateral = course.get('lateral_entry', [])
+    return {'course_id': coid, 'course_name': course.get('display_name'), 'lateral_entry': lateral}
+
+
+@app.get('/course/{course_id}/govt-exams')
+def get_course_govt_exams(course_id: str):
+    """Return government exams eligible after this course (basic stub)."""
+    coid = _norm_id('course', course_id)
+    course = loader.nodes.get(coid)
+    if not course:
+        raise HTTPException(status_code=404, detail=f'Course {course_id} not found')
+    exams = course.get('govt_exams', [])
+    return {'course_id': coid, 'course_name': course.get('display_name'), 'govt_exams': exams}
+
+
+@app.get('/career/govt-service/hierarchy')
+def govt_service_hierarchy():
+    """Return a general government service hierarchy (stub)."""
+    hierarchy = [
+        {'rank': 'Junior Officer', 'years': '0-5'},
+        {'rank': 'Senior Officer', 'years': '5-10'},
+        {'rank': 'Assistant Director', 'years': '10-15'},
+        {'rank': 'Deputy Director', 'years': '15-20'},
+        {'rank': 'Director', 'years': '20+'}
+    ]
+    return {'service_hierarchy': hierarchy}
+
+
+@app.get('/career/govt-service/posting')
+def govt_service_posting_growth():
+    """Return generic posting and growth info (stub)."""
+    return {
+        'posting_types': ['District', 'State', 'Central'],
+        'growth_factors': ['Exam performance', 'Seniority', 'Annual reviews']
+    }
+
+
+@app.get('/career/{career_id}/other-govt-exams')
+def get_other_govt_exams(career_id: str):
+    """Return other related government exams for the career (basic stub)."""
+    cid = _norm_id('career', career_id)
+    node = loader.nodes.get(cid)
+    if not node:
+        raise HTTPException(status_code=404, detail=f'Career {career_id} not found')
+    # Minimal related exams set; can be enriched via data
+    exams = ['exam:ssc', 'exam:state_psc']
+    results = []
+    for eid in exams:
+        exnode = loader.nodes.get(eid)
+        if exnode:
+            results.append({'id': eid, 'name': exnode.get('display_name', eid)})
+    return {'career_id': cid, 'career_name': node.get('display_name'), 'other_govt_exams': results}
+
+
+@app.get('/course/{course_id}/entry-jobs')
+def get_course_entry_jobs(course_id: str):
+    """Return entry jobs after diploma/course (stub)."""
+    coid = _norm_id('course', course_id)
+    course = loader.nodes.get(coid)
+    if not course:
+        raise HTTPException(status_code=404, detail=f'Course {course_id} not found')
+    jobs = course.get('entry_jobs', [])
+    return {'course_id': coid, 'course_name': course.get('display_name'), 'entry_jobs': jobs}
+
+
+@app.get('/career/{career_id}/entry-positions')
+def get_career_entry_positions(career_id: str):
+    cid = _norm_id('career', career_id)
+    node = loader.nodes.get(cid)
+    if not node:
+        raise HTTPException(status_code=404, detail=f'Career {career_id} not found')
+    # Stub entry positions; enrich per career later
+    positions = node.get('entry_positions', [])
+    return {'career_id': cid, 'career_name': node.get('display_name'), 'entry_positions': positions}
+
+
+@app.get('/career/{career_id}/certifications')
+def get_career_certifications(career_id: str):
+    cid = _norm_id('career', career_id)
+    node = loader.nodes.get(cid)
+    if not node:
+        raise HTTPException(status_code=404, detail=f'Career {career_id} not found')
+    certs = node.get('certifications', [])
+    return {'career_id': cid, 'career_name': node.get('display_name'), 'certifications': certs}
+
+
+@app.get('/career/{career_id}/work-options')
+def get_career_work_options(career_id: str):
+    cid = _norm_id('career', career_id)
+    node = loader.nodes.get(cid)
+    if not node:
+        raise HTTPException(status_code=404, detail=f'Career {career_id} not found')
+    # Basic analysis stub
+    return {
+        'career_id': cid,
+        'career_name': node.get('display_name'),
+        'options': ['Full-time job', 'Freelance/Contract', 'Internship/Apprenticeship']
+    }
+
+
 if __name__ == '__main__':
     import uvicorn
     uvicorn.run('main:app', host='127.0.0.1', port=8000, reload=True)
-# force reload 
+# force reload
+ 

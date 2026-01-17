@@ -1,18 +1,18 @@
 # Career Path Frontend
 
-Modern, animated React + Vite frontend for Career Navigator, delivering an engaging user experience for career exploration and path recommendation.
+Modern React + Vite frontend with 25 careers, versioned data support, and engaging UI.
 
 ## Status
-Production Ready | Version 1.0.0 | January 15, 2026
+✅ Production Ready | Version 2.0.0 | January 18, 2026
 
 ## Overview
 
-The frontend provides an intuitive interface for users to:
-- **Explore Streams**: Browse Science, Commerce, Arts, and Vocational education paths
-- **Discover Variants**: Understand stream specializations (MPC, BiPC, HEC, etc.)
-- **Find Paths**: Discover course-to-career transitions and roadmaps
-- **Get Recommendations**: Receive AI-powered career suggestions based on interests
-- **Visualize Relationships**: View career-course-exam connections in interactive charts
+The frontend provides:
+- **25 Career Paths**: Science, Commerce, Arts, Vocational
+- **Interactive Exploration**: Streams, variants, courses, exams
+- **Versioned Data**: Automatically uses backend's active version (v1/v2)
+- **Fast Performance**: Vite build + React 18
+- **Modern UI**: Tailwind CSS + smooth animations
 
 ## Tech Stack
 

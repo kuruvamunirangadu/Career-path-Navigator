@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import {useNavigate} from 'react-router-dom'
 import VisualChart from '../components/VisualChart'
+import { saveLastStream, getResumeMessage } from '../utils/userProgress'
 
 const API_BASE = import.meta.env.VITE_API_BASE || 'http://127.0.0.1:8000'
 
@@ -10,8 +11,17 @@ export default function Explore(){
   const nav = useNavigate()
   const [viewChart, setViewChart] = useState(false)
   const [selectedNode, setSelectedNode] = useState(null)
+  const [resumeMessage, setResumeMessage] = useState(null)
 
   useEffect(()=>{
+    // Show resume message if user has explored before
+    const message = getResumeMessage()
+    if (message) {
+      setResumeMessage(message)
+      // Auto-hide after 5 seconds
+      setTimeout(() => setResumeMessage(null), 5000)
+    }
+    
     fetch(`${API_BASE}/streams?class=10`).then(r=>r.json()).then(data=>{
       setStreams(data.streams || [])
     }).catch(err=>{
@@ -45,6 +55,23 @@ export default function Explore(){
         </button>
       </div>
       
+      {resumeMessage && (
+        <div style={{
+          background: 'linear-gradient(135deg, rgba(0, 217, 255, 0.1), rgba(0, 217, 255, 0.05))',
+          border: '1px solid var(--primary)',
+          borderRadius: '8px',
+          padding: '12px 16px',
+          marginBottom: '16px',
+          animation: 'slideInDown 0.3s ease',
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center'
+        }}>
+          <span style={{color: 'var(--primary)', fontWeight: '500'}}>{resumeMessage}</span>
+          <button onClick={() => setResumeMessage(null)} style={{background: 'none', border: 'none', color: 'var(--primary)', cursor: 'pointer', fontSize: '1.2rem'}}>✕</button>
+        </div>
+      )}
+      
       {loading && (
         <div className="loading" style={{animation: 'fadeIn 0.6s ease'}}>
           <div className="spinner"></div>
@@ -55,7 +82,10 @@ export default function Explore(){
       {!viewChart && (
         <div className="grid" style={{animation: 'fadeIn 0.8s ease'}}>
           {streams.map((s, idx) => (
-            <button type="button" key={s.id} className="card" onClick={()=>nav(`/explore/${s.id.replace('stream:','')}`) }
+            <button type="button" key={s.id} className="card" onClick={()=>{
+              saveLastStream(s.id)
+              nav(`/explore/${s.id.replace('stream:','')}`)
+            }}
               style={{
                 animation: `fadeInUp 0.${5 + (idx % 3)}s ease`,
                 transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)'

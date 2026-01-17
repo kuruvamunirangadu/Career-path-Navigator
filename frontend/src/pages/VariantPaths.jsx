@@ -318,8 +318,18 @@ export default function VariantPaths(){
               </div>
             ) : (
               <div className="explain-card">
-                <div style={{background: 'rgba(0, 217, 255, 0.1)', border: '1px solid rgba(0, 217, 255, 0.3)', borderRadius: '8px', padding: '12px', marginBottom: '16px'}}>
-                  <h4 style={{margin: '0 0 8px 0', wordWrap: 'break-word', overflowWrap: 'break-word'}}>{explanation.career_id?.replace(/^career:/, '').replace(/_/g, ' ')}</h4>
+                <div style={{background: 'rgba(0, 217, 255, 0.1)', border: '1px solid rgba(0, 217, 255, 0.3)', borderRadius: '8px', padding: '12px', marginBottom: '16px', display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
+                  <h4 style={{margin: 0, wordWrap: 'break-word', overflowWrap: 'break-word', flex: 1}}>{explanation.career_id?.replace(/^career:/, '').replace(/_/g, ' ')}</h4>
+                  <button 
+                    type="button"
+                    className="btn"
+                    style={{marginLeft: '8px', whiteSpace: 'nowrap'}}
+                    onClick={() => {
+                      const careerId = explanation.career_id?.replace(/^career:/, '') || explanation.career_id
+                      nav(`/career/${careerId}`)
+                    }}>
+                    View Full →
+                  </button>
                 </div>
                 {explanation.why && (
                   <div style={{marginBottom: '12px'}}>

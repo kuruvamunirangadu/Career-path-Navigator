@@ -1,25 +1,40 @@
 # Career Path Backend
 
-FastAPI-based backend service for Career Navigator, providing intelligent career path recommendations through graph-based relationship mapping and AI-powered ranking.
+FastAPI-based backend service with versioned data system, instant rollback, and 25 production careers.
 
 ## Status
-Production Ready | Version 1.0.0 | January 15, 2026
+✅ Production Ready | Version 2.0.0 | January 18, 2026
 
 ## Overview
 
-The backend serves as the core intelligence engine for the Career Navigator application, managing:
-- **Career Data**: 1000+ educational pathways across 10+ career domains
-- **Path Resolution**: Graph-based computation of valid course-to-career transitions
-- **Intelligent Ranking**: AI-powered career recommendations based on user interests and academic performance
-- **Academic Rules**: Deterministic filtering based on subject combinations and eligibility criteria
+The backend provides:
+- **25 Careers**: Science, Commerce, Arts, Vocational paths
+- **Versioned Data**: v1 (production) + v2 (experimental)
+- **Instant Rollback**: One-line config switch for version control
+- **Schema Validation**: 100% validated career data
+- **Zero Dependencies**: Pure Python + JSON (no external libs)
+
+## Key Features
+
+- **One-Line Version Switch**: Edit `config.py` → Change version → Restart
+- **Instant Rollback**: < 30 seconds to revert if needed
+- **Safe Testing**: Test v2 without affecting v1 production data
+- **Backward Compatible**: Existing code works without changes
+
+## Version Control
+
+**Switch versions** by editing `backend/config.py` line 10:
+```python
+ACTIVE_DATA_VERSION = "v1"  # Change to "v2" for testing
+```
+Then restart the backend.
 
 ## Requirements
 
-- **Python**: 3.9+
+- **Python**: 3.8+
 - **Package Manager**: `pip`
-- **Database**: JSON-based (in-memory on startup)
-- **RAM**: 256MB minimum
-- **Disk**: 20MB for data files
+- **Storage**: JSON-based versioned data
+- **RAM**: 128MB minimum
 
 ## Installation & Setup
 

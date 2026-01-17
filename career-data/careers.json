@@ -3,7 +3,7 @@
     "id": "career:software_engineer",
     "type": "career",
     "display_name": "Software Engineer",
-    "attributes": { "course_ids": ["course:engineering_btech", "course:bsc"], "career_type": "Private", "nature": "Technical", "stream_paths": ["variant:mpc", "variant:pcmb"] },
+    "attributes": { "course_ids": ["course:engineering_btech", "course:bsc"], "career_type": "Private", "nature": "Technical", "stream_paths": ["variant:mpc", "variant:pcmb"], "nba_attributes": { "has_exam": true, "has_degree": true, "is_skill_based": true, "exam_types": ["jee", "state_cet"] } },
     "skills": ["skill:problem_solving", "skill:coding_basics"],
     "metadata": { "source": ["industry_consensus"], "last_reviewed": "2026-01-14", "version": 1 }
   },
@@ -11,7 +11,7 @@
     "id": "career:data_scientist",
     "type": "career",
     "display_name": "Data Scientist / AI Engineer",
-    "attributes": { "course_ids": ["course:engineering_btech", "course:bsc"], "career_type": "Private", "nature": "Technical", "stream_paths": ["variant:mpc", "variant:pcmb"] },
+    "attributes": { "course_ids": ["course:engineering_btech", "course:bsc"], "career_type": "Private", "nature": "Technical", "stream_paths": ["variant:mpc", "variant:pcmb"], "nba_attributes": { "has_exam": true, "has_degree": true, "is_skill_based": true, "exam_types": ["jee", "state_cet"] } },
     "skills": ["skill:problem_solving", "skill:statistical_analysis", "skill:coding_basics"],
     "metadata": { "source": ["industry_consensus"], "last_reviewed": "2026-01-14", "version": 1 }
   },
@@ -19,7 +19,7 @@
     "id": "career:ai_engineer",
     "type": "career",
     "display_name": "AI / Machine Learning Engineer",
-    "attributes": { "course_ids": ["course:engineering_btech", "course:bsc"], "career_type": "Private", "nature": "Technical", "stream_paths": ["variant:mpc", "variant:pcmb"] },
+    "attributes": { "course_ids": ["course:engineering_btech", "course:bsc"], "career_type": "Private", "nature": "Technical", "stream_paths": ["variant:mpc", "variant:pcmb"], "nba_attributes": { "has_exam": true, "has_degree": true, "is_skill_based": true, "exam_types": ["jee", "state_cet"] } },
     "skills": ["skill:problem_solving", "skill:coding_basics", "skill:statistical_analysis"],
     "metadata": { "source": ["industry_consensus"], "last_reviewed": "2026-01-14", "version": 1 }
   },
@@ -27,7 +27,7 @@
     "id": "career:core_engineer",
     "type": "career",
     "display_name": "Core Engineer (Mechanical / Electrical / Civil)",
-    "attributes": { "course_ids": ["course:engineering_btech"], "career_type": "Private/Government", "nature": "Technical", "stream_paths": ["variant:mpc", "variant:pcmb"] },
+    "attributes": { "course_ids": ["course:engineering_btech"], "career_type": "Private/Government", "nature": "Technical", "stream_paths": ["variant:mpc", "variant:pcmb"], "nba_attributes": { "has_exam": true, "has_degree": true, "is_govt_service": true, "exam_types": ["jee", "state_cet"] } },
     "skills": ["skill:technical_design", "skill:problem_solving"],
     "metadata": { "source": ["industry_consensus"], "last_reviewed": "2026-01-14", "version": 1 }
   },
@@ -35,7 +35,7 @@
     "id": "career:psu_officer",
     "type": "career",
     "display_name": "PSU / Government Engineer",
-    "attributes": { "course_ids": ["course:engineering_btech"], "career_type": "Government", "nature": "Technical", "stream_paths": ["variant:mpc", "variant:pcmb"] },
+    "attributes": { "course_ids": ["course:engineering_btech"], "career_type": "Government", "nature": "Technical", "stream_paths": ["variant:mpc", "variant:pcmb"], "nba_attributes": { "has_exam": true, "has_degree": true, "is_govt_service": true, "exam_types": ["jee", "state_cet"] } },
     "skills": ["skill:technical_knowledge", "skill:public_service"],
     "metadata": { "source": ["industry_consensus"], "last_reviewed": "2026-01-14", "version": 1 }
   },
@@ -50,7 +50,8 @@
       "nature": "Design & Technical", 
       "stream_paths": ["variant:mpc"],
       "mandatory_subjects": ["Architectural Design", "Building Materials", "Structural Systems", "Urban Planning"],
-      "entry_exams": ["NATA", "JEE Paper 2"]
+      "entry_exams": ["NATA", "JEE Paper 2"],
+      "nba_attributes": { "has_exam": true, "has_degree": true, "is_skill_based": true, "exam_types": ["nata", "jee"] }
     },
     "skills": ["skill:design_thinking", "skill:technical_design", "skill:problem_solving", "skill:creativity"],
     "why_path": "Architect / Architectural Professional typically follows the course: B.Arch (Bachelor of Architecture) and focuses on building design, planning, and construction.",
@@ -67,7 +68,7 @@
     "type": "career",
     "display_name": "Doctor / Medical Professional",
     "short_description": "Provide medical care and treatment to patients with expertise and compassion",
-    "attributes": { "course_ids": ["course:mbbs"], "career_type": "Private/Government", "nature": "Medical", "stream_paths": ["variant:bipc", "variant:pcmb"], "mandatory_subjects": ["Anatomy", "Physiology", "Pathology", "Pharmacology"], "entry_exams": ["NEET"] },
+    "attributes": { "course_ids": ["course:mbbs"], "career_type": "Private/Government", "nature": "Medical", "stream_paths": ["variant:bipc", "variant:pcmb"], "mandatory_subjects": ["Anatomy", "Physiology", "Pathology", "Pharmacology"], "entry_exams": ["NEET"], "nba_attributes": { "has_exam": true, "has_degree": true, "is_medical": true, "exam_types": ["neet"] } },
     "skills": ["skill:biology_knowledge", "skill:patient_care", "skill:medical_knowledge", "skill:communication"],
     "why_path": "Doctor typically follows the course: MBBS (Bachelor of Medicine, Bachelor of Surgery) and focuses on diagnosing and treating diseases.",
     "what_to_study": "Subjects and courses: MBBS, Anatomy, Physiology, Pathology, Pharmacology, Medicine, Surgery",
@@ -83,7 +84,7 @@
     "type": "career",
     "display_name": "Pharmacist / Pharmaceutical Professional",
     "short_description": "Dispense medications and provide pharmaceutical advice to ensure safe and effective medication use",
-    "attributes": { "course_ids": ["course:bpharm"], "career_type": "Private/Government", "nature": "Medical", "stream_paths": ["variant:bipc", "variant:pcmb"], "mandatory_subjects": ["Chemistry", "Pharmaceutics", "Pharmacology", "Biochemistry"], "entry_exams": ["NEET"] },
+    "attributes": { "course_ids": ["course:bpharm"], "career_type": "Private/Government", "nature": "Medical", "stream_paths": ["variant:bipc", "variant:pcmb"], "mandatory_subjects": ["Chemistry", "Pharmaceutics", "Pharmacology", "Biochemistry"], "entry_exams": ["NEET"], "nba_attributes": { "has_exam": true, "has_degree": true, "is_medical": true, "exam_types": ["neet"] } },
     "skills": ["skill:chemistry_knowledge", "skill:patient_care", "skill:medical_knowledge", "skill:communication"],
     "why_path": "Pharmacist typically follows the course: B.Pharm (Bachelor of Pharmacy) and focuses on medication and pharmaceutical care.",
     "what_to_study": "Subjects and courses: B.Pharm, Chemistry, Pharmaceutics, Pharmacology, Biochemistry, Pharmaceutical Analysis",
@@ -105,7 +106,8 @@
       "nature": "Medical", 
       "stream_paths": ["variant:bipc", "variant:pcmb"],
       "mandatory_subjects": ["Oral Anatomy", "Dental Materials", "Prosthodontics", "Orthodontics"],
-      "entry_exams": ["NEET"]
+      "entry_exams": ["NEET"],
+      "nba_attributes": { "has_exam": true, "has_degree": true, "is_medical": true, "exam_types": ["neet"] }
     },
     "skills": ["skill:biology_knowledge", "skill:patient_care", "skill:precision", "skill:communication"],
     "why_path": "Dental Surgeon typically follows the course: BDS (Bachelor of Dental Surgery) and focuses on oral health and dental care.",
@@ -128,7 +130,8 @@
       "nature": "Medical/Healthcare", 
       "stream_paths": ["variant:bipc", "variant:pcmb"],
       "mandatory_subjects": ["Anatomy & Physiology", "Medical-Surgical Nursing", "Community Health Nursing"],
-      "entry_exams": ["State/National Entrance Exams"]
+      "entry_exams": ["State/National Entrance Exams"],
+      "nba_attributes": { "has_exam": true, "has_degree": true, "is_medical": true, "exam_types": ["state_cet"] }
     },
     "skills": ["skill:patient_care", "skill:medical_knowledge", "skill:empathy", "skill:communication"],
     "why_path": "Registered Nurse typically follows the course: B.Sc Nursing and focuses on patient care and clinical services.",
@@ -173,11 +176,27 @@
     "metadata": { "source": ["industry_consensus"], "last_reviewed": "2026-01-14", "version": 1 }
   },
   {
+    "id": "career:chartered_accountant",
+    "type": "career",
+    "display_name": "Chartered Accountant (CA)",
+    "short_description": "Professional accountant qualified through rigorous examinations and practical training",
+    "attributes": { "course_ids": ["course:ca", "course:bcom"], "career_type": "Private/Government", "nature": "Finance", "stream_paths": ["variant:mec", "variant:hec_commerce"], "mandatory_subjects": ["Accounting", "Taxation", "Auditing", "Business Laws"], "entry_exams": ["CA Foundation", "CA Intermediate", "CA Final"], "foundation_allowed_in_12": true, "nba_attributes": { "has_exam": true, "has_degree": true, "is_skill_based": true, "exam_types": ["ca_foundation", "ca_intermediate", "ca_final"] } },
+    "skills": ["skill:accounting_basics", "skill:analytical_thinking", "skill:taxation_knowledge", "skill:financial_analysis", "skill:attention_to_detail"],
+    "why_path": "CA is one of the most respected finance professions in India, offering expertise in accounting, taxation, auditing, and financial management.",
+    "what_to_study": "Commerce stream (Class 11-12), then CA Foundation → CA Intermediate (with Articleship) → CA Final",
+    "roadmap": {
+      "short_term": "Class 12 Commerce, register for CA Foundation",
+      "mid_term": "Clear CA Intermediate + complete 3 years Articleship training",
+      "long_term": "Clear CA Final exam → Practice as CA / Join firms / Corporate positions"
+    },
+    "metadata": { "source": ["industry_consensus"], "last_reviewed": "2026-01-15", "version": 1 }
+  },
+  {
     "id": "career:auditor",
     "type": "career",
     "display_name": "Auditor / Audit Professional",
     "short_description": "Examine financial records and ensure compliance with accounting standards",
-    "attributes": { "course_ids": ["course:ca", "course:bcom"], "career_type": "Private/Government", "nature": "Finance", "stream_paths": ["variant:mec"], "mandatory_subjects": ["Accounting", "Auditing", "Taxation"], "entry_exams": ["CA Examination"] },
+    "attributes": { "course_ids": ["course:ca", "course:bcom"], "career_type": "Private/Government", "nature": "Finance", "stream_paths": ["variant:mec"], "mandatory_subjects": ["Accounting", "Auditing", "Taxation"], "entry_exams": ["CA Examination"], "nba_attributes": { "has_exam": true, "has_degree": true, "exam_types": ["ca_final"] } },
     "skills": ["skill:accounting_basics", "skill:analytical_thinking", "skill:compliance_knowledge", "skill:attention_to_detail"],
     "why_path": "Auditor requires detailed knowledge of accounting and financial regulations, typically obtained through CA or equivalent professional qualifications.",
     "what_to_study": "B.Com followed by CA (Chartered Accountant) or similar professional certification",
@@ -192,7 +211,7 @@
     "id": "career:financial_analyst",
     "type": "career",
     "display_name": "Financial Analyst",
-    "attributes": { "course_ids": ["course:bcom", "course:bba", "course:ca", "course:ba_economics", "course:ba_public_admin"], "career_type": "Private", "nature": "Finance", "stream_paths": ["variant:mec", "variant:cec", "variant:hec_commerce"] },
+    "attributes": { "course_ids": ["course:bcom", "course:bba", "course:ca", "course:ba_economics", "course:ba_public_admin"], "career_type": "Private", "nature": "Finance", "stream_paths": ["variant:mec", "variant:cec", "variant:hec_commerce"], "nba_attributes": { "has_degree": true, "is_skill_based": true } },
     "skills": ["skill:statistical_analysis", "skill:financial_modeling", "skill:numeracy"],
     "metadata": { "source": ["industry_consensus"], "last_reviewed": "2026-01-14", "version": 1 }
   },
@@ -200,7 +219,7 @@
     "id": "career:corporate_lawyer",
     "type": "career",
     "display_name": "Corporate Lawyer / Legal Professional",
-    "attributes": { "course_ids": ["course:cs", "course:bcom"], "career_type": "Private/Government", "nature": "Legal/Business", "stream_paths": ["variant:mec"] },
+    "attributes": { "course_ids": ["course:cs", "course:bcom"], "career_type": "Private/Government", "nature": "Legal/Business", "stream_paths": ["variant:mec"], "nba_attributes": { "has_exam": true, "has_degree": true } },
     "skills": ["skill:legal_knowledge", "skill:communication", "skill:analytical_thinking"],
     "metadata": { "source": ["industry_consensus"], "last_reviewed": "2026-01-14", "version": 1 }
   },
@@ -208,7 +227,7 @@
     "id": "career:cfo_consultant",
     "type": "career",
     "display_name": "CFO / Financial Consultant",
-    "attributes": { "course_ids": ["course:ca", "course:mba", "course:mcom"], "career_type": "Private", "nature": "Finance/Management", "stream_paths": ["variant:mec"] },
+    "attributes": { "course_ids": ["course:ca", "course:mba", "course:mcom"], "career_type": "Private", "nature": "Finance/Management", "stream_paths": ["variant:mec"], "nba_attributes": { "has_degree": true, "is_skill_based": true } },
     "skills": ["skill:financial_strategy", "skill:leadership", "skill:accounting_basics"],
     "metadata": { "source": ["industry_consensus"], "last_reviewed": "2026-01-14", "version": 1 }
   },
@@ -216,7 +235,7 @@
     "id": "career:banker",
     "type": "career",
     "display_name": "Banker / Banking Professional",
-    "attributes": { "course_ids": ["course:bcom", "course:bba", "course:ba_economics", "course:ba_public_admin"], "career_type": "Private/Government", "nature": "Finance", "stream_paths": ["variant:mec", "variant:cec", "variant:hec_commerce"] },
+    "attributes": { "course_ids": ["course:bcom", "course:bba", "course:ba_economics", "course:ba_public_admin"], "career_type": "Private/Government", "nature": "Finance", "stream_paths": ["variant:mec", "variant:cec", "variant:hec_commerce"], "nba_attributes": { "has_degree": true, "is_govt_service": true } },
     "skills": ["skill:customer_service", "skill:numeracy", "skill:financial_knowledge"],
     "metadata": { "source": ["industry_consensus"], "last_reviewed": "2026-01-14", "version": 1 }
   },
@@ -224,7 +243,7 @@
     "id": "career:finance_professional",
     "type": "career",
     "display_name": "Finance Professional / Accountant",
-    "attributes": { "course_ids": ["course:bcom", "course:ca", "course:cma", "course:ba_economics", "course:ba_public_admin"], "career_type": "Private/Government", "nature": "Finance", "stream_paths": ["variant:mec", "variant:cec", "variant:hec_commerce"] },
+    "attributes": { "course_ids": ["course:bcom", "course:ca", "course:cma", "course:ba_economics", "course:ba_public_admin"], "career_type": "Private/Government", "nature": "Finance", "stream_paths": ["variant:mec", "variant:cec", "variant:hec_commerce"], "nba_attributes": { "has_degree": true, "has_exam": true } },
     "skills": ["skill:accounting_basics", "skill:financial_planning", "skill:numeracy"],
     "metadata": { "source": ["industry_consensus"], "last_reviewed": "2026-01-14", "version": 1 }
   },

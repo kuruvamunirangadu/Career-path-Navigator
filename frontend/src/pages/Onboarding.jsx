@@ -1,5 +1,6 @@
 import React, { useMemo, useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { getUserProgress, saveInterests, saveBoard, saveUserProgress } from '../utils/userProgress'
 
 const API_BASE = import.meta.env.VITE_API_BASE || 'http://127.0.0.1:8000'
 
@@ -27,9 +28,21 @@ export default function Onboarding(){
   const [filterScore, setFilterScore] = useState('all') // all, high, medium, any
   const [isAnimating, setIsAnimating] = useState(false)
 
-  // Test API connection on mount
+  // Test API connection on mount and load saved progress
   useEffect(() => {
     console.log('API_BASE is:', API_BASE)
+    
+    // Load saved progress
+    const savedProgress = getUserProgress()
+    if (savedProgress.board) {
+      setBoard(savedProgress.board)
+    }
+    if (savedProgress.interests && savedProgress.interests.length > 0) {
+      setInterests(savedProgress.interests.map(name => 
+        INTERESTS.find(i => i.name === name) || name
+      ))
+    }
+    
     fetch(`${API_BASE}/streams?class=10`)
       .then(r => {
         console.log('API connection test:', r.ok ? 'SUCCESS' : 'FAILED', r.status)
@@ -49,12 +62,16 @@ export default function Onboarding(){
     const name = typeof interestObj === 'string' ? interestObj : interestObj.name
     setInterests(prev => {
       const prevNames = prev.map(p => typeof p === 'string' ? p : p.name)
+      let updated
       if (prevNames.includes(name)) {
-        return prev.filter(x => (typeof x === 'string' ? x : x.name) !== name)
+        updated = prev.filter(x => (typeof x === 'string' ? x : x.name) !== name)
       } else {
         const fullObj = INTERESTS.find(i => i.name === name)
-        return [...prev, fullObj || name]
+        updated = [...prev, fullObj || name]
       }
+      // Auto-save interests after change
+      saveInterests(updated)
+      return updated
     })
   }
 
@@ -110,6 +127,10 @@ export default function Onboarding(){
     setLoading(true)
     setRanked(null)
     try{
+      // Save user selections to progress
+      saveBoard(board)
+      saveInterests(interests)
+      
       const valid_paths = await fetchAllPaths()
       if(!valid_paths || valid_paths.length === 0){
         setError('No career paths available. Please try again.')

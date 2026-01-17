@@ -2,7 +2,7 @@
   "id": "career:software_engineer",
   "type": "career",
   "display_name": "Software Engineer",
-  "attributes": {"course_ids": ["course:engineering_btech", "course:bsc"], "career_type": "Private", "nature": "Technical"},
+  "attributes": {"course_ids": ["course:engineering_btech", "course:bsc"], "career_type": "Private", "nature": "Technical", "nba_attributes": {"has_exam": true, "has_degree": true, "is_skill_based": true, "exam_types": ["jee", "state_cet"]}},
   "skills": ["skill:problem_solving", "skill:coding_basics"],
   "metadata": { "source": ["industry_consensus"], "last_reviewed": "2026-01-11", "version": 1 }
 }
