@@ -16,7 +16,7 @@ nba_engine = NBAEngine(loader)  # Initialize NBA engine for next-best-action rec
 def _norm_id(prefix: str, value: str) -> str:
     return value if value.startswith(f"{prefix}:") else f"{prefix}:{value}"
 
-# Allow local frontend during development
+# Allow local frontend during development and production (Vercel)
 origins = [
     "http://localhost",
     "http://localhost:3000",
@@ -28,6 +28,9 @@ origins = [
     "http://localhost:5176",
     "http://localhost:5177",
     "http://127.0.0.1:5177",
+    # Production domains
+    "https://career-path-navigator.vercel.app",
+    "https://www.career-path-navigator.vercel.app",
 ]
 
 app.add_middleware(
