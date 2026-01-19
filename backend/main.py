@@ -1,10 +1,13 @@
 from fastapi import FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 from pydantic import BaseModel
 import os
 import requests
 import json
 from typing import Optional
+from pathlib import Path
 from data_loader import CareerData
 from chatbot_nba import NBAEngine
 
@@ -40,6 +43,16 @@ app.add_middleware(
     allow_methods=["GET", "POST", "OPTIONS"],
     allow_headers=["*"],
 )
+
+# Serve static frontend files (for Railway unified deployment)
+public_dir = Path(__file__).parent.parent / "public"
+if public_dir.exists():
+    app.mount("/", StaticFiles(directory=str(public_dir), html=True), name="public")
+else:
+    # Fallback for development
+    @app.get("/")
+    def root():
+        return {"message": "Career Path API - Frontend not mounted. Use /docs for API documentation."}
 
 @app.get('/streams')
 def get_streams(class_param: Optional[str] = Query('10', alias='class')):
