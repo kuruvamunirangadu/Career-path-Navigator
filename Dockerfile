@@ -13,8 +13,8 @@ RUN npm ci
 # Copy source
 COPY frontend/ .
 
-# Build React app (ensure vite is executable)
-RUN chmod +x node_modules/.bin/* && npx vite build
+# Build React app (invoke vite via node to avoid exec bit issues)
+RUN node node_modules/vite/bin/vite.js build
 
 # Stage 2: Build and run backend with static frontend
 FROM python:3.11-slim
