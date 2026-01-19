@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import {useParams, useNavigate} from 'react-router-dom'
-
-const API_BASE = import.meta.env.VITE_API_BASE || 'http://127.0.0.1:8000'
+import { API_BASE } from '../utils/apiConfig'
 
 export default function VariantPaths(){
   const {streamId} = useParams()

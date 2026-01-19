@@ -2,8 +2,7 @@ import React, {useEffect, useState} from 'react'
 import {useNavigate} from 'react-router-dom'
 import VisualChart from '../components/VisualChart'
 import { saveLastStream, getResumeMessage } from '../utils/userProgress'
-
-const API_BASE = import.meta.env.VITE_API_BASE || 'http://127.0.0.1:8000'
+import { API_BASE } from '../utils/apiConfig'
 
 export default function Explore(){
   const [streams, setStreams] = useState([])

@@ -1,6 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react'
-
-const API_BASE = import.meta.env.VITE_API_BASE || 'http://127.0.0.1:8000'
+import { API_BASE } from '../utils/apiConfig'
 
 export default function CareerChatbot() {
   const [isOpen, setIsOpen] = useState(false)

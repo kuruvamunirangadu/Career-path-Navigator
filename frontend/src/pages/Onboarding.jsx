@@ -1,8 +1,7 @@
 import React, { useMemo, useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { getUserProgress, saveInterests, saveBoard, saveUserProgress } from '../utils/userProgress'
-
-const API_BASE = import.meta.env.VITE_API_BASE || 'http://127.0.0.1:8000'
+import { API_BASE } from '../utils/apiConfig'
 
 const BOARDS = ['CBSE','ICSE','STATE']
 const INTERESTS = [
