@@ -32,8 +32,8 @@ origins = [
     "http://localhost:5177",
     "http://127.0.0.1:5177",
     # Production domains
-    "https://career-path-navigator.vercel.app",
-    "https://www.career-path-navigator.vercel.app",
+    "https://career-path-navigator-sobk.vercel.app",
+    "https://www.career-path-navigator-sobk.vercel.app",
 ]
 
 app.add_middleware(
