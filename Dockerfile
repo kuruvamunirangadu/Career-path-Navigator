@@ -19,12 +19,15 @@ RUN npm run build
 # Stage 2: Build and run backend with static frontend
 FROM python:3.11-slim
 
+# Avoid interactive prompts during apt installs
+ARG DEBIAN_FRONTEND=noninteractive
+
 WORKDIR /app
 
 # Install system dependencies
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    curl \
-    && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+  curl \
+  && rm -rf /var/lib/apt/lists/*
 
 # Copy Python dependencies
 COPY backend/requirements.txt .
