@@ -2,7 +2,6 @@ services:
   - type: web
     name: career-navigator-backend
     runtime: python
-    pythonVersion: 3.11
     plan: free
     
     buildCommand: cd backend && pip install -r requirements.txt
@@ -13,11 +12,3 @@ services:
         value: true
       - key: PORT
         value: 8000
-    
-    # Configure GitHub integration
-    repo: https://github.com/kuruvamunirangadu/Career-path-Navigator
-    branch: main
-    
-    # Health check
-    healthCheckPath: /health
-    healthCheckInterval: 300
