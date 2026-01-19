@@ -85,7 +85,8 @@ export default function Onboarding(){
   async function fetchAllPaths(){
     try {
       console.log('Fetching paths from API_BASE:', API_BASE)
-      const variants = ['variant:mpc','variant:bipc','variant:mec','variant:hec','variant:hpc','variant:cec','variant:pcmb','variant:hsp','variant:heg','variant:creative_service_skills','variant:technical_skills']
+      // Use only variants that exist in the data
+      const variants = ['variant:mpc', 'variant:bipc', 'variant:mec', 'variant:hec', 'variant:hpc', 'variant:hsp', 'variant:heg', 'variant:technical_skills']
       console.log('Trying variants:', variants)
       
       const results = await Promise.all(variants.map(async v => {
@@ -130,30 +131,47 @@ export default function Onboarding(){
       saveBoard(board)
       saveInterests(interests)
       
+      console.log('=== Starting Career Path Ranking ===')
+      console.log('API_BASE:', API_BASE)
+      console.log('User Profile:', userProfile)
+      
       const valid_paths = await fetchAllPaths()
+      console.log('Total paths collected:', valid_paths.length)
+      
       if(!valid_paths || valid_paths.length === 0){
-        setError('No career paths available. Please try again.')
+        console.error('No career paths available after fetch')
+        setError('No career paths available. Please check your internet connection and try again.')
         setLoading(false)
         return
       }
       console.log('Submitting with user_profile:', userProfile)
       console.log('And valid_paths:', valid_paths)
+      
+      console.log('Calling /ai/rank endpoint...')
       const resp = await fetch(`${API_BASE}/ai/rank`, {
         method: 'POST',
         headers: { 'Content-Type':'application/json' },
         body: JSON.stringify({ user_profile: userProfile, valid_paths })
       })
+      
       if(!resp.ok) {
         const errText = await resp.text()
-        throw new Error(`Ranking failed: ${resp.status} ${errText}`)
+        console.error('Ranking API error:', resp.status, errText)
+        throw new Error(`Ranking API returned ${resp.status}: ${errText}`)
       }
+      
       const data = await resp.json()
       console.log('Ranked response:', data)
+      
+      if(!data.ranked || data.ranked.length === 0) {
+        throw new Error('No ranked careers returned from API')
+      }
+      
       setRanked(data.ranked || data)
       setStep(4)
     }catch(e){
       console.error('Submit error:', e)
-      setError(`Error: ${e.message || 'Something went wrong while fetching ranked paths.'}`)
+      setError(`Error: ${e.message || 'Something went wrong. Please check console for details.'}`)
     }finally{
       setLoading(false)
     }

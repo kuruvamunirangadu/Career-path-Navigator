@@ -66,9 +66,9 @@ def get_streams(class_param: Optional[str] = Query('10', alias='class')):
 def get_paths(variant: str = Query(...)):
     """Return valid paths (courses -> careers) for a given stream variant (e.g., ?variant=mpc)."""
     res = loader.get_paths_for_variant(variant)
-    if not res['paths']:
-        raise HTTPException(status_code=404, detail='No paths found for the specified variant')
-    return res
+    # Return empty paths instead of 404 to prevent frontend errors
+    # This allows the frontend to collect paths from multiple variants
+    return res or {'paths': []}
 
 
 @app.get('/variants')
@@ -155,6 +155,8 @@ def ai_rank(req: RankRequest):
     """
     user = req.user_profile
     paths = req.valid_paths
+    
+    print(f"[AI RANK] Received {len(paths)} paths for user profile: {user}")
 
     # Extract candidate careers from paths
     candidates = []
@@ -169,6 +171,8 @@ def ai_rank(req: RankRequest):
                 'course_name': course.get('display_name'),
                 'skills': c.get('skills', [])
             })
+    
+    print(f"[AI RANK] Extracted {len(candidates)} candidate careers")
 
     # If OPENAI_API_KEY present, call OpenAI Chat Completions with strict instructions
     OPENAI_API_KEY = os.environ.get('OPENAI_API_KEY')
