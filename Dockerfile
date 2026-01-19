@@ -41,15 +41,7 @@ EXPOSE 8000
 
 # Health check using Python stdlib (avoids curl dependency)
 HEALTHCHECK --interval=30s --timeout=10s --start-period=10s --retries=3 \
-  CMD python - <<'PY'
-import urllib.request
-import sys
-try:
-    with urllib.request.urlopen('http://localhost:8000/streams?class=10', timeout=5) as resp:
-        sys.exit(0 if resp.status == 200 else 1)
-except Exception:
-    sys.exit(1)
-PY
+  CMD python -c "import urllib.request; urllib.request.urlopen('http://localhost:8000/streams?class=10', timeout=5)"
 
 # Run with Railway PORT variable
 CMD ["sh", "-c", "uvicorn main:app --host 0.0.0.0 --port ${PORT:-8000}"]
