@@ -1,8 +1,16 @@
-# � Career Path Navigator
+# 🎓 Career Path Navigator
 
 > A comprehensive career guidance platform with 25 careers, versioned data system, and instant rollback capability.
 
-**Status**: ✅ **Production Ready** | **25 Careers Live** | **Versioning System Active** | **🚀 Deployment Ready**
+**Status**: ✅ **Production Ready** | **25 Careers Live** | **Versioning System Active** | **🚀 Live Deployment**
+
+## 🌐 Live Demo
+
+**Experience it now:**
+- **Frontend (Live):** https://career-path-navigator-sobk.vercel.app
+- **Backend API:** https://career-navigator-backend-7el6.onrender.com
+
+> Auto-deploys on every push to `main` branch via GitHub webhooks
 
 ### 🚀 Ready to Deploy? 
 - **[DEPLOYMENT_QUICK_START.md](DEPLOYMENT_QUICK_START.md)** - Visual 3-path deployment guide (20 mins → Live!)
