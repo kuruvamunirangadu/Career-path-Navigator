@@ -19,21 +19,23 @@ nba_engine = NBAEngine(loader)  # Initialize NBA engine for next-best-action rec
 def _norm_id(prefix: str, value: str) -> str:
     return value if value.startswith(f"{prefix}:") else f"{prefix}:{value}"
 
-# Allow local frontend during development and production (Vercel)
+# CORS origins - Production (Vercel) + Local development (commented for production)
 origins = [
-    "http://localhost",
-    "http://localhost:3000",
-    "http://127.0.0.1:3000",
-    "http://localhost:5173",
-    "http://127.0.0.1:5173",
-    "http://localhost:5174",
-    "http://localhost:5175",
-    "http://localhost:5176",
-    "http://localhost:5177",
-    "http://127.0.0.1:5177",
-    # Production domains
+    # Production domains (Vercel)
     "https://career-path-navigator-sobk.vercel.app",
     "https://www.career-path-navigator-sobk.vercel.app",
+    
+    # Local development (uncomment when developing locally)
+    # "http://localhost",
+    # "http://localhost:3000",
+    # "http://127.0.0.1:3000",
+    # "http://localhost:5173",
+    # "http://127.0.0.1:5173",
+    # "http://localhost:5174",
+    # "http://localhost:5175",
+    # "http://localhost:5176",
+    # "http://localhost:5177",
+    # "http://127.0.0.1:5177",
 ]
 
 app.add_middleware(
@@ -712,6 +714,12 @@ def get_career_work_options(career_id: str):
 
 if __name__ == '__main__':
     import uvicorn
-    uvicorn.run('main:app', host='127.0.0.1', port=8000, reload=True)
+    # Production: Render uses PORT environment variable
+    # Local dev: Uncomment line below to run on localhost:8000
+    # uvicorn.run('main:app', host='127.0.0.1', port=8000, reload=True)
+    
+    # Production mode (uses PORT from environment)
+    port = int(os.getenv('PORT', 8000))
+    uvicorn.run('main:app', host='0.0.0.0', port=port, reload=False)
 # force reload
  

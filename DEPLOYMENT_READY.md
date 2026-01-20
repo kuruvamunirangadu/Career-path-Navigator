@@ -7,68 +7,27 @@
 - **Frontend**: `frontend/Dockerfile` - React with Node 18 (multi-stage build)
 - Both include health checks and optimized layers
 
-### ✅ Deployment Scripts Ready
-- **Manual**: `deploy.sh` - Bash script for one-click Azure deployment
-- **Automated**: `.github/workflows/deploy.yml` - GitHub Actions CI/CD pipeline
-
-### ✅ Documentation Complete
-- **Guide**: `.azure/DEPLOYMENT_GUIDE.md` - Complete deployment walkthrough
+### ✅ Deployment Ready
+- **Platform**: Render (Backend) + Vercel (Frontend)
+- **Auto-Deploy**: GitHub integration configured
 
 ---
 
-## 🎯 Quick Start - 3 Options
+## 🎯 Deployment - Live on Render & Vercel
 
-### Option 1: One-Click Azure Deployment (Easiest)
-**Time: ~15 minutes**
+### ✅ Already Deployed (Auto-Deploy Active)
+**Frontend:** https://career-path-navigator-sobk.vercel.app  
+**Backend:** https://career-navigator-backend-7el6.onrender.com
 
-```bash
-cd c:\Users\kuruv\project\carrer
+### 🔄 How Auto-Deploy Works
 
-# Make script executable (on Mac/Linux)
-chmod +x deploy.sh
+**Automatic on Every Push to `main`:**
+1. Push code to GitHub
+2. Vercel auto-deploys frontend (30 seconds)
+3. Render auto-deploys backend (2-3 minutes)
+4. Both services live automatically
 
-# Run deployment script
-./deploy.sh
-
-# It will:
-# 1. Check Docker & Azure CLI
-# 2. Create Azure resources
-# 3. Build Docker images
-# 4. Push to Azure Container Registry
-# 5. Deploy both containers
-# 6. Show live URLs ✓
-```
-
-### Option 2: Automated CI/CD with GitHub Actions (Recommended)
-**Time: Setup ~5 mins, then automatic on every push**
-
-**Prerequisites:**
-1. Create Azure credentials:
-   ```bash
-   az ad sp create-for-rbac --name CareerAppDeployer --sdk-auth
-   ```
-
-2. Add to GitHub Secrets (Settings → Secrets → New):
-   - Name: `AZURE_CREDENTIALS`
-   - Value: (paste the JSON output from step 1)
-
-3. Push changes to main branch:
-   ```bash
-   git add .
-   git commit -m "Add deployment infrastructure"
-   git push origin main
-   ```
-
-4. GitHub Actions will automatically:
-   - Build Docker images
-   - Push to Azure Container Registry
-   - Deploy updated containers
-   - Post live URLs in PR/commit
-
-### Option 3: Manual Azure CLI Commands
-**Time: ~20 minutes**
-
-See `.azure/DEPLOYMENT_GUIDE.md` for step-by-step commands
+**No manual steps needed** - Just push your code!
 
 ---
 
@@ -79,26 +38,25 @@ See `.azure/DEPLOYMENT_GUIDE.md` for step-by-step commands
 │               Career Path Navigator - Live              │
 ├─────────────────────────────────────────────────────────┤
 │                                                          │
-│  GitHub Repo                                            │
-│  └─> push main                                          │
-│      └─> GitHub Actions (.github/workflows/deploy.yml) │
-│          └─> Build Docker images                       │
-│              └─> Push to Azure Container Registry      │
-│                  └─> Deploy to Azure Container Apps    │
+│  GitHub Repo (main branch)                              │
+│  └─> push to main                                       │
+│      ├─> Vercel Auto-Deploy (Frontend)                 │
+│      │   └─> https://career-path-navigator-sobk.       │
+│      │       vercel.app                                 │
+│      │                                                   │
+│      └─> Render Auto-Deploy (Backend)                  │
+│          └─> https://career-navigator-backend-7el6.    │
+│              onrender.com                               │
 │                                                          │
 │  ┌─────────────────────────────────────────────────┐  │
-│  │          Azure Infrastructure                    │  │
+│  │          Production Infrastructure               │  │
 │  ├─────────────────────────────────────────────────┤  │
 │  │                                                  │  │
-│  │  Frontend (React + Vite)              Backend   │  │
-│  │  ├─ Azure Container App               (FastAPI)│  │
-│  │  ├─ Automatic HTTPS (*.azurecontainerapps.io) │  │
-│  │  ├─ Auto-scaling enabled              Azure    │  │
-│  │  └─ Global CDN (available)            Container │  │
-│  │                                       App      │  │
-│  │                                       ├─ 8000  │  │
-│  │                                       └─ JSON  │  │
-│  │                                          Data  │  │
+│  │  Frontend (Vercel)         Backend (Render)     │  │
+│  │  ├─ React + Vite          ├─ FastAPI + Python  │  │
+│  │  ├─ Global CDN            ├─ Auto-scaling       │  │
+│  │  ├─ HTTPS automatic       ├─ HTTPS automatic    │  │
+│  │  └─ 99.99% uptime         └─ JSON data + AI     │  │
 │  │                                                  │  │
 │  └─────────────────────────────────────────────────┘  │
 │                                                          │
@@ -111,73 +69,73 @@ See `.azure/DEPLOYMENT_GUIDE.md` for step-by-step commands
 
 | Feature | Benefit |
 |---------|---------|
-| **Containerized** | Same environment: local, staging, production |
+| **Zero-config Deploy** | Push to main = auto-deploy |
 | **Auto-scaling** | Handles traffic spikes automatically |
 | **HTTPS by default** | Secure communication out-of-box |
-| **CI/CD Automated** | One push = automatic deployment |
-| **Cost-effective** | Pay only for what you use (~$15-25/month) |
-| **Easy rollback** | Previous versions stored in registry |
-| **Monitoring ready** | Application Insights integration available |
+| **Global CDN** | Fast loading worldwide (Vercel) |
+| **Free Tier** | Render + Vercel free plans |
+| **Easy rollback** | Previous deployments accessible |
+| **Built-in monitoring** | Render & Vercel dashboards |
 
 ---
 
-## 📈 Expected Costs (Azure Free Tier + Pay-as-you-go)
+## 📈 Current Hosting Costs
 
-| Resource | Monthly Cost |
-|----------|------------|
-| Container Apps (backend) | $10-15 |
-| Container Apps (frontend) | $10-15 |
-| Container Registry | $5 |
-| Data Transfer | $0 (first 15 GB free) |
-| **TOTAL** | **$25-35/month** |
+| Service | Plan | Monthly Cost |
+|---------|------|--------------|
+| Vercel (Frontend) | Free Tier | $0 |
+| Render (Backend) | Free Tier | $0 |
+| **TOTAL** | | **$0/month** |
 
-**Free tier includes:** 
-- $200 credit for first month
-- Many services free for 12 months
-
----
-
-## 🚀 Deployment Checklist
-
-### Before Deployment
-- [ ] Git repo is up to date (`git status` shows clean)
-- [ ] All changes committed (`git log -1` shows your latest work)
-- [ ] Local app tested and working
-- [ ] Dockerfiles created ✓
-- [ ] GitHub Actions workflow created ✓
-
-### To Deploy Now
-**Choose ONE:**
-
-**A) Automated (Recommended)**
-1. [ ] Create Azure credentials: `az ad sp create-for-rbac`
-2. [ ] Add `AZURE_CREDENTIALS` secret to GitHub
-3. [ ] Push to main branch
-4. [ ] Wait for GitHub Actions to complete
-5. [ ] Check URLs in workflow logs
-
-**B) Manual Script**
-1. [ ] Ensure Docker Desktop is running
-2. [ ] Run: `./deploy.sh`
-3. [ ] Answer prompts (press Enter for defaults)
-4. [ ] Note the live URLs at the end
-
-### After Deployment
-- [ ] Test backend: `curl https://<backend-url>/streams?class=10`
-- [ ] Open frontend in browser: `https://<frontend-url>`
-- [ ] Try asking chatbot: "How to become architect?"
-- [ ] Share live URLs with team/users
+**Current setup:**
+- Free tier includes all features needed
+- Automatic HTTPS & CDN included
+- Can upgrade if needed for scale
 
 ---
 
-## 🔧 Configuration for Production
+## 🚀 Deployment Process
 
-### Frontend API Connection
-Update in `frontend/src/services/api.js`:
+### ✅ Already Set Up (One-Time)
+- [x] GitHub repo connected to Vercel
+- [x] GitHub repo connected to Render
+- [x] Auto-deploy enabled on both
+- [x] HTTPS configured automatically
+- [x] Environment variables set
+
+### 🔄 To Deploy Updates
+
+**Simple 3-Step Process:**
+1. Make your changes locally
+2. Commit and push to `main` branch:
+   ```bash
+   git add .
+   git commit -m "Your update message"
+   git push origin main
+   ```
+3. Wait 2-3 minutes - both services auto-deploy!
+
+### ✓ Verify Deployment
+- [ ] Check Vercel dashboard for frontend status
+- [ ] Check Render dashboard for backend status
+- [ ] Test live backend: https://career-navigator-backend-7el6.onrender.com/streams?class=10
+- [ ] Test live frontend: https://career-path-navigator-sobk.vercel.app
+- [ ] Try chatbot feature: "How to become architect?"
+
+---
+
+## 🔧 Production Configuration
+
+### ✅ Already Configured
+
+**Frontend API Connection** (`frontend/src/services/api.js`):
 ```javascript
-const API_BASE_URL = process.env.REACT_APP_API_URL || 
-                     'https://career-backend.azurecontainerapps.io';
+const API_BASE_URL = 'https://career-navigator-backend-7el6.onrender.com';
 ```
+
+**Backend CORS** (`backend/main.py`):
+- Allows Vercel frontend domain
+- HTTPS enabled by default on Render
 
 ### Environment Variables (if needed)
 Add to Azure Container Apps after deployment:

@@ -34,7 +34,6 @@
 - **[LIVE_DEPLOYMENT_SUMMARY.md](LIVE_DEPLOYMENT_SUMMARY.md)** - Complete overview
 - **[DEPLOYMENT_READY.md](DEPLOYMENT_READY.md)** - Detailed technical instructions
 - **[DEPLOYMENT_PORTS_CONFIG.md](DEPLOYMENT_PORTS_CONFIG.md)** - Port & environment configuration
-- **[.azure/DEPLOYMENT_GUIDE.md](.azure/DEPLOYMENT_GUIDE.md)** - Full technical walkthrough
 
 ### ⚡ Quick Start (Local Development)
 

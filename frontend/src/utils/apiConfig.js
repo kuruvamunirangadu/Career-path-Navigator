@@ -9,6 +9,15 @@
  */
 
 export const getApiBase = () => {
+  // Production URL (Render backend)
+  const productionUrl = 'https://career-navigator-backend-7el6.onrender.com'
+  
+  // 1. Always use production URL (deployed on Vercel)
+  console.log('API: Using production backend:', productionUrl)
+  return productionUrl
+  
+  // Local development mode (uncomment below when developing locally)
+  /*
   // 1. Check environment variable (set by Vercel/build process)
   if (import.meta.env.VITE_API_BASE) {
     console.log('API: Using VITE_API_BASE env var:', import.meta.env.VITE_API_BASE)
@@ -25,10 +34,10 @@ export const getApiBase = () => {
     return localUrl
   }
 
-  // 3. Production fallback (mobile users, deployed on different domain, etc.)
-  const productionUrl = 'https://career-navigator-backend-7el6.onrender.com'
-  console.log('API: Running in production/mobile, using:', productionUrl)
+  // 3. Production fallback
+  console.log('API: Using production backend:', productionUrl)
   return productionUrl
+  */
 }
 
 export const API_BASE = getApiBase()
