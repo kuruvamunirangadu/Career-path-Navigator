@@ -1,123 +1,74 @@
 # 🎓 Career Path Navigator
 
-> A comprehensive career guidance platform with 50+ careers, versioned data system, and instant rollback capability.
-
-**Status**: ✅ **Production Ready** | **50+ Careers Live** | **Versioning System Active** | **🚀 Deployed & Live**
+Career guidance platform with 50+ careers, a versioned data system, and a clean UI for exploring paths, actions, and roadmaps.
 
 ---
 
-## 🌐 🎯 **Live Application - Ready to Use Now!**
-
-### **👉 [VISIT LIVE APP HERE](https://career-path-navigator-sobk.vercel.app)**
-
-**Frontend (Vercel):** https://career-path-navigator-sobk.vercel.app  
-**Backend API (Render):** https://career-navigator-backend-7el6.onrender.com
-
-### ✨ What's Live:
-- ✅ Career exploration across 4 education streams
-- ✅ 50+ careers with detailed information
-- ✅ Career roadmap with 5-phase timeline
-- ✅ 16+ actionable next-best-actions
-- ✅ AI-powered career explanations
-- ✅ Mobile-responsive design
-- ✅ Auto-deploys on every push to `main` branch
-
-> **Deployment Status**: Both services auto-deploy via GitHub webhooks (Vercel + Render)
+## 🌐 Live Demo
+- Frontend (Vercel): https://career-path-navigator-sobk.vercel.app
+- Backend API (Render): https://career-navigator-backend-7el6.onrender.com
 
 ---
 
-## 📚 Deployment Documentation
+## ✨ Highlights
+- Explore 50+ careers across 4 education streams
+- 5‑phase career roadmap visualization
+- 16+ actionable next‑best‑actions with detail pages
+- AI‑powered explanations
+- Mobile‑responsive UI
 
-### 📖 Complete Setup Guides
-- **[DEPLOYMENT_QUICK_START.md](DEPLOYMENT_QUICK_START.md)** - Visual 3-path deployment guide (20 mins → Live!)
-- **[LIVE_DEPLOYMENT_URLS.md](LIVE_DEPLOYMENT_URLS.md)** - Live deployment details and URLs
-- **[LIVE_DEPLOYMENT_SUMMARY.md](LIVE_DEPLOYMENT_SUMMARY.md)** - Complete overview
-- **[DEPLOYMENT_READY.md](DEPLOYMENT_READY.md)** - Detailed technical instructions
-- **[DEPLOYMENT_PORTS_CONFIG.md](DEPLOYMENT_PORTS_CONFIG.md)** - Port & environment configuration
+---
 
-### ⚡ Quick Start (Local Development)
-
-#### Option 1: One-Command Setup (Windows)
+## ⚡ Quick Start
+Windows (one command):
 ```bash
-# Just run this batch file!
 start-all.bat
 ```
-- Installs dependencies automatically
-- Starts backend on port 8000
-- Starts frontend on port 5173
-- Opens browser automatically
 
-#### Option 2: Manual Setup (30 seconds)
-
+Manual:
 ```bash
-# Backend (Port 8000)
+# Backend
 cd backend
 pip install -r requirements.txt
 python main.py
 
-# Frontend (New Terminal)
+# Frontend (new terminal)
 cd frontend
 npm install
 npm run dev
 ```
 
-**Open**: **http://localhost:5173**
-
-### 2. Switch Career Data Version (10 seconds)
-
-Edit `backend/config.py` line 10:
-```python
-ACTIVE_DATA_VERSION = "v1"  # Change to "v2" for testing
-```
-Then restart backend. That's it! 🚀
+Note: The frontend is configured to use the production API by default. For local API development, see comments in `frontend/src/utils/apiConfig.js`.
 
 ---
 
-## 🎯 Versioning System
-
-**Why?** Instant rollback, A/B testing, zero risk updates.
-
-### One-Line Version Switch
-```python
-# backend/config.py (line 10)
-ACTIVE_DATA_VERSION = "v1"  # ← Change this, restart
-```
-
-- `v1` = **PRODUCTION** (live, tested, stable)
-- `v2` = **EXPERIMENTAL** (test new features safely)
-
-### Current Data
-- **25 careers** across 4 streams
-- **100% validated** ✅ (see validation tool)
-- **Instant rollback** < 30 seconds
-- **Zero dependencies** (pure Python + JSON)
-
-**Need details?** → See [VERSIONING_GUIDE.md](VERSIONING_GUIDE.md)
+## 🔌 Key API Endpoints
+- GET `/streams` – Education streams
+- GET `/careers` – All careers
+- GET `/career/{id}` – Career details
+- GET `/actions?career={id}` – Available actions
 
 ---
 
-## 📋 Features - Phase 4 ✨ (Live & Deployed)
+## 🔁 Data Versioning
+Switch active dataset in `backend/config.py` (e.g., `ACTIVE_DATA_VERSION = "v1"`). See [VERSIONING_GUIDE.md](VERSIONING_GUIDE.md) for details.
 
-### 1. Action Detail Pages (✅ Live & Deployed)
-Click any action chip to see comprehensive information:
-- **16+ pre-configured actions** with full details
-- **Rich metadata**: descriptions, key points (5-8), resources (5-10)
-- **Timeline & difficulty** indicators
-- **Color-coded** by action category
-- **Smooth animations** and professional UX
+---
 
-**Route**: `/action/:actionId`
+## 🧰 Tech Stack
+- Frontend: React + Vite + Tailwind (Vercel)
+- Backend: FastAPI (Render)
+- Data: JSON files (versioned)
 
-### 2. Career Roadmap Visualization (✅ Live & Deployed)
-New roadmap tab shows 5-phase career progression:
-1. **Decision & Preparation** (📚) - 1-2 years
-2. **Entrance & Qualification** (📝) - 3-5 years
-3. **Skill Development** (🛠️) - 1-3 years
-4. **Career Entry** (🚀) - Ongoing
-5. **Growth & Specialization** (📈) - 3-5 years
+---
 
-Features:
-- Interactive timeline with visual progression
+## 🚀 Deployment
+Auto‑deploys on push to `main` (Vercel + Render). See [DEPLOYMENT_READY.md](DEPLOYMENT_READY.md) for environment and URLs.
+
+---
+
+## 📄 License
+MIT
 - Milestone tracking (short/mid/long-term)
 - Smart adaptation to career type
 - Success tips and guidance
