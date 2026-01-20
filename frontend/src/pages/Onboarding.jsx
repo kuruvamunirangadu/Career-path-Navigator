@@ -85,13 +85,44 @@ export default function Onboarding(){
   async function fetchAllPaths(){
     try {
       console.log('Fetching paths from API_BASE:', API_BASE)
-      // Use only variants that exist in the data
-      const variants = ['variant:mpc', 'variant:bipc', 'variant:mec', 'variant:hec', 'variant:hpc', 'variant:hsp', 'variant:heg', 'variant:technical_skills']
-      console.log('Trying variants:', variants)
-      
+
+      // 1) Get streams for class 10
+      const streamsResp = await fetch(`${API_BASE}/streams?class=10`)
+      if(!streamsResp.ok){
+        console.error('Failed to load streams', streamsResp.status)
+        return []
+      }
+      const streamsData = await streamsResp.json()
+      const streams = streamsData.streams || []
+      console.log('Streams:', streams.map(s=>s.id))
+
+      // 2) For each stream, load variants dynamically
+      const variants = (await Promise.all(streams.map(async s => {
+        try {
+          const vResp = await fetch(`${API_BASE}/variants?stream=${s.id}`)
+          if(!vResp.ok) {
+            console.warn('No variants for stream', s.id, vResp.status)
+            return []
+          }
+          const vData = await vResp.json()
+          const vs = (vData.variants || []).map(v => v.id || v)
+          console.log('Variants for', s.id, vs)
+          return vs
+        } catch(err){
+          console.error('Variant fetch error for stream', s.id, err)
+          return []
+        }
+      }))).flat()
+
+      if(variants.length === 0){
+        console.error('No variants discovered; cannot fetch paths')
+        return []
+      }
+
+      // 3) Fetch paths for each discovered variant
       const results = await Promise.all(variants.map(async v => {
         try {
-          const url = `${API_BASE}/paths?variant=${v}`
+          const url = `${API_BASE}/paths?variant=${encodeURIComponent(v)}`
           console.log('Fetching:', url)
           const r = await fetch(url)
           console.log(`Response for ${v}:`, r.status, r.ok)
@@ -109,7 +140,7 @@ export default function Onboarding(){
         }
       }))
       
-      // Flatten paths arrays
+      // 4) Flatten paths arrays
       const valid_paths = results.flatMap(r => r.paths || [])
       console.log('Total valid paths collected:', valid_paths.length)
       if(valid_paths.length > 0) {
