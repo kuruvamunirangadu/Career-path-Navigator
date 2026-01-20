@@ -48,7 +48,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Serve static frontend files (for Railway unified deployment)
+# Serve static frontend files (optional unified deployment)
 public_dir = Path(__file__).parent.parent / "public"
 if public_dir.exists():
     app.mount("/", StaticFiles(directory=str(public_dir), html=True), name="public")
