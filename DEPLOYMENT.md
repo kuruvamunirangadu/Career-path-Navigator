@@ -1,12 +1,16 @@
 # 🚀 Deployment Guide
 
-## Live Production URLs
+## 🌐 Live Production URLs (Primary)
+
+**Use these URLs for production access:**
 
 - **Frontend:** https://career-path-navigator-sobk.vercel.app
 - **Backend API:** https://career-navigator-backend-7el6.onrender.com
+- **API Docs:** https://career-navigator-backend-7el6.onrender.com/docs
+
+**Status:** ✅ Live and auto-deploying on every `git push origin main`
 
 ## Deployment Architecture
-
 **Split Deployment:**
 - **Vercel** (Frontend) - Static React app with auto-deployment
 - **Render** (Backend) - Python FastAPI service with auto-deployment
@@ -74,6 +78,14 @@ No additional environment variables required for basic deployment.
 ### CORS Errors
 - Ensure frontend URL is added to `origins` list in backend/main.py
 - Both http and https versions may need to be included
+
+### Run frontend locally against deployed API
+```
+set SKIP_BACKEND=1
+set VITE_API_BASE=https://career-navigator-backend-7el6.onrender.com
+start-all.bat
+```
+This skips the local backend and points Vite to the deployed Render API.
 
 ## Quick Deploy
 

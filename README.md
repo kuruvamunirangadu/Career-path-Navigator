@@ -20,25 +20,26 @@ Career guidance platform with 50+ careers, a versioned data system, and a clean 
 ---
 
 ## ⚡ Quick Start
+
+**Production App (Deployed):**
+- Frontend: https://career-path-navigator-sobk.vercel.app
+- Backend API: https://career-navigator-backend-7el6.onrender.com
+
+**Local Development (Optional):**
+
 Windows (one command):
 ```bash
 start-all.bat
 ```
 
-Manual:
+Frontend-only against deployed API:
 ```bash
-# Backend
-cd backend
-pip install -r requirements.txt
-python main.py
-
-# Frontend (new terminal)
-cd frontend
-npm install
-npm run dev
+set SKIP_BACKEND=1
+set VITE_API_BASE=https://career-navigator-backend-7el6.onrender.com
+start-all.bat
 ```
 
-Note: The frontend is configured to use the production API by default. For local API development, see comments in `frontend/src/utils/apiConfig.js`.
+Note: Local frontend automatically uses deployed API via `.env.local`. See `frontend/.env.local` to configure.
 
 ---
 

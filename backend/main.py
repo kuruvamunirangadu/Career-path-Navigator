@@ -24,18 +24,15 @@ origins = [
     # Production domains (Vercel)
     "https://career-path-navigator-sobk.vercel.app",
     "https://www.career-path-navigator-sobk.vercel.app",
-    
-    # Local development (uncomment when developing locally)
-    # "http://localhost",
-    # "http://localhost:3000",
-    # "http://127.0.0.1:3000",
-    # "http://localhost:5173",
-    # "http://127.0.0.1:5173",
-    # "http://localhost:5174",
-    # "http://localhost:5175",
-    # "http://localhost:5176",
-    # "http://localhost:5177",
-    # "http://127.0.0.1:5177",
+
+    # Local development
+    "http://localhost",
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+    "http://localhost:5173",
+    "http://127.0.0.1:5173",
+    "http://localhost:4173",
+    "http://127.0.0.1:4173",
 ]
 
 app.add_middleware(

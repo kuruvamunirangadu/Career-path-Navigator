@@ -3,9 +3,11 @@
 **Deployment Date**: January 19, 2026  
 **Status**: ✅ LIVE and RUNNING
 
+**⭐ Use these URLs - not localhost:**
+
 ---
 
-## 🌐 Production URLs
+## 🌐 Production URLs (Primary Access)
 
 ### **Frontend (Vercel)**
 ```
