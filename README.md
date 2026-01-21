@@ -1,45 +1,57 @@
 # 🎓 Career Path Navigator
 
-Career guidance platform with 50+ careers, a versioned data system, and a clean UI for exploring paths, actions, and roadmaps.
+> **AI-powered career guidance platform helping students discover 50+ career paths across science, commerce, arts, and vocational streams.**
+
+<div align="center">
+
+### 🚀 [**Try Live Demo**](https://career-path-navigator-sobk.vercel.app) 🚀
+
+[![Deploy Status](https://img.shields.io/badge/deploy-active-brightgreen)](https://career-path-navigator-sobk.vercel.app)
+[![Backend](https://img.shields.io/badge/API-live-blue)](https://career-navigator-backend-7el6.onrender.com/docs)
+[![License](https://img.shields.io/badge/license-MIT-orange)](LICENSE)
+
+**[Live App](https://career-path-navigator-sobk.vercel.app)** • **[API Docs](https://career-navigator-backend-7el6.onrender.com/docs)** • **[GitHub](https://github.com/kuruvamunirangadu/Career-path-Navigator)**
+
+</div>
 
 ---
 
-## 🌐 Live Demo
-- Frontend (Vercel): https://career-path-navigator-sobk.vercel.app
-- Backend API (Render): https://career-navigator-backend-7el6.onrender.com
+## ✨ Features
+
+🎯 **50+ Career Paths** - Explore careers from Software Engineer to Doctor, Civil Services to Creative Arts  
+🗺️ **Interactive Roadmaps** - 5-phase timeline visualization for every career  
+💡 **AI-Powered Ranking** - Personalized career recommendations based on interests  
+📊 **Stream-Based Navigation** - Science, Commerce, Arts, Vocational paths  
+🎓 **Exam & Course Info** - Entrance exams, degree programs, and eligibility criteria  
+📱 **Mobile Responsive** - Works seamlessly on all devices
 
 ---
 
-## ✨ Highlights
-- Explore 50+ careers across 4 education streams
-- 5‑phase career roadmap visualization
-- 16+ actionable next‑best‑actions with detail pages
-- AI‑powered explanations
-- Mobile‑responsive UI
+## 🚀 Quick Start
+
+### 🌐 **Use the Live App** (Recommended)
+
+👉 **Just visit:** [career-path-navigator-sobk.vercel.app](https://career-path-navigator-sobk.vercel.app)
+
+No installation needed! The app is fully deployed and ready to use.
 
 ---
 
-## ⚡ Quick Start
+### 💻 **Local Development** (Optional)
 
-**Production App (Deployed):**
-- Frontend: https://career-path-navigator-sobk.vercel.app
-- Backend API: https://career-navigator-backend-7el6.onrender.com
-
-**Local Development (Optional):**
-
-Windows (one command):
-```bash
-start-all.bat
-```
-
-Frontend-only against deployed API:
+**Run frontend against deployed API:**
 ```bash
 set SKIP_BACKEND=1
 set VITE_API_BASE=https://career-navigator-backend-7el6.onrender.com
 start-all.bat
 ```
 
-Note: Local frontend automatically uses deployed API via `.env.local`. See `frontend/.env.local` to configure.
+**Full local stack:**
+```bash
+start-all.bat
+```
+
+> **Note:** See [PUSH_AND_DEPLOY.md](PUSH_AND_DEPLOY.md) for deployment guide.
 
 ---
 
