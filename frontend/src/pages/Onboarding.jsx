@@ -266,18 +266,18 @@ export default function Onboarding(){
         <div className="bg-white/5 border border-slate-700 rounded-xl p-8 backdrop-blur" style={{animation: 'slideInUp 0.5s ease', opacity: isAnimating ? 0 : 1, transition: 'opacity 0.3s ease'}}>
           <h2 className="text-3xl font-semibold mb-4 text-primary flex items-center gap-3">🏫 Step 2 — Choose Board</h2>
           <p className="text-lg text-slate-300 mb-6">Pick your board to personalize content.</p>
-          <div className="flex gap-3 flex-wrap">
+          <div className="flex gap-4 flex-wrap">
             {BOARDS.map(b => (
               <button 
                 key={b}
                 onClick={() => setBoard(b)}
-                className={`px-6 py-3 rounded-lg border-2 font-semibold text-lg transition-all duration-300 ${
+                className={`px-8 py-4 rounded-lg border-3 font-bold text-xl transition-all duration-300 ${
                   board === b 
                     ? 'border-primary bg-primary/20 text-primary shadow-glow' 
                     : 'border-slate-600 text-slate-300 hover:border-primary/50'
                 }`}
                 style={{
-                  transform: board === b ? 'scale(1.05)' : 'scale(1)',
+                  transform: board === b ? 'scale(1.08)' : 'scale(1)',
                   animation: board === b ? 'pulse 2s infinite' : 'none'
                 }}
               >
