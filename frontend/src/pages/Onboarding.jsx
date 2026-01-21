@@ -5,15 +5,15 @@ import { API_BASE } from '../utils/apiConfig'
 
 const BOARDS = ['CBSE','ICSE','STATE']
 const INTERESTS = [
-  { name: 'Technology', icon: '💻' },
-  { name: 'Biology', icon: '🧬' },
-  { name: 'Business', icon: '💼' },
-  { name: 'Creativity', icon: '🎨' },
-  { name: 'Defense', icon: '🛡️' },
-  { name: 'Science', icon: '🔬' },
-  { name: 'Arts', icon: '🎭' },
-  { name: 'Leadership', icon: '👔' },
-  { name: 'Research', icon: '📚' }
+  { name: 'Technology', icon: '💻', color: '#00d9ff' },
+  { name: 'Biology', icon: '🧬', color: '#4ade80' },
+  { name: 'Business', icon: '💼', color: '#f59e0b' },
+  { name: 'Creativity', icon: '🎨', color: '#ec4899' },
+  { name: 'Defense', icon: '🛡️', color: '#8b5cf6' },
+  { name: 'Science', icon: '🔬', color: '#06b6d4' },
+  { name: 'Arts', icon: '🎭', color: '#f97316' },
+  { name: 'Leadership', icon: '👔', color: '#3b82f6' },
+  { name: 'Research', icon: '📚', color: '#10b981' }
 ]
 
 export default function Onboarding(){
@@ -304,49 +304,52 @@ export default function Onboarding(){
         <div className="bg-white/5 border border-slate-700 rounded-xl p-8 backdrop-blur" style={{animation: 'slideInUp 0.5s ease', opacity: isAnimating ? 0 : 1, transition: 'opacity 0.3s ease'}}>
           <h2 className="text-3xl font-semibold mb-4 text-primary flex items-center gap-3">❤️ Step 3 — Select Interests</h2>
           <p className="text-lg text-slate-300 mb-6">Pick 2–4 interests (used for ranking only; never for eligibility).</p>
-          <div style={{display: 'flex', flexWrap: 'wrap', gap: '12px', marginBottom: '24px'}}>
+          <div style={{display: 'flex', flexWrap: 'wrap', gap: '16px', marginBottom: '24px'}}>
             {INTERESTS.map((interest) => {
               const name = interest.name
               const icon = interest.icon
+              const color = interest.color
               const isSelected = interests.some(i => (typeof i === 'string' ? i : i.name) === name)
               return (
                 <button 
                   key={name}
                   type="button"
                   style={{
-                    padding: '12px 20px',
-                    borderRadius: '24px',
-                    border: `2px solid ${isSelected ? 'var(--primary)' : 'var(--border)'}`,
-                    background: isSelected ? 'linear-gradient(135deg, rgba(0, 217, 255, 0.25), rgba(154, 52, 255, 0.25))' : 'transparent',
-                    color: isSelected ? 'var(--primary)' : 'var(--text-secondary)',
+                    padding: '16px 28px',
+                    borderRadius: '28px',
+                    border: `3px solid ${isSelected ? color : 'var(--border)'}`,
+                    background: isSelected ? `linear-gradient(135deg, ${color}20, ${color}40)` : 'rgba(255, 255, 255, 0.05)',
+                    color: isSelected ? color : 'var(--text-secondary)',
                     cursor: 'pointer',
-                    fontSize: '1.05rem',
-                    fontWeight: '600',
+                    fontSize: '1.15rem',
+                    fontWeight: '700',
                     transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                     fontFamily: 'Inter, sans-serif',
                     position: 'relative',
                     zIndex: 10,
-                    transform: isSelected ? 'scale(1.05)' : 'scale(1)',
-                    boxShadow: isSelected ? '0 4px 12px rgba(0, 217, 255, 0.4)' : 'none',
+                    transform: isSelected ? 'scale(1.08)' : 'scale(1)',
+                    boxShadow: isSelected ? `0 6px 20px ${color}60` : 'none',
                     display: 'flex',
                     alignItems: 'center',
-                    gap: '8px'
+                    gap: '12px'
                   }}
                   onClick={() => toggleInterest(interest)}
                   onMouseEnter={(e) => {
-                    e.target.style.transform = 'scale(1.1) translateY(-2px)'
-                    e.target.style.borderColor = 'var(--primary)'
-                    e.target.style.color = 'var(--primary)'
+                    e.target.style.transform = 'scale(1.12) translateY(-3px)'
+                    e.target.style.borderColor = color
+                    e.target.style.color = color
+                    e.target.style.boxShadow = `0 8px 24px ${color}60`
                   }}
                   onMouseLeave={(e) => {
-                    e.target.style.transform = isSelected ? 'scale(1.05)' : 'scale(1)'
-                    e.target.style.borderColor = isSelected ? 'var(--primary)' : 'var(--border)'
-                    e.target.style.color = isSelected ? 'var(--primary)' : 'var(--text-secondary)'
+                    e.target.style.transform = isSelected ? 'scale(1.08)' : 'scale(1)'
+                    e.target.style.borderColor = isSelected ? color : 'var(--border)'
+                    e.target.style.color = isSelected ? color : 'var(--text-secondary)'
+                    e.target.style.boxShadow = isSelected ? `0 6px 20px ${color}60` : 'none'
                   }}
                 >
-                  <span style={{fontSize: '1.3rem'}}>{icon}</span>
+                  <span style={{fontSize: '2rem', filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.3))'}}>{icon}</span>
                   {name}
-                  {isSelected && <span style={{marginLeft: '4px'}}>✓</span>}
+                  {isSelected && <span style={{marginLeft: '4px', fontSize: '1.2rem'}}>✓</span>}
                 </button>
               )
             })}
