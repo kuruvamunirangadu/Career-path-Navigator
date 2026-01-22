@@ -1,6 +1,6 @@
 import React, { useMemo, useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { getUserProgress, saveInterests, saveBoard, saveUserProgress } from '../utils/userProgress'
+import { getUserProgress, saveInterests, saveBoard } from '../utils/userProgress'
 import { API_BASE } from '../utils/apiConfig'
 
 const BOARDS = ['CBSE','ICSE','STATE']
@@ -14,6 +14,13 @@ const INTERESTS = [
   { name: 'Arts', icon: '🎭', color: '#f97316' },
   { name: 'Leadership', icon: '👔', color: '#3b82f6' },
   { name: 'Research', icon: '📚', color: '#10b981' }
+]
+
+const STEPS = [
+  { num: 1, label: 'Class', icon: '📚', helper: 'Pick your current class' },
+  { num: 2, label: 'Board', icon: '🏫', helper: 'Choose your education board' },
+  { num: 3, label: 'Interests', icon: '❤️', helper: 'Select what excites you' },
+  { num: 4, label: 'Results', icon: '🎯', helper: 'Review matched paths' }
 ]
 
 export default function Onboarding(){
@@ -209,305 +216,249 @@ export default function Onboarding(){
   }
 
   return (
-    <div className="max-w-3xl mx-auto p-6">
-      {/* Navigation */}
-      <div style={{display: 'flex', gap: '16px', marginBottom: '24px', paddingBottom: '16px', borderBottom: '1px solid var(--border)'}}>
-        <button onClick={()=>nav('/')} style={{padding: '8px 16px', background: 'transparent', border: '1px solid var(--primary)', color: 'var(--primary)', borderRadius: '8px', cursor: 'pointer', fontWeight: '600', fontSize: '0.95rem', transition: 'all 0.3s ease', display: 'flex', alignItems: 'center', gap: '6px'}}
-          onMouseEnter={(e) => {e.target.style.transform = 'translateY(-2px)'; e.target.style.boxShadow = '0 4px 12px rgba(0, 217, 255, 0.3)'}}
-          onMouseLeave={(e) => {e.target.style.transform = 'translateY(0)'; e.target.style.boxShadow = 'none'}}>
-          🎯 Onboarding
-        </button>
-        <button onClick={()=>nav('/explore')} style={{padding: '8px 16px', background: 'transparent', border: '1px solid var(--border)', color: 'var(--text-secondary)', borderRadius: '8px', cursor: 'pointer', fontWeight: '600', fontSize: '0.95rem', transition: 'all 0.3s ease', display: 'flex', alignItems: 'center', gap: '6px'}}
-          onMouseEnter={(e) => {e.target.style.borderColor = 'var(--primary)'; e.target.style.color = 'var(--primary)'; e.target.style.transform = 'translateY(-2px)'}}
-          onMouseLeave={(e) => {e.target.style.borderColor = 'var(--border)'; e.target.style.color = 'var(--text-secondary)'; e.target.style.transform = 'translateY(0)'}}>
+    <div className="onboarding-shell">
+      <div className="tab-row">
+        <button className="tab-pill is-active">🎯 Onboarding</button>
+        <button className="tab-pill" onClick={() => nav('/explore')}>
           🗺️ Explore
         </button>
       </div>
-      
-      <h1 className="text-4xl font-extrabold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent mb-8" style={{animation: 'fadeInDown 0.6s ease'}}>Career Onboarding</h1>
 
-      {/* Steps indicator */}
-      <ol className="flex items-center space-x-4 mb-8 text-lg text-slate-300">
-        {[
-          {num: 1, label: 'Class', icon: '📚'},
-          {num: 2, label: 'Board', icon: '🏫'},
-          {num: 3, label: 'Interests', icon: '❤️'},
-          {num: 4, label: 'Results', icon: '🎯'}
-        ].map(({num, label, icon}) => (
-          <li key={num} className={`flex items-center ${step>=num? 'text-primary':'text-slate-500'}`} style={{transition: 'all 0.4s ease', transform: step >= num ? 'scale(1.05)' : 'scale(1)'}}>
-            <span className={`w-8 h-8 rounded-full border mr-2 flex items-center justify-center ${step>=num? 'border-primary bg-primary/20 shadow-glow':'border-slate-600'}`} style={{transition: 'all 0.4s ease'}}>
-              {step > num ? '✓' : icon}
-            </span>
-            {label}
-          </li>
-        ))}
-      </ol>
+      <div className="onboarding-hero glass-panel">
+        <div className="hero-copy">
+          <p className="eyebrow">Guided setup</p>
+          <h1>Career Onboarding</h1>
+          <p className="supporting-text">Take a quick, four-step walkthrough so we can tailor streams, variants, and actions to you.</p>
+          <div className="hero-actions">
+            <button className="btn" onClick={() => goToStep(Math.min(step + 1, 4))}>
+              Continue setup →
+            </button>
+            <button className="btn btn-ghost" onClick={() => nav('/home')}>
+              Go to home
+            </button>
+          </div>
+        </div>
+        <div className="hero-stats glass-panel">
+          <p className="muted">Progress</p>
+          <div className="hero-progress">
+            <span className="hero-step">{step}</span>
+            <span className="muted">of 4 steps</span>
+          </div>
+          <div className="chip-row">
+            <span className="tag">Board: {board}</span>
+            <span className="tag">{interests.length} interests</span>
+          </div>
+        </div>
+      </div>
 
-      {step===1 && (
-        <div className="bg-white/5 border border-slate-700 rounded-xl p-8 backdrop-blur" style={{animation: 'slideInUp 0.5s ease', opacity: isAnimating ? 0 : 1, transition: 'opacity 0.3s ease'}}>
-          <h2 className="text-3xl font-semibold mb-4 text-primary flex items-center gap-3">📚 Step 1 — Select Class</h2>
-          <p className="text-lg text-slate-300 mb-6">Currently supported: Class 10</p>
-          <div className="flex items-center gap-4">
-            <div className="px-6 py-3 rounded-lg bg-gradient-to-r from-primary/20 to-secondary/20 border border-primary text-white text-lg font-semibold shadow-glow" style={{animation: 'pulse 2s infinite'}}>
-              Class 10
+      <div className="stepper">
+        {STEPS.map(({ num, label, icon, helper }) => (
+          <div key={num} className={`stepper-item ${step >= num ? 'is-active' : ''}`}>
+            <div className="stepper-badge">{step > num ? '✓' : icon}</div>
+            <div className="stepper-copy">
+              <span className="muted">Step {num}</span>
+              <div className="stepper-label">{label}</div>
+              <div className="stepper-helper">{helper}</div>
             </div>
           </div>
-          <div className="mt-8">
-            <button type="button" className="btn" onClick={()=>goToStep(2)} style={{transition: 'all 0.3s ease'}}
-              onMouseEnter={(e) => e.target.style.transform = 'scale(1.05)'}
-              onMouseLeave={(e) => e.target.style.transform = 'scale(1)'}>
-              Next → 
-            </button>
-          </div>
-        </div>
-      )}
+        ))}
+      </div>
 
-      {step===2 && (
-        <div className="bg-white/5 border border-slate-700 rounded-xl p-8 backdrop-blur" style={{animation: 'slideInUp 0.5s ease', opacity: isAnimating ? 0 : 1, transition: 'opacity 0.3s ease'}}>
-          <h2 className="text-3xl font-semibold mb-4 text-primary flex items-center gap-3">🏫 Step 2 — Choose Board</h2>
-          <p className="text-lg text-slate-300 mb-6">Pick your board to personalize content.</p>
-          <div className="flex gap-4 flex-wrap">
-            {BOARDS.map(b => (
-              <button 
-                key={b}
-                onClick={() => setBoard(b)}
-                className={`px-8 py-4 rounded-lg border-3 font-bold text-xl transition-all duration-300 ${
-                  board === b 
-                    ? 'border-primary bg-primary/20 text-primary shadow-glow' 
-                    : 'border-slate-600 text-slate-300 hover:border-primary/50'
-                }`}
-                style={{
-                  transform: board === b ? 'scale(1.08)' : 'scale(1)',
-                  animation: board === b ? 'pulse 2s infinite' : 'none'
-                }}
-              >
-                {b}
-              </button>
-            ))}
-          </div>
-          <div className="mt-8 flex gap-4">
-            <button type="button" className="btn" onClick={()=>goToStep(1)} style={{transition: 'all 0.3s ease'}}
-              onMouseEnter={(e) => e.target.style.transform = 'scale(1.05)'}
-              onMouseLeave={(e) => e.target.style.transform = 'scale(1)'}>
-              ← Back
-            </button>
-            <button type="button" className="btn" onClick={()=>goToStep(3)} style={{transition: 'all 0.3s ease'}}
-              onMouseEnter={(e) => e.target.style.transform = 'scale(1.05)'}
-              onMouseLeave={(e) => e.target.style.transform = 'scale(1)'}>
-              Next →
-            </button>
-          </div>
-        </div>
-      )}
-
-      {step===3 && (
-        <div className="bg-white/5 border border-slate-700 rounded-xl p-8 backdrop-blur" style={{animation: 'slideInUp 0.5s ease', opacity: isAnimating ? 0 : 1, transition: 'opacity 0.3s ease'}}>
-          <h2 className="text-3xl font-semibold mb-4 text-primary flex items-center gap-3">❤️ Step 3 — Select Interests</h2>
-          <p className="text-lg text-slate-300 mb-6">Pick 2–4 interests (used for ranking only; never for eligibility).</p>
-          <div style={{display: 'flex', flexWrap: 'wrap', gap: '16px', marginBottom: '24px'}}>
-            {INTERESTS.map((interest) => {
-              const name = interest.name
-              const icon = interest.icon
-              const color = interest.color
-              const isSelected = interests.some(i => (typeof i === 'string' ? i : i.name) === name)
-              return (
-                <button 
-                  key={name}
-                  type="button"
-                  style={{
-                    padding: '16px 28px',
-                    borderRadius: '28px',
-                    border: `3px solid ${isSelected ? color : 'var(--border)'}`,
-                    background: isSelected ? `linear-gradient(135deg, ${color}20, ${color}40)` : 'rgba(255, 255, 255, 0.05)',
-                    color: isSelected ? color : 'var(--text-secondary)',
-                    cursor: 'pointer',
-                    fontSize: '1.15rem',
-                    fontWeight: '700',
-                    transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-                    fontFamily: 'Inter, sans-serif',
-                    position: 'relative',
-                    zIndex: 10,
-                    transform: isSelected ? 'scale(1.08)' : 'scale(1)',
-                    boxShadow: isSelected ? `0 6px 20px ${color}60` : 'none',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '12px'
-                  }}
-                  onClick={() => toggleInterest(interest)}
-                  onMouseEnter={(e) => {
-                    e.target.style.transform = 'scale(1.12) translateY(-3px)'
-                    e.target.style.borderColor = color
-                    e.target.style.color = color
-                    e.target.style.boxShadow = `0 8px 24px ${color}60`
-                  }}
-                  onMouseLeave={(e) => {
-                    e.target.style.transform = isSelected ? 'scale(1.08)' : 'scale(1)'
-                    e.target.style.borderColor = isSelected ? color : 'var(--border)'
-                    e.target.style.color = isSelected ? color : 'var(--text-secondary)'
-                    e.target.style.boxShadow = isSelected ? `0 6px 20px ${color}60` : 'none'
-                  }}
-                >
-                  <span style={{fontSize: '2rem', filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.3))'}}>{icon}</span>
-                  {name}
-                  {isSelected && <span style={{marginLeft: '4px', fontSize: '1.2rem'}}>✓</span>}
-                </button>
-              )
-            })}
-          </div>
-          <div style={{display: 'flex', gap: '16px', alignItems: 'center', flexWrap: 'wrap'}}>
-            <button type="button" className="btn" onClick={() => goToStep(2)} style={{transition: 'all 0.3s ease'}}
-              onMouseEnter={(e) => e.target.style.transform = 'scale(1.05)'}
-              onMouseLeave={(e) => e.target.style.transform = 'scale(1)'}>
-              ← Back
-            </button>
-            <button type="button" className="btn" onClick={submit} disabled={loading} style={{
-              opacity: loading ? 0.7 : 1, 
-              cursor: loading ? 'not-allowed' : 'pointer',
-              transition: 'all 0.3s ease',
-              position: 'relative',
-              overflow: 'hidden'
-            }}
-            onMouseEnter={(e) => !loading && (e.target.style.transform = 'scale(1.05)')}
-            onMouseLeave={(e) => !loading && (e.target.style.transform = 'scale(1)')}>
-              {loading && <span className="inline-block animate-spin mr-2">⚙️</span>}
-              {loading ? 'Ranking…' : '✨ Submit & Rank Paths'}
-            </button>
-            {error && <span style={{color: '#ff6b6b', fontSize: '1.05rem', animation: 'shake 0.5s'}}>{error}</span>}
-          </div>
-        </div>
-      )}
-
-      {step===4 && (
-        <div className="bg-white/5 border border-slate-700 rounded-xl p-8 backdrop-blur" style={{animation: 'slideInUp 0.5s ease', opacity: isAnimating ? 0 : 1, transition: 'opacity 0.3s ease'}}>
-          <h2 className="text-3xl font-semibold mb-6 text-primary flex items-center gap-3">🎯 Recommended Career Paths</h2>
-          {!ranked && <div className="text-slate-300 text-lg">No results</div>}
-          {ranked && (
-            <>
-              <p className="text-slate-300 mb-4" style={{animation: 'fadeIn 0.6s ease'}}>Based on your interests: <span className="text-primary font-semibold">{interests.map(i => typeof i === 'string' ? i : i.name).join(', ')}</span></p>
-              
-              {/* Filter Controls */}
-              <div className="flex gap-3 mb-6 flex-wrap" style={{animation: 'fadeIn 0.8s ease'}}>
-                <button 
-                  onClick={() => setFilterScore('all')} 
-                  className={`px-4 py-2 rounded-lg border transition-all duration-300 ${filterScore === 'all' ? 'border-primary bg-primary/20 text-primary shadow-glow' : 'border-slate-600 text-slate-400 hover:border-primary/50'}`}
-                  style={{transform: filterScore === 'all' ? 'scale(1.05)' : 'scale(1)'}}
-                  onMouseEnter={(e) => e.target.style.transform = 'scale(1.05) translateY(-2px)'}
-                  onMouseLeave={(e) => e.target.style.transform = filterScore === 'all' ? 'scale(1.05)' : 'scale(1)'}
-                >
-                  📊 All ({ranked.length})
-                </button>
-                <button 
-                  onClick={() => setFilterScore('high')} 
-                  className={`px-4 py-2 rounded-lg border transition-all duration-300 ${filterScore === 'high' ? 'border-primary bg-primary/20 text-primary shadow-glow' : 'border-slate-600 text-slate-400 hover:border-primary/50'}`}
-                  style={{transform: filterScore === 'high' ? 'scale(1.05)' : 'scale(1)'}}
-                  onMouseEnter={(e) => e.target.style.transform = 'scale(1.05) translateY(-2px)'}
-                  onMouseLeave={(e) => e.target.style.transform = filterScore === 'high' ? 'scale(1.05)' : 'scale(1)'}
-                >
-                  ⭐ Best Matches ({ranked.filter(r => r.score >= 5).length})
-                </button>
-                <button 
-                  onClick={() => setFilterScore('medium')} 
-                  className={`px-4 py-2 rounded-lg border transition-all duration-300 ${filterScore === 'medium' ? 'border-primary bg-primary/20 text-primary shadow-glow' : 'border-slate-600 text-slate-400 hover:border-primary/50'}`}
-                  style={{transform: filterScore === 'medium' ? 'scale(1.05)' : 'scale(1)'}}
-                  onMouseEnter={(e) => e.target.style.transform = 'scale(1.05) translateY(-2px)'}
-                  onMouseLeave={(e) => e.target.style.transform = filterScore === 'medium' ? 'scale(1.05)' : 'scale(1)'}
-                >
-                  ✨ Good Matches ({ranked.filter(r => r.score >= 2 && r.score < 5).length})
-                </button>
-                <button 
-                  onClick={() => setFilterScore('any')} 
-                  className={`px-4 py-2 rounded-lg border transition-all duration-300 ${filterScore === 'any' ? 'border-primary bg-primary/20 text-primary shadow-glow' : 'border-slate-600 text-slate-400 hover:border-primary/50'}`}
-                  style={{transform: filterScore === 'any' ? 'scale(1.05)' : 'scale(1)'}}
-                  onMouseEnter={(e) => e.target.style.transform = 'scale(1.05) translateY(-2px)'}
-                  onMouseLeave={(e) => e.target.style.transform = filterScore === 'any' ? 'scale(1.05)' : 'scale(1)'}
-                >
-                  💡 Others ({ranked.filter(r => r.score > 0 && r.score < 2).length})
-                </button>
+      <div className="step-panels">
+        {step===1 && (
+          <section className={`panel glass-panel ${isAnimating ? 'is-fading' : ''}`}>
+            <div className="panel-header">
+              <div className="eyebrow">Step 1</div>
+              <h2>Choose your class</h2>
+              <p className="supporting-text">Currently supported: Class 10. More grades coming soon.</p>
+            </div>
+            <div className="class-card">
+              <div>
+                <p className="muted">Available now</p>
+                <h3>Class 10</h3>
+                <p className="supporting-text">We will use this to pull the right streams, variants, and next-best actions.</p>
               </div>
+              <span className="tag">Pre-selected</span>
+            </div>
+            <div className="panel-actions">
+              <button type="button" className="btn" onClick={()=>goToStep(2)}>
+                Next →
+              </button>
+            </div>
+          </section>
+        )}
 
-              {/* Results Grid */}
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 max-h-[500px] overflow-y-auto pr-2">
-                {ranked
-                  .filter(r => {
-                    if (filterScore === 'all') return true;
-                    if (filterScore === 'high') return r.score >= 5;
-                    if (filterScore === 'medium') return r.score >= 2 && r.score < 5;
-                    if (filterScore === 'any') return r.score > 0 && r.score < 2;
-                    return true;
-                  })
-                  .map((r, idx) => (
-                    <div 
-                      key={r.career_id || idx} 
-                      className="flex items-start gap-3 p-4 rounded-lg border border-slate-700 bg-white/5 hover:bg-white/10 transition-all duration-300"
-                      style={{
-                        animation: `fadeInUp 0.${5 + idx}s ease`,
-                        transform: 'translateY(0)',
-                        cursor: 'pointer'
-                      }}
-                      onMouseEnter={(e) => {
-                        e.currentTarget.style.transform = 'translateY(-4px) scale(1.02)';
-                        e.currentTarget.style.borderColor = 'var(--primary)';
-                        e.currentTarget.style.boxShadow = '0 8px 20px rgba(0, 217, 255, 0.3)';
-                      }}
-                      onMouseLeave={(e) => {
-                        e.currentTarget.style.transform = 'translateY(0) scale(1)';
-                        e.currentTarget.style.borderColor = 'rgb(51, 65, 85)';
-                        e.currentTarget.style.boxShadow = 'none';
-                      }}
-                    >
-                      <div className="flex-1">
-                        <div className="font-semibold text-white text-base flex items-center gap-2">
-                          <span>🎯</span> {r.career_name}
-                        </div>
-                        <div className="text-sm text-slate-400 mt-1">{r.reason || 'Available career path'}</div>
+        {step===2 && (
+          <section className={`panel glass-panel ${isAnimating ? 'is-fading' : ''}`}>
+            <div className="panel-header">
+              <div className="eyebrow">Step 2</div>
+              <h2>Choose your board</h2>
+              <p className="supporting-text">Pick the board that matches your curriculum so eligibility and paths stay accurate.</p>
+            </div>
+            <div className="option-grid">
+              {BOARDS.map(b => {
+                const isActive = board === b
+                return (
+                  <button
+                    key={b}
+                    onClick={() => setBoard(b)}
+                    className={`select-card ${isActive ? 'is-active' : ''}`}
+                  >
+                    <span className="select-title">{b}</span>
+                    <span className="muted">{isActive ? 'Selected' : 'Tap to select'}</span>
+                  </button>
+                )
+              })}
+            </div>
+            <div className="panel-actions">
+              <button type="button" className="btn btn-ghost" onClick={()=>goToStep(1)}>
+                ← Back
+              </button>
+              <button type="button" className="btn" onClick={()=>goToStep(3)}>
+                Next →
+              </button>
+            </div>
+          </section>
+        )}
+
+        {step===3 && (
+          <section className={`panel glass-panel ${isAnimating ? 'is-fading' : ''}`}>
+            <div className="panel-header">
+              <div className="eyebrow">Step 3</div>
+              <h2>Select your interests</h2>
+              <p className="supporting-text">Pick 2–4 interests. They only inform ranking and are never used for eligibility filters.</p>
+            </div>
+            <div className="interest-grid">
+              {INTERESTS.map((interest) => {
+                const name = interest.name
+                const icon = interest.icon
+                const color = interest.color
+                const isSelected = interests.some(i => (typeof i === 'string' ? i : i.name) === name)
+                return (
+                  <button
+                    key={name}
+                    type="button"
+                    className={`interest-chip ${isSelected ? 'is-active' : ''}`}
+                    style={{
+                      borderColor: isSelected ? color : 'var(--border)',
+                      background: isSelected ? `linear-gradient(135deg, ${color}22, ${color}33)` : 'rgba(255,255,255,0.04)',
+                      color: isSelected ? color : 'var(--text-secondary)'
+                    }}
+                    onClick={() => toggleInterest(interest)}
+                  >
+                    <span className="interest-icon">{icon}</span>
+                    <span className="interest-name">{name}</span>
+                    {isSelected && <span className="interest-check">✓</span>}
+                  </button>
+                )
+              })}
+            </div>
+            <div className="panel-actions">
+              <button type="button" className="btn btn-ghost" onClick={() => goToStep(2)}>
+                ← Back
+              </button>
+              <button
+                type="button"
+                className="btn"
+                onClick={submit}
+                disabled={loading}
+              >
+                {loading ? 'Ranking…' : '✨ Submit & Rank Paths'}
+              </button>
+              {error && <span className="error-text">{error}</span>}
+            </div>
+          </section>
+        )}
+
+        {step===4 && (
+          <section className={`panel glass-panel ${isAnimating ? 'is-fading' : ''}`}>
+            <div className="panel-header">
+              <div className="eyebrow">Step 4</div>
+              <h2>Recommended career paths</h2>
+              <p className="supporting-text">Based on your interests: <span className="text-highlight">{interests.map(i => typeof i === 'string' ? i : i.name).join(', ')}</span></p>
+            </div>
+            {!ranked && <div className="muted">No results yet</div>}
+            {ranked && (
+              <>
+                <div className="filter-row">
+                  <button 
+                    onClick={() => setFilterScore('all')} 
+                    className={`filter-chip ${filterScore === 'all' ? 'is-active' : ''}`}
+                  >
+                    📊 All ({ranked.length})
+                  </button>
+                  <button 
+                    onClick={() => setFilterScore('high')} 
+                    className={`filter-chip ${filterScore === 'high' ? 'is-active' : ''}`}
+                  >
+                    ⭐ Best ({ranked.filter(r => r.score >= 5).length})
+                  </button>
+                  <button 
+                    onClick={() => setFilterScore('medium')} 
+                    className={`filter-chip ${filterScore === 'medium' ? 'is-active' : ''}`}
+                  >
+                    ✨ Good ({ranked.filter(r => r.score >= 2 && r.score < 5).length})
+                  </button>
+                  <button 
+                    onClick={() => setFilterScore('any')} 
+                    className={`filter-chip ${filterScore === 'any' ? 'is-active' : ''}`}
+                  >
+                    💡 Others ({ranked.filter(r => r.score > 0 && r.score < 2).length})
+                  </button>
+                </div>
+
+                <div className="results-grid">
+                  {ranked
+                    .filter(r => {
+                      if (filterScore === 'all') return true
+                      if (filterScore === 'high') return r.score >= 5
+                      if (filterScore === 'medium') return r.score >= 2 && r.score < 5
+                      if (filterScore === 'any') return r.score > 0 && r.score < 2
+                      return true
+                    })
+                    .map((r, idx) => (
+                      <div 
+                        key={r.career_id || idx}
+                        className="result-card"
+                        style={{animation: `fadeInUp 0.${5 + idx}s ease`}}
+                      >
+                        <div className="result-title">🎯 {r.career_name}</div>
+                        <div className="result-sub">{r.reason || 'Available career path'}</div>
                         {r.score > 0 && (
-                          <div className="flex items-center gap-2 mt-2">
-                            <div className="flex gap-1">
+                          <div className="result-score">
+                            <div className="score-dots">
                               {Array.from({length: Math.min(5, Math.ceil(r.score/2))}).map((_, i) => (
-                                <span 
-                                  key={i} 
-                                  className="inline-block w-2 h-2 rounded-full bg-emerald-400"
-                                  style={{animation: `pulse 2s infinite ${i * 0.1}s`}}
-                                ></span>
+                                <span key={i} className="score-dot"></span>
                               ))}
                             </div>
-                            <span className="text-xs text-emerald-300 font-semibold">{r.score} pts</span>
+                            <span className="score-label">{r.score} pts</span>
                           </div>
                         )}
                       </div>
-                    </div>
-                  ))
-                }
-              </div>
-              <p className="text-sm text-slate-400 mt-4 italic">
-                {filterScore === 'all' 
-                  ? `Showing all ${ranked.length} results` 
-                  : `Filtered results • Use tabs above to see more`}
-              </p>
-            </>
-          )}
-          <div className="mt-6 flex gap-4">
-            <button 
-              type="button" 
-              className="btn" 
-              onClick={() => { goToStep(3); setRanked(null); setFilterScore('all'); }}
-              style={{transition: 'all 0.3s ease'}}
-              onMouseEnter={(e) => e.target.style.transform = 'scale(1.05) translateY(-2px)'}
-              onMouseLeave={(e) => e.target.style.transform = 'scale(1)'}>
-              ← Adjust Interests
-            </button>
-            <button 
-              type="button" 
-              className="btn" 
-              onClick={() => nav('/explore')}
-              style={{transition: 'all 0.3s ease'}}
-              onMouseEnter={(e) => e.target.style.transform = 'scale(1.05) translateY(-2px)'}
-              onMouseLeave={(e) => e.target.style.transform = 'scale(1)'}>
-              🗺️ Explore Career Map
-            </button>
-          </div>
-        </div>
-      )}
+                    ))}
+                </div>
+                <p className="supporting-text">{filterScore === 'all' ? `Showing all ${ranked.length} results` : 'Filtered results • Switch tabs to view more'}</p>
+              </>
+            )}
+            <div className="panel-actions">
+              <button 
+                type="button" 
+                className="btn btn-ghost" 
+                onClick={() => { goToStep(3); setRanked(null); setFilterScore('all'); }}
+              >
+                ← Adjust interests
+              </button>
+              <button 
+                type="button" 
+                className="btn" 
+                onClick={() => nav('/explore')}
+              >
+                🗺️ Explore career map
+              </button>
+            </div>
+          </section>
+        )}
+      </div>
     </div>
   )
 }
