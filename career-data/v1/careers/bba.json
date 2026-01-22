@@ -16,5 +16,41 @@
     "MBA",
     "Sales & marketing roles",
     "Startup roles"
+  ],
+  "roadmap": {
+    "decision_preparation": {
+      "duration": "1 year",
+      "steps": [
+        "Understand business & management roles",
+        "Build communication and leadership skills",
+        "Choose specialization interest (HR/Marketing/Finance)"
+      ]
+    },
+    "career_entry": {
+      "duration": "3 years",
+      "steps": [
+        "Complete BBA degree",
+        "Do internships in corporate roles",
+        "Start as management trainee or executive"
+      ]
+    },
+    "growth_specialization": {
+      "duration": "3–7 years",
+      "steps": [
+        "Pursue MBA",
+        "Move into managerial roles",
+        "Handle teams and business units"
+      ]
+    }
+  },
+  "key_milestones": {
+    "short_term": ["Complete BBA"],
+    "mid_term": ["MBA or management role"],
+    "long_term": ["Business Manager / Leader"]
+  },
+  "tips_for_success": [
+    "Soft skills are as important as academics",
+    "Internships build real value",
+    "MBA accelerates growth"
   ]
 }

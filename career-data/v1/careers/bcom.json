@@ -16,5 +16,41 @@
     "MBA",
     "Accounting roles",
     "Banking exams"
+  ],
+  "roadmap": {
+    "decision_preparation": {
+      "duration": "1 year",
+      "steps": [
+        "Understand commerce career options",
+        "Strengthen basics of accounting and economics",
+        "Choose college based on future goals (CA/MBA)"
+      ]
+    },
+    "career_entry": {
+      "duration": "3 years",
+      "steps": [
+        "Complete B.Com degree",
+        "Do internships in accounting or finance",
+        "Take entry-level accounting or analyst roles"
+      ]
+    },
+    "growth_specialization": {
+      "duration": "3–6 years",
+      "steps": [
+        "Pursue MBA / CA / CMA / certifications",
+        "Move into senior accounting or finance roles",
+        "Develop managerial responsibility"
+      ]
+    }
+  },
+  "key_milestones": {
+    "short_term": ["Complete B.Com basics"],
+    "mid_term": ["Secure entry-level job"],
+    "long_term": ["Finance Manager / Senior Accountant"]
+  },
+  "tips_for_success": [
+    "Strong accounting fundamentals are critical",
+    "Internships matter more than marks",
+    "Certifications boost salary growth"
   ]
 }
