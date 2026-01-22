@@ -4,18 +4,18 @@ const DEVELOPERS = [
   {
     name: 'Muni Rangadu',
     title: 'Full-Stack Developer',
-    roles: ['Backend Specialist', 'Database & API Expert'],
+    roles: ['Project Lead & Architect', 'Backend Specialist', 'Database & API Expert'],
     email: 'kuruvamunirangadu.2005@gmail.com',
     phone: '+91 8639019597',
-    icon: '👨‍💻'
+    icon: '👨‍💼'
   },
   {
     name: 'Reddi Sekhar',
     title: 'Full-Stack Developer',
-    roles: ['Project Lead & Architect', 'Next.js & TypeScript Expert'],
+    roles: ['Frontend Specialist', 'Next.js & TypeScript Expert'],
     email: 'reddisekharmarugani@gmail.com',
     phone: '+91 9346414887',
-    icon: '👨‍💼'
+    icon: '👨‍💻'
   }
 ]
 

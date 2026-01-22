@@ -1051,8 +1051,8 @@ button[class*="border-"]:focus {
 }
 /* Footer Styles */
 .footer-section {
-  background: linear-gradient(180deg, rgba(10, 14, 39, 0.6) 0%, rgba(5, 8, 18, 0.95) 100%);
-  border-top: 1px solid rgba(0, 217, 255, 0.1);
+  background: linear-gradient(180deg, rgba(25, 35, 65, 0.45) 0%, rgba(15, 20, 40, 0.8) 100%);
+  border-top: 1px solid rgba(0, 217, 255, 0.15);
   padding: 48px 20px 24px;
   margin-top: 80px;
   position: relative;
@@ -1130,19 +1130,19 @@ button[class*="border-"]:focus {
 }
 
 .dev-card {
-  background: rgba(45, 53, 97, 0.25);
-  border: 1px solid rgba(0, 217, 255, 0.15);
+  background: rgba(50, 65, 120, 0.35);
+  border: 1px solid rgba(0, 217, 255, 0.2);
   border-radius: 14px;
   padding: 20px;
-  -webkit-backdrop-filter: blur(10px);
-  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
   transition: all 0.3s ease;
 }
 
 .dev-card:hover {
-  border-color: rgba(0, 217, 255, 0.4);
-  background: rgba(45, 53, 97, 0.35);
-  box-shadow: 0 12px 32px rgba(0, 217, 255, 0.1);
+  border-color: rgba(0, 217, 255, 0.5);
+  background: rgba(50, 65, 120, 0.5);
+  box-shadow: 0 12px 32px rgba(0, 217, 255, 0.15);
   transform: translateY(-4px);
 }
 
