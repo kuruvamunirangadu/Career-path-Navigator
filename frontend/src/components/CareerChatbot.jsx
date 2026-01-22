@@ -6,7 +6,27 @@ export default function CareerChatbot() {
   const [messages, setMessages] = useState([
     {
       role: 'assistant',
-      content: 'Hi! I\'m your Career Assistant. Ask me anything about career paths, courses, or guidance!'
+      content: `Hi! I'm your Career Assistant. I can help with:
+
+📚 **Search & Info:**
+• Search careers, streams, exams, courses
+• Get details on any career path
+• Find entrance exam information
+
+🎯 **Guidance:**
+• Career eligibility requirements
+• Step-by-step career paths  
+• Stream recommendations (Class 10/12)
+• Career roadmaps & alternatives
+
+Try asking:
+• 'Tell me about CA'
+• 'What streams are available?'
+• 'Search for engineering careers'
+• 'What exams do I need for MBBS?'
+• 'Am I eligible for civil services?'
+
+Or use our Onboarding Tool for personalized recommendations! ✓`
     }
   ])
   const [input, setInput] = useState('')

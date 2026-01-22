@@ -6,6 +6,7 @@ Converts verified data into consistent UI format
 import os
 import json
 from typing import Dict, Optional
+from chatbot_search import CareerSearch
 
 
 class ResponseFormatter:
@@ -14,6 +15,55 @@ class ResponseFormatter:
     
     CONSISTENT UI EVERYWHERE
     """
+    @staticmethod
+    def format_search_results(search_data: Dict) -> Dict:
+        """
+        Format comprehensive search results
+        Shows careers, streams, exams, courses matching query
+        """
+        query = search_data.get('query', '')
+        careers = search_data.get('careers', [])
+        streams = search_data.get('streams', [])
+        exams = search_data.get('exams', [])
+        courses = search_data.get('courses', [])
+        total = search_data.get('total_results', 0)
+        
+        answer_parts = [f"🔍 **Search Results for '{query}'** ({total} results found)\n"]
+        
+        if careers:
+            answer_parts.append("**🎯 Careers:**")
+            for c in careers[:3]:
+                answer_parts.append(f"• {c['name']} - {c.get('description', 'N/A')[:80]}...")
+        
+        if streams:
+            answer_parts.append("\n**🌊 Streams:**")
+            for s in streams[:3]:
+                answer_parts.append(f"• {s['name']} - {s.get('description', 'N/A')[:80]}...")
+        
+        if exams:
+            answer_parts.append("\n**📝 Exams:**")
+            for e in exams[:3]:
+                answer_parts.append(f"• {e['name']} - {e.get('description', 'N/A')[:80]}...")
+        
+        if courses:
+            answer_parts.append("\n**📚 Courses:**")
+            for c in courses[:3]:
+                answer_parts.append(f"• {c['name']} - {c.get('description', 'N/A')[:80]}...")
+        
+        if total == 0:
+            answer_parts = [f"No results found for '{query}'. Try searching for specific careers, streams, or exams!"]
+        
+        return {
+            'type': 'search_results',
+            'query': query,
+            'answer': '\n'.join(answer_parts),
+            'metadata': {
+                'careers_count': len(careers),
+                'streams_count': len(streams),
+                'exams_count': len(exams),
+                'courses_count': len(courses)
+            }
+        }
     
     @staticmethod
     def format_eligibility(data: Dict) -> Dict:

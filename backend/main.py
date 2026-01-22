@@ -286,6 +286,7 @@ def chatbot_ask(req: ChatbotRequest):
     from chatbot_decision import DecisionEngine
     from chatbot_source import AnswerSource
     from chatbot_formatter import ResponseFormatter
+    from chatbot_search import CareerSearch
     
     question = req.question
     
@@ -301,6 +302,24 @@ def chatbot_ask(req: ChatbotRequest):
     # Fetch required data based on intent
     answer_source = AnswerSource(loader)
     fetched_data = {}  # Initialize as empty dict
+    
+    # Check if this is a general search query (mentions stream, career, exam, course)
+    search_keywords = ['stream', 'career', 'exam', 'course', 'job', 'what', 'tell me about']
+    is_search_query = any(keyword in question.lower() for keyword in search_keywords)
+    
+    if is_search_query and confidence < 0.7:
+        # Perform comprehensive search
+        search_results = CareerSearch.comprehensive_search(question)
+        if search_results['total_results'] > 0:
+            formatted = ResponseFormatter.format_search_results(search_results)
+            return {
+                'answer': formatted.get('answer', 'Search completed'),
+                'type': formatted.get('type', 'search_results'),
+                'intent': 'search',
+                'confidence': 0.8,
+                'verified': True,
+                'metadata': formatted.get('metadata', {})
+            }
     
     # Fetch required data based on intent
     if intent == 'eligibility_check' and entities.get('career'):
