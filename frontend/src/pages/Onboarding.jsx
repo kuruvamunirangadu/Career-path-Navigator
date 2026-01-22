@@ -226,6 +226,10 @@ export default function Onboarding(){
 
       <div className="onboarding-hero glass-panel">
         <div className="hero-copy">
+          <div className="brand-mark">
+            <img src="/cpn-logo.svg" alt="Career Path Navigator logo" />
+            <div className="brand-name">Career Path Navigator</div>
+          </div>
           <p className="eyebrow">Guided setup</p>
           <h1>Career Onboarding</h1>
           <p className="supporting-text">Take a quick, four-step walkthrough so we can tailor streams, variants, and actions to you.</p>
