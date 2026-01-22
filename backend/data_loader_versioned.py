@@ -12,11 +12,12 @@ Features:
 - Caching support (CachedDataLoader)
 
 Usage:
-    from data_loader import VersionedDataLoader, load_career, load_exam
+    from data_loader import VersionedDataLoader, load_career, load_exam, load_roadmap
 
     # Automatic - uses config.ACTIVE_DATA_VERSION
     career_data = load_career("software_engineer")
     exam_data = load_exam("jee")
+    roadmap_data = load_roadmap("iti")
     
     # Or with explicit versioning
     loader = VersionedDataLoader(version="v1")
@@ -149,6 +150,11 @@ class VersionedDataLoader:
         # courses.json might be in a single file
         return self._load_json("courses", f"{course_type}.json")
 
+    def get_roadmap(self, career_id: str) -> Optional[Dict[str, Any]]:
+        """Load roadmap by career_id (e.g., 'iti', 'ba_humanities')."""
+        filename = f"{career_id}.json"
+        return self._load_json("roadmaps", filename)
+
     def get_all_careers(self) -> Dict[str, Dict[str, Any]]:
         """Load all career files."""
         careers = {}
@@ -255,6 +261,12 @@ def load_exam(exam_id: str) -> Optional[Dict[str, Any]]:
     """Convenience function to load exam."""
     loader = get_default_loader()
     return loader.get_exam(exam_id)
+
+
+def load_roadmap(career_id: str) -> Optional[Dict[str, Any]]:
+    """Convenience function to load roadmap by career_id."""
+    loader = get_default_loader()
+    return loader.get_roadmap(career_id)
 
 
 def load_all_careers() -> Dict[str, Dict[str, Any]]:
