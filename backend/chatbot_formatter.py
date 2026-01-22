@@ -227,7 +227,7 @@ class ResponseFormatter:
         """
         return {
             'type': 'generic',
-            'answer': "I can help you with:\n• Career eligibility and requirements\n• Step-by-step career paths\n• Stream guidance (after Class 10/12)\n• Career roadmaps\n\nTry asking:\n• 'How can I become a CA?'\n• 'What streams are available after Class 10?'\n• 'Am I eligible for engineering?'\n\nOr use our **Onboarding Tool** for personalized career recommendations!"
+            'answer': "I can help with career steps, eligibility, exams, streams, and courses. Try:\n• 'Tell me about CA'\n• 'Search for engineering careers'\n• 'What exams for MBBS?'\n• 'Streams after Class 10'\nOr run the Onboarding Tool for personalized picks."
         }
     
     @staticmethod

@@ -346,10 +346,21 @@ def chatbot_ask(req: ChatbotRequest):
     
     print(f"🔍 DEBUG: intent={intent}, entities={entities}, fetched_data available={fetched_data.get('available') if fetched_data else 'NONE'}")
     
-    # STEP 4: Validate data availability
+    # STEP 4: Validate data availability; if missing, try comprehensive search before fallback
     if not fetched_data or not fetched_data.get('available', False):
-        # Use fallback if no verified data
-        print(f"⚠️  Using fallback - fetched_data={fetched_data}")
+        print(f"⚠️  No verified data; attempting search. fetched_data={fetched_data}")
+        search_results = CareerSearch.comprehensive_search(question)
+        if search_results.get('total_results', 0) > 0:
+            formatted = ResponseFormatter.format_search_results(search_results)
+            return {
+                'answer': formatted.get('answer', 'Search completed'),
+                'type': formatted.get('type', 'search_results'),
+                'intent': 'search',
+                'confidence': 0.8,
+                'verified': True,
+                'metadata': formatted.get('metadata', {})
+            }
+        # Use fallback if search also empty
         formatted = ResponseFormatter.format_fallback()
     else:
         print(f"✅ Formatting response for {intent}")
