@@ -8,13 +8,13 @@
   "entry_paths": ["bsc_statistics"],
   "exams_required": [],
   "salary_band": {
-    "entry": "₹3–6 LPA",
-    "mid": "₹7–12 LPA",
-    "senior": "₹18+ LPA"
+    "entry": "₹4–7 LPA",
+    "mid": "₹8–14 LPA",
+    "senior": "₹22+ LPA"
   },
   "failure_safe_paths": [
     "M.Sc Statistics",
-    "Data analytics",
-    "Business intelligence"
+    "Data science",
+    "Actuarial exams"
   ]
 }

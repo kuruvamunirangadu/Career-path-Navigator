@@ -2,7 +2,7 @@
   "career_id": "scientific_researcher",
   "display_name": "Scientific Researcher",
   "stream": "science",
-  "variant": "pcmb",
+  "variant": "mpc",
   "status": "active",
   "last_verified": "2025-12",
   "entry_paths": ["msc", "phd"],
