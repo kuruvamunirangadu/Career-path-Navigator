@@ -10,6 +10,7 @@ import CareerDetail from './pages/CareerDetail'
 import ActionDetail from './pages/ActionDetail'
 import VisualChart from './components/VisualChart'
 import CareerChatbot from './components/CareerChatbot'
+import Footer from './components/Footer'
 import './index.css'
 
 createRoot(document.getElementById('root')).render(
@@ -25,6 +26,7 @@ createRoot(document.getElementById('root')).render(
         <Route path='/action/:actionId' element={<ActionDetail/>} />
         <Route path='*' element={<Navigate to='/' replace/>} />
       </Routes>
+      <Footer />
       <CareerChatbot />
     </BrowserRouter>
   </React.StrictMode>
