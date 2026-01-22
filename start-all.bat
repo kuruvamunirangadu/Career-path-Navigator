@@ -43,16 +43,17 @@ if not "%SKIP_BACKEND%"=="1" (
   echo - Backend: skipped (set SKIP_BACKEND=0 to start locally)
   echo - Tip: set VITE_API_BASE before running to point frontend at your deployed API.
 )
+
 echo.
-echo ===== DEPLOYED URLS (Use these) =====
-echo - Frontend: https://career-path-navigator-sobk.vercel.app
-echo - Backend API: https://career-navigator-backend-7el6.onrender.com
-echo.
-echo ===== Local Dev URLs =====
+echo ===== QUICK LINKS =====
+echo Click to open:
+echo - Frontend (deployed): https://career-path-navigator-sobk.vercel.app
+echo - Backend API (deployed): https://career-navigator-backend-7el6.onrender.com
 echo - Frontend (local): http://localhost:5173/
 echo - Backend (local): http://127.0.0.1:8000
-
-echo You can close this window.
+echo - API Docs (local): http://127.0.0.1:8000/docs
+echo.
+echo Press Ctrl+C to stop the servers, or close this window.
 endlocal
 popd
 exit /b 0
