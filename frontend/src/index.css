@@ -656,17 +656,24 @@ button[class*="border-"]:focus {
 .brand-mark {
   display: flex;
   align-items: center;
-  gap: 10px;
-  margin-bottom: 10px;
+  gap: 14px;
+  margin-bottom: 16px;
+  animation: fadeIn 0.8s ease-out;
 }
 
 .brand-mark img {
-  width: 46px;
-  height: 46px;
-  border-radius: 12px;
-  background: rgba(255,255,255,0.06);
-  padding: 6px;
-  box-shadow: 0 8px 20px rgba(0,217,255,0.15);
+  width: 64px;
+  height: 64px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, rgba(0,217,255,0.1) 0%, rgba(20,184,166,0.08) 100%);
+  padding: 8px;
+  box-shadow: 0 12px 32px rgba(0,217,255,0.25), inset 0 1px 0 rgba(255,255,255,0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.brand-mark img:hover {
+  transform: translateY(-4px) scale(1.05);
+  box-shadow: 0 16px 48px rgba(0,217,255,0.35), inset 0 1px 0 rgba(255,255,255,0.2);
 }
 
 .brand-name {

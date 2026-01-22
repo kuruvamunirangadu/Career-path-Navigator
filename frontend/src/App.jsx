@@ -15,7 +15,13 @@ export default function App(){
   return (
     <div className="app">
       <header className="header">
-        <h1>Career Navigator</h1>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '16px' }}>
+          <img src="/cpn-logo.svg" alt="Career Path Navigator" style={{ width: '56px', height: '56px', borderRadius: '12px' }} />
+          <div>
+            <h1 style={{ margin: '0 0 4px 0' }}>Career Path Navigator</h1>
+            <p style={{ margin: 0, fontSize: '0.9em', color: 'rgba(255,255,255,0.7)' }}>AI-Powered Career Guidance</p>
+          </div>
+        </div>
         <p>Explore your future with AI-powered career path guidance. Discover streams, courses, and careers aligned with your aspirations.</p>
         <Link to="/explore" className="btn">Start Exploring →</Link>
       </header>
