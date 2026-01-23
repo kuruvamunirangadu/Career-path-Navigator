@@ -5,6 +5,7 @@ from typing import Dict, List, Any
 BASE = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'career-data'))
 
 class CareerData:
+    """Career data loader with support for both 'id' and 'career_id' fields - Enhanced version"""
     def __init__(self, base_path: str = BASE):
         self.base = base_path
         self.nodes: Dict[str, Dict[str, Any]] = {}
@@ -45,13 +46,25 @@ class CareerData:
                     continue
                 data = self._load_json(folder, fname)
                 # if file is an object
-                if isinstance(data, dict) and 'id' in data:
-                    self.nodes[data['id']] = data
+                if isinstance(data, dict):
+                    # Support both 'id' and 'career_id' fields for backwards compatibility
+                    node_id = data.get('id') or data.get('career_id')
+                    if node_id and folder == 'careers' and not node_id.startswith('career:'):
+                        # Add 'career:' prefix if missing
+                        node_id = f'career:{node_id}'
+                        data['id'] = node_id
+                    if node_id:
+                        self.nodes[node_id] = data
                 # if it's a list, add each
                 elif isinstance(data, list):
                     for item in data:
-                        if isinstance(item, dict) and 'id' in item:
-                            self.nodes[item['id']] = item
+                        if isinstance(item, dict):
+                            node_id = item.get('id') or item.get('career_id')
+                            if node_id and folder == 'careers' and not node_id.startswith('career:'):
+                                node_id = f'career:{node_id}'
+                                item['id'] = node_id
+                            if node_id:
+                                self.nodes[node_id] = item
 
         # load mappings/graph_edges.json
         try:

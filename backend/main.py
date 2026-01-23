@@ -14,6 +14,7 @@ from chatbot_nba import NBAEngine
 app = FastAPI(title='Career Path API')
 loader = CareerData()  # Create a fresh instance and load all data - Updated with complete career details
 nba_engine = NBAEngine(loader)  # Initialize NBA engine for next-best-action recommendations
+# Reload trigger: Software Engineer roadmap updated with detailed phases
 
 # Helpers
 def _norm_id(prefix: str, value: str) -> str:
@@ -122,13 +123,24 @@ def ai_explain(career: str = Query(...)):
         }
     
     skills_list = skills
+    
+    # Include additional career details
+    key_milestones = node.get('key_milestones', {})
+    tips_for_success = node.get('tips_for_success', [])
+    nba_attributes = attrs.get('nba_attributes', {})
 
     return {
         'career_id': career_id,
+        'display_name': node.get('display_name'),
+        'description': node.get('description'),
         'why': why,
         'what_to_study': what_to_study,
         'skills': skills_list,
         'roadmap': roadmap,
+        'key_milestones': key_milestones,
+        'tips_for_success': tips_for_success,
+        'nba_attributes': nba_attributes,
+        'attributes': attrs,
         'note': 'This explanation is generated from structured data and templates; it is not a human expert opinion.'
     }
 

@@ -459,7 +459,11 @@ export default function CareerDetail() {
             <CareerRoadmap
               careerId={careerId}
               careerName={careerName}
-              nbaAttributes={careerData.nba_attributes || {}}
+              nbaAttributes={careerData.nba_attributes || careerData.attributes?.nba_attributes || {}}
+              roadmapData={careerData.roadmap || career.roadmap}
+              careerAttributes={careerData.attributes}
+              keyMilestones={careerData.key_milestones || career.key_milestones}
+              tipsForSuccess={careerData.tips_for_success || career.tips_for_success}
             />
           </div>
         )}

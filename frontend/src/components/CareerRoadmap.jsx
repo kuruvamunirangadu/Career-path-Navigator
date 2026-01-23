@@ -1,86 +1,156 @@
 import React from 'react'
 
-export default function CareerRoadmap({ careerId, careerName, nbaAttributes }) {
-  // Create timeline based on career attributes
+export default function CareerRoadmap({ careerId, careerName, nbaAttributes, roadmapData, careerAttributes, keyMilestones, tipsForSuccess }) {
+  // Use actual roadmap data if available, otherwise generate from attributes
+  const hasCustomRoadmap = roadmapData && Object.keys(roadmapData).length > 0
+  
+  // Create timeline based on career attributes or use custom roadmap
   const phases = []
 
-  // Phase 1: Decision & Preparation
-  phases.push({
-    title: 'Decision & Preparation',
-    icon: '📚',
-    color: '#FFD460',
-    duration: '1-2 years',
-    actions: [
-      'Research career thoroughly',
-      'Assess your aptitude and interests',
-      nbaAttributes?.has_exam && 'Begin entrance exam preparation',
-      nbaAttributes?.is_skill_based && 'Start learning foundational skills'
-    ].filter(Boolean)
-  })
+  if (hasCustomRoadmap && (roadmapData.decision_preparation || roadmapData.career_entry || roadmapData.growth_specialization)) {
+    // Use detailed structured roadmap data from career object
+    if (roadmapData.decision_preparation) {
+      phases.push({
+        title: roadmapData.decision_preparation.title || 'Decision & Preparation',
+        icon: '📚',
+        color: '#FFD460',
+        duration: roadmapData.decision_preparation.duration || '1-2 years',
+        actions: roadmapData.decision_preparation.steps || ['Research career thoroughly']
+      })
+    }
+    
+    if (roadmapData.career_entry) {
+      phases.push({
+        title: roadmapData.career_entry.title || 'Career Entry',
+        icon: '🚀',
+        color: '#FF6B35',
+        duration: roadmapData.career_entry.duration || '3-5 years',
+        actions: roadmapData.career_entry.steps || ['Complete required education']
+      })
+    }
+    
+    if (roadmapData.growth_specialization) {
+      phases.push({
+        title: roadmapData.growth_specialization.title || 'Growth & Specialization',
+        icon: '📈',
+        color: '#6A4C93',
+        duration: roadmapData.growth_specialization.duration || '3-5 years',
+        actions: roadmapData.growth_specialization.steps || ['Develop expertise']
+      })
+    }
+  } else if (hasCustomRoadmap && (roadmapData.short_term || roadmapData.mid_term || roadmapData.long_term)) {
+    // Use simple roadmap format (short_term, mid_term, long_term)
+    if (roadmapData.short_term) {
+      phases.push({
+        title: 'Decision & Preparation',
+        icon: '📚',
+        color: '#FFD460',
+        duration: '1-2 years',
+        actions: (typeof roadmapData.short_term === 'string') ? [roadmapData.short_term] : roadmapData.short_term
+      })
+    }
+    
+    if (roadmapData.mid_term) {
+      phases.push({
+        title: 'Career Development',
+        icon: '🛠️',
+        color: '#4ECDC4',
+        duration: '2-5 years',
+        actions: (typeof roadmapData.mid_term === 'string') ? [roadmapData.mid_term] : roadmapData.mid_term
+      })
+    }
+    
+    if (roadmapData.long_term) {
+      phases.push({
+        title: 'Growth & Mastery',
+        icon: '📈',
+        color: '#6A4C93',
+        duration: '5+ years',
+        actions: (typeof roadmapData.long_term === 'string') ? [roadmapData.long_term] : roadmapData.long_term
+      })
+    }
+  }
 
-  // Phase 2: Entrance & Qualification
-  if (nbaAttributes?.has_exam || nbaAttributes?.has_degree) {
+  // If no custom roadmap or insufficient data, use generated phases
+  if (phases.length === 0) {
+    // Phase 1: Decision & Preparation
     phases.push({
-      title: 'Entrance & Qualification',
-      icon: '📝',
-      color: '#FF6B35',
-      duration: nbaAttributes?.has_degree ? '3-5 years' : '1-2 years',
+      title: 'Decision & Preparation',
+      icon: '📚',
+      color: '#FFD460',
+      duration: '1-2 years',
       actions: [
-        nbaAttributes?.has_exam && 'Take entrance examination',
-        nbaAttributes?.has_degree && 'Pursue degree program',
-        nbaAttributes?.has_diploma && 'Complete diploma program',
-        'Build foundational knowledge',
-        'Internship and practical experience'
+        'Research career thoroughly',
+        'Assess your aptitude and interests',
+        nbaAttributes?.has_exam && 'Begin entrance exam preparation',
+        nbaAttributes?.is_skill_based && 'Start learning foundational skills'
+      ].filter(Boolean)
+    })
+
+    // Phase 2: Entrance & Qualification
+    if (nbaAttributes?.has_exam || nbaAttributes?.has_degree) {
+      phases.push({
+        title: 'Entrance & Qualification',
+        icon: '📝',
+        color: '#FF6B35',
+        duration: nbaAttributes?.has_degree ? '3-5 years' : '1-2 years',
+        actions: [
+          nbaAttributes?.has_exam && 'Take entrance examination',
+          nbaAttributes?.has_degree && 'Pursue degree program',
+          nbaAttributes?.has_diploma && 'Complete diploma program',
+          'Build foundational knowledge',
+          'Internship and practical experience'
+        ].filter(Boolean)
+      })
+    }
+
+    // Phase 3: Skill Development
+    if (nbaAttributes?.is_skill_based || nbaAttributes?.has_degree) {
+      phases.push({
+        title: 'Skill Development',
+        icon: '🛠️',
+        color: '#4ECDC4',
+        duration: '1-3 years',
+        actions: [
+          'Develop technical skills',
+          'Obtain relevant certifications',
+          nbaAttributes?.is_skill_based && 'Build portfolio of projects',
+          'Gain hands-on experience',
+          'Network with professionals'
+        ].filter(Boolean)
+      })
+    }
+
+    // Phase 4: Entry & Career Start
+    phases.push({
+      title: 'Career Entry',
+      icon: '🚀',
+      color: '#00D9FF',
+      duration: 'Ongoing',
+      actions: [
+        'Secure first job/position',
+        'Adapt to professional environment',
+        nbaAttributes?.is_govt_service && 'Join government service',
+        nbaAttributes?.is_medical && 'Obtain medical license',
+        'Establish professional reputation'
+      ].filter(Boolean)
+    })
+
+    // Phase 5: Growth & Specialization
+    phases.push({
+      title: 'Growth & Specialization',
+      icon: '📈',
+      color: '#6A4C93',
+      duration: '3-5 years',
+      actions: [
+        'Pursue advanced certifications',
+        'Consider specialization/masters',
+        'Increase responsibility and leadership',
+        nbaAttributes?.is_govt_service && 'Climb government hierarchy',
+        'Develop expertise and thought leadership'
       ].filter(Boolean)
     })
   }
-
-  // Phase 3: Skill Development
-  if (nbaAttributes?.is_skill_based || nbaAttributes?.has_degree) {
-    phases.push({
-      title: 'Skill Development',
-      icon: '🛠️',
-      color: '#4ECDC4',
-      duration: '1-3 years',
-      actions: [
-        'Develop technical skills',
-        'Obtain relevant certifications',
-        nbaAttributes?.is_skill_based && 'Build portfolio of projects',
-        'Gain hands-on experience',
-        'Network with professionals'
-      ].filter(Boolean)
-    })
-  }
-
-  // Phase 4: Entry & Career Start
-  phases.push({
-    title: 'Career Entry',
-    icon: '🚀',
-    color: '#00D9FF',
-    duration: 'Ongoing',
-    actions: [
-      'Secure first job/position',
-      'Adapt to professional environment',
-      nbaAttributes?.is_govt_service && 'Join government service',
-      nbaAttributes?.is_medical && 'Obtain medical license',
-      'Establish professional reputation'
-    ].filter(Boolean)
-  })
-
-  // Phase 5: Growth & Specialization
-  phases.push({
-    title: 'Growth & Specialization',
-    icon: '📈',
-    color: '#6A4C93',
-    duration: '3-5 years',
-    actions: [
-      'Pursue advanced certifications',
-      'Consider specialization/masters',
-      'Increase responsibility and leadership',
-      nbaAttributes?.is_govt_service && 'Climb government hierarchy',
-      'Develop expertise and thought leadership'
-    ].filter(Boolean)
-  })
 
   return (
     <div style={{ animation: 'fadeIn 0.6s ease' }}>
@@ -247,6 +317,7 @@ export default function CareerRoadmap({ careerId, careerName, nbaAttributes }) {
             gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
             gap: '16px'
           }}>
+          {/* Short Term */}
           <div
             style={{
               background: 'rgba(255, 107, 53, 0.1)',
@@ -255,7 +326,7 @@ export default function CareerRoadmap({ careerId, careerName, nbaAttributes }) {
               padding: '16px'
             }}>
             <p style={{ margin: '0 0 8px 0', fontWeight: '600', color: '#FF6B35', fontSize: '0.9rem' }}>
-              SHORT TERM (0-2 years)
+              {keyMilestones?.short_term?.label || 'SHORT TERM (0-2 years)'}
             </p>
             <ul
               style={{
@@ -264,12 +335,21 @@ export default function CareerRoadmap({ careerId, careerName, nbaAttributes }) {
                 color: 'var(--text-secondary)',
                 fontSize: '0.9rem'
               }}>
-              {nbaAttributes?.has_exam && <li>Complete entrance exam preparation</li>}
-              {nbaAttributes?.is_skill_based && <li>Build foundational skills</li>}
-              <li>Research thoroughly and plan</li>
+              {keyMilestones?.short_term?.milestones ? (
+                keyMilestones.short_term.milestones.map((milestone, idx) => (
+                  <li key={idx}>{milestone}</li>
+                ))
+              ) : (
+                <>
+                  {nbaAttributes?.has_exam && <li>Complete entrance exam preparation</li>}
+                  {nbaAttributes?.is_skill_based && <li>Build foundational skills</li>}
+                  <li>Research thoroughly and plan</li>
+                </>
+              )}
             </ul>
           </div>
 
+          {/* Mid Term */}
           <div
             style={{
               background: 'rgba(78, 205, 196, 0.1)',
@@ -278,7 +358,7 @@ export default function CareerRoadmap({ careerId, careerName, nbaAttributes }) {
               padding: '16px'
             }}>
             <p style={{ margin: '0 0 8px 0', fontWeight: '600', color: '#4ECDC4', fontSize: '0.9rem' }}>
-              MID TERM (2-5 years)
+              {keyMilestones?.mid_term?.label || 'MID TERM (2-5 years)'}
             </p>
             <ul
               style={{
@@ -287,12 +367,21 @@ export default function CareerRoadmap({ careerId, careerName, nbaAttributes }) {
                 color: 'var(--text-secondary)',
                 fontSize: '0.9rem'
               }}>
-              {nbaAttributes?.has_degree && <li>Complete degree program</li>}
-              <li>Gain practical experience</li>
-              <li>Secure entry-level position</li>
+              {keyMilestones?.mid_term?.milestones ? (
+                keyMilestones.mid_term.milestones.map((milestone, idx) => (
+                  <li key={idx}>{milestone}</li>
+                ))
+              ) : (
+                <>
+                  {nbaAttributes?.has_degree && <li>Complete degree program</li>}
+                  <li>Gain practical experience</li>
+                  <li>Secure entry-level position</li>
+                </>
+              )}
             </ul>
           </div>
 
+          {/* Long Term */}
           <div
             style={{
               background: 'rgba(106, 76, 147, 0.1)',
@@ -301,7 +390,7 @@ export default function CareerRoadmap({ careerId, careerName, nbaAttributes }) {
               padding: '16px'
             }}>
             <p style={{ margin: '0 0 8px 0', fontWeight: '600', color: '#6A4C93', fontSize: '0.9rem' }}>
-              LONG TERM (5+ years)
+              {keyMilestones?.long_term?.label || 'LONG TERM (5+ years)'}
             </p>
             <ul
               style={{
@@ -310,9 +399,17 @@ export default function CareerRoadmap({ careerId, careerName, nbaAttributes }) {
                 color: 'var(--text-secondary)',
                 fontSize: '0.9rem'
               }}>
-              <li>Develop specialized expertise</li>
-              {nbaAttributes?.is_govt_service && <li>Progress in government hierarchy</li>}
-              <li>Establish thought leadership</li>
+              {keyMilestones?.long_term?.milestones ? (
+                keyMilestones.long_term.milestones.map((milestone, idx) => (
+                  <li key={idx}>{milestone}</li>
+                ))
+              ) : (
+                <>
+                  <li>Develop specialized expertise</li>
+                  {nbaAttributes?.is_govt_service && <li>Progress in government hierarchy</li>}
+                  <li>Establish thought leadership</li>
+                </>
+              )}
             </ul>
           </div>
         </div>
@@ -341,11 +438,19 @@ export default function CareerRoadmap({ careerId, careerName, nbaAttributes }) {
             color: 'var(--text-secondary)',
             fontSize: '0.9rem'
           }}>
-          <li>Stay committed and persistent through challenges</li>
-          <li>Network with people already in this field</li>
-          <li>Keep developing new skills continuously</li>
-          <li>Track your progress against these milestones</li>
-          <li>Adapt your plan as circumstances change</li>
+          {tipsForSuccess && tipsForSuccess.length > 0 ? (
+            tipsForSuccess.map((tip, idx) => (
+              <li key={idx}>{tip}</li>
+            ))
+          ) : (
+            <>
+              <li>Stay committed and persistent through challenges</li>
+              <li>Network with people already in this field</li>
+              <li>Keep developing new skills continuously</li>
+              <li>Track your progress against these milestones</li>
+              <li>Adapt your plan as circumstances change</li>
+            </>
+          )}
         </ul>
       </div>
     </div>
