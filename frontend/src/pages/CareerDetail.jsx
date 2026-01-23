@@ -21,29 +21,51 @@ export default function CareerDetail() {
     setError(null)
 
     // Fetch career details - try both with and without 'career:' prefix
-    const ids = [
-      careerId.includes(':') ? careerId : `career:${careerId}`,
-      careerId
-    ]
-
-    // Try to fetch explanation which includes career data
     const normalizedId = careerId.includes(':') ? careerId : `career:${careerId}`
     
-    fetch(`${API_BASE}/ai/explain?career=${encodeURIComponent(normalizedId)}`)
+    // Try multiple endpoints with timeout
+    const fetchWithTimeout = (url, timeout = 8000) => {
+      return Promise.race([
+        fetch(url),
+        new Promise((_, reject) =>
+          setTimeout(() => reject(new Error('Request timeout')), timeout)
+        )
+      ])
+    }
+    
+    // First try main API
+    fetchWithTimeout(`${API_BASE}/ai/explain?career=${encodeURIComponent(normalizedId)}`)
       .then(r => {
         if (!r.ok) throw new Error(`HTTP ${r.status}`)
         return r.json()
       })
       .then(data => {
         setCareer(data)
-        // Save to viewed careers and check if already viewed
         addViewedCareer(normalizedId)
         setIsViewed(isCareerViewed(normalizedId))
         setError(null)
       })
       .catch(err => {
-        console.error('Error fetching career:', err)
-        setError(`Failed to load career details: ${err.message}`)
+        console.error('Error fetching career from main API:', err)
+        console.log('Attempting fallback endpoint...')
+        
+        // Try fallback local endpoint
+        return fetch(`http://localhost:8000/ai/explain?career=${encodeURIComponent(normalizedId)}`)
+          .then(r => {
+            if (!r.ok) throw new Error(`Fallback HTTP ${r.status}`)
+            return r.json()
+          })
+          .then(data => {
+            setCareer(data)
+            addViewedCareer(normalizedId)
+            setIsViewed(isCareerViewed(normalizedId))
+            setError(null)
+          })
+          .catch(fallbackErr => {
+            console.error('Both endpoints failed:', fallbackErr)
+            setError(`Failed to load career details. Please check your connection and try again.`)
+            throw fallbackErr
+          })
       })
       .finally(() => setLoading(false))
   }, [careerId])

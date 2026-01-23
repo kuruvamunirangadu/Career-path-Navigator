@@ -25,6 +25,9 @@ origins = [
     # Production domains (Vercel)
     "https://career-path-navigator-sobk.vercel.app",
     "https://www.career-path-navigator-sobk.vercel.app",
+    
+    # Production Render backend (self-reference for direct API calls)
+    "https://career-navigator-backend-7el6.onrender.com",
 
     # Local development
     "http://localhost",
@@ -39,8 +42,8 @@ origins = [
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
-    # Allow all Vercel preview domains as well
-    allow_origin_regex=r"https://.*\\.vercel\\.app$",
+    # Allow all Vercel preview domains and Render deployment domains
+    allow_origin_regex=r"https://(.*\.vercel\.app|.*\.onrender\.com|.*\.herokuapp\.com|.*\d+\.\d+\.\d+\.\d+.*)",
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

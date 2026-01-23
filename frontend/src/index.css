@@ -1274,4 +1274,114 @@ button[class*="border-"]:focus {
   .developers-section {
     grid-template-columns: 1fr;
   }
+
+  /* Mobile: Header */
+  .header {
+    margin: 40px auto 40px;
+    padding: 0 16px;
+  }
+
+  .header h1 {
+    font-size: 2.5rem !important;
+  }
+
+  .header p {
+    font-size: 1rem !important;
+  }
+
+  /* Mobile: Page */
+  .page {
+    padding: 16px !important;
+  }
+
+  /* Mobile: Career Detail Tabs */
+  .career-tabs {
+    gap: 8px !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .career-tabs::-webkit-scrollbar {
+    display: none;
+  }
+
+  .career-tabs button {
+    padding: 10px 16px !important;
+    font-size: 0.85rem !important;
+    flex-shrink: 0;
+  }
+
+  /* Mobile: Roadmap Timeline */
+  .roadmap-timeline {
+    padding-left: 30px !important;
+    gap: 20px !important;
+  }
+
+  .roadmap-timeline::before {
+    left: 8px !important;
+  }
+
+  .timeline-dot {
+    left: -22px !important;
+    width: 20px !important;
+    height: 20px !important;
+    font-size: 0.7rem !important;
+    border-width: 2px !important;
+  }
+
+  /* Mobile: Milestones Grid */
+  .milestones-grid {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+  }
+
+  /* Mobile: Cards and Buttons */
+  .explain-card {
+    padding: 16px !important;
+    margin-bottom: 16px !important;
+  }
+
+  .explain-card h1 {
+    font-size: 1.75rem !important;
+  }
+
+  .explain-card h3 {
+    font-size: 1.1rem !important;
+  }
+
+  .explain-card p {
+    font-size: 0.9rem !important;
+  }
+
+  /* Mobile: Action Chips */
+  .action-grid {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+  }
+
+  /* Mobile: Chat Messages */
+  .chat-message {
+    max-width: 95% !important;
+    padding: 12px !important;
+    font-size: 0.9rem !important;
+  }
+
+  /* Mobile: Input */
+  .chat-input {
+    padding: 12px 50px 12px 16px !important;
+    font-size: 0.9rem !important;
+  }
+
+  /* Mobile: Skills/Attributes */
+  .explain-card > div > span {
+    font-size: 0.8rem !important;
+    padding: 6px 10px !important;
+  }
+
+  /* Mobile: Back Button */
+  button[style*="Back"] {
+    padding: 8px 12px !important;
+    font-size: 0.85rem !important;
+  }
 }
