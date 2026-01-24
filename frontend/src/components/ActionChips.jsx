@@ -176,6 +176,7 @@ export default function ActionChips({ careerId }) {
                       color={color}
                       careerId={careerId}
                       actionId={chip.id}
+                      delay={chipIdx * 0.05}
                       onNavigate={() => {
                         if (chip.id) {
                           // Navigate to action detail page using React Router
@@ -254,7 +255,7 @@ export default function ActionChips({ careerId }) {
 }
 
 // Individual action chip component
-function ActionChip({ chip, color, onNavigate }) {
+function ActionChip({ chip, color, onNavigate, delay = 0 }) {
   return (
     <button
       onClick={onNavigate}
@@ -271,18 +272,19 @@ function ActionChip({ chip, color, onNavigate }) {
         display: 'flex',
         alignItems: 'center',
         gap: '6px',
-        whiteSpace: 'nowrap'
+        whiteSpace: 'nowrap',
+        animation: `fadeInUp 0.5s ease-out ${delay}s backwards`
       }}
       onMouseEnter={(e) => {
         e.currentTarget.style.background = color
         e.currentTarget.style.color = 'var(--bg-darker)'
-        e.currentTarget.style.transform = 'translateY(-2px)'
-        e.currentTarget.style.boxShadow = `0 4px 12px ${color}40`
+        e.currentTarget.style.transform = 'translateY(-3px) scale(1.05)'
+        e.currentTarget.style.boxShadow = `0 6px 16px ${color}50`
       }}
       onMouseLeave={(e) => {
         e.currentTarget.style.background = 'var(--bg-darker)'
         e.currentTarget.style.color = 'var(--text-primary)'
-        e.currentTarget.style.transform = 'translateY(0)'
+        e.currentTarget.style.transform = 'translateY(0) scale(1)'
         e.currentTarget.style.boxShadow = 'none'
       }}
     >

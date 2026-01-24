@@ -147,6 +147,103 @@ body::after {
   50% { text-shadow: 0 0 20px rgba(0, 217, 255, 0.8); }
 }
 
+/* CTA & Button Animations */
+@keyframes buttonPulse {
+  0% { box-shadow: 0 0 0 0 rgba(0, 217, 255, 0.7); }
+  50% { box-shadow: 0 0 0 10px rgba(0, 217, 255, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(0, 217, 255, 0); }
+}
+
+@keyframes bounce-subtle {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes rotateIn {
+  from {
+    opacity: 0;
+    transform: rotate(-10deg) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: rotate(0) scale(1);
+  }
+}
+
+@keyframes shimmer {
+  0% { background-position: -1000px 0; }
+  100% { background-position: 1000px 0; }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    max-height: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    max-height: 500px;
+    transform: translateY(0);
+  }
+}
+
+/* Card reveal animations */
+@keyframes cardReveal {
+  0% {
+    opacity: 0;
+    transform: translateY(40px) rotateX(-10deg);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) rotateX(0);
+  }
+}
+
+@keyframes cardStagger {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 @keyframes pulse-border {
   0%, 100% { border-color: var(--border); box-shadow: 0 0 10px rgba(0, 217, 255, 0.2); }
   50% { border-color: var(--primary); box-shadow: 0 0 20px rgba(0, 217, 255, 0.4); }
@@ -190,7 +287,7 @@ body::after {
   background-clip: text;
   margin-bottom: 16px;
   letter-spacing: -1px;
-  animation: glow 3s ease-in-out infinite;
+  animation: glow 3s ease-in-out infinite, slideInDown 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .header p {
@@ -198,6 +295,7 @@ body::after {
   color: var(--text-secondary);
   margin-bottom: 32px;
   line-height: 1.8;
+  animation: fadeIn 1s ease-out 0.3s both;
 }
 
 /* Buttons */
@@ -221,11 +319,13 @@ body::after {
   font-family: 'Inter', sans-serif;
   min-height: 48px;
   white-space: nowrap;
+  animation: scaleIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .btn:hover:not(:disabled) {
   transform: translateY(-4px);
   box-shadow: 0 0 30px rgba(0, 217, 255, 0.6), 0 10px 30px rgba(0, 217, 255, 0.2);
+  animation: buttonPulse 2s infinite;
 }
 
 .btn:active:not(:disabled) {
@@ -260,6 +360,7 @@ body::after {
   padding: 0 20px;
   position: relative;
   z-index: 1;
+  animation: fadeIn 0.6s ease-out;
 }
 
 .page h2 {
@@ -296,6 +397,7 @@ body::after {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  animation: cardStagger 0.6s ease-out backwards;
 }
 
 .card::before, .card-variant::before {
@@ -1396,4 +1498,18 @@ button[class*="border-"]:focus {
     padding: 8px 12px !important;
     font-size: 0.85rem !important;
   }
+}
+
+/* Animation utility classes */
+.animate-in-view {
+  animation: fadeInUp 0.6s ease-out !important;
+}
+
+[data-scroll-animate] {
+  opacity: 0;
+  animation: none;
+}
+
+[data-scroll-animate].animate-in-view {
+  animation: cardStagger 0.6s ease-out forwards !important;
 }

@@ -11,7 +11,13 @@ import ActionDetail from './pages/ActionDetail'
 import VisualChart from './components/VisualChart'
 import CareerChatbot from './components/CareerChatbot'
 import Footer from './components/Footer'
+import { initScrollAnimations } from './utils/scrollAnimations'
 import './index.css'
+
+// Initialize scroll animations on mount
+window.addEventListener('load', () => {
+  initScrollAnimations()
+})
 
 createRoot(document.getElementById('root')).render(
   <React.StrictMode>
@@ -31,3 +37,4 @@ createRoot(document.getElementById('root')).render(
     </BrowserRouter>
   </React.StrictMode>
 )
+

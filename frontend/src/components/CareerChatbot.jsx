@@ -125,15 +125,18 @@ Or use our Onboarding Tool for personalized recommendations! ✓`
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          transition: 'transform 0.3s ease, box-shadow 0.3s ease'
+          transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+          animation: 'bounce-subtle 2s ease-in-out infinite'
         }}
         onMouseEnter={(e) => {
-          e.currentTarget.style.transform = 'scale(1.1)'
+          e.currentTarget.style.transform = 'scale(1.15)'
           e.currentTarget.style.boxShadow = '0 6px 20px rgba(0,0,0,0.4)'
+          e.currentTarget.style.animation = 'none'
         }}
         onMouseLeave={(e) => {
           e.currentTarget.style.transform = 'scale(1)'
           e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.3)'
+          e.currentTarget.style.animation = 'bounce-subtle 2s ease-in-out infinite'
         }}
       >
         {isOpen ? '✕' : '💬'}
