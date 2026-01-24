@@ -114,9 +114,15 @@ export default function Explore(){
       {viewChart && (
         <div className="split">
           <div className="split-left">
-            <p className="muted">💡 Interactive explorer — Click any node to inspect details</p>
+            <p className="muted">💡 Interactive explorer — Click any node to inspect details or navigate</p>
             <div style={{height: 700, marginTop: '12px'}}>
-              <VisualChart onSelect={(node)=> setSelectedNode(node)} />
+              <VisualChart 
+                onSelect={(node)=> setSelectedNode(node)}
+                onCareerClick={(node)=> {
+                  const careerId = node.id.replace('career:', '')
+                  nav(`/career/${careerId}`)
+                }}
+              />
             </div>
           </div>
           <div className="split-right">

@@ -14,7 +14,7 @@ function groupNodesByType(nodes){
   return groups
 }
 
-export default function VisualChart({onSelect}){
+export default function VisualChart({onSelect, onCareerClick}){
   const [graph, setGraph] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
@@ -141,8 +141,13 @@ export default function VisualChart({onSelect}){
 
         {/* nodes */}
         {Object.values(layout.positions).map((p)=> (
-          <g key={p.node.id} transform={`translate(${p.x},${p.y})`} style={{cursor:'pointer'}} onClick={()=>onSelect && onSelect(p.node)}>
-            <rect x={0} y={0} width={160} height={40} rx={10} fill={getNodeGradient(p.node.type)} stroke={getNodeColor(p.node.type)} strokeWidth="2" filter="url(#glow)" opacity="0.8" style={{transition:'all 0.3s ease'}} />
+          <g key={p.node.id} transform={`translate(${p.x},${p.y})`} style={{cursor:'pointer'}} onClick={()=>{
+            onSelect && onSelect(p.node)
+            if(p.node.type === 'career' && onCareerClick) {
+              onCareerClick(p.node)
+            }
+          }}>
+            <rect x={0} y={0} width={160} height={40} rx={10} fill={getNodeGradient(p.node.type)} stroke={getNodeColor(p.node.type)} strokeWidth="2" filter="url(#glow)" opacity="0.8" style={{transition:'all 0.3s ease', cursor: p.node.type === 'career' ? 'pointer' : 'default'}} />
             <text x={12} y={24} fontSize={12} fill="#ffffff" fontWeight="600" style={{pointerEvents:'none'}}>{p.node.display_name}</text>
             <rect x={0} y={0} width={160} height={40} rx={10} fill="none" stroke={getNodeColor(p.node.type)} strokeWidth="2" opacity="0" style={{animation:'pulse-border 2s ease-in-out infinite'}} />
           </g>
