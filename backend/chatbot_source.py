@@ -18,9 +18,8 @@ class AnswerSource:
     """
     
     def __init__(self, loader=None):
-        # Loader parameter kept for backward compatibility but not used
-        # Now uses versioned data directly
-        pass
+        # Keep a loader reference for stream lookups; fallback to None-safe usage
+        self.loader = loader
     
     def fetch_career_data(self, career_id: str) -> Optional[Dict]:
         """
@@ -50,7 +49,24 @@ class AnswerSource:
         """
         Fetch stream data for a class level
         """
+        if not self.loader:
+            return []
         return self.loader.get_streams_for_class(class_level)
+
+    def get_exam_info(self, exam_id: str) -> Dict:
+        """Return basic exam information from versioned data."""
+        exam = load_exam(exam_id) or load_exam(f'exam:{exam_id}')
+        if not exam:
+            return {'available': False}
+
+        return {
+            'available': True,
+            'exam_id': exam.get('id', exam_id),
+            'exam_name': exam.get('display_name', exam_id.upper()),
+            'requires': exam.get('requires', []),
+            'leads_to': exam.get('leads_to', []),
+            'metadata': exam.get('metadata', {})
+        }
     
     def fetch_exam_data(self, exam_name: str) -> Optional[Dict]:
         """

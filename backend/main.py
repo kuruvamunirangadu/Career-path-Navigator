@@ -355,6 +355,9 @@ def chatbot_ask(req: ChatbotRequest):
     elif intent == 'stream_guidance':
         class_level = entities.get('class_level', '10')
         fetched_data = answer_source.get_stream_guidance(class_level)
+
+    elif intent == 'exam_info' and entities.get('exam'):
+        fetched_data = answer_source.get_exam_info(entities['exam'])
     
     elif intent == 'career_overview' and entities.get('career'):
         fetched_data = answer_source.get_career_steps(entities['career'])
@@ -388,6 +391,8 @@ def chatbot_ask(req: ChatbotRequest):
             formatted = ResponseFormatter.format_roadmap(fetched_data, decision['allow_gpt_explain'])
         elif intent == 'stream_guidance':
             formatted = ResponseFormatter.format_stream_guidance(fetched_data)
+        elif intent == 'exam_info':
+            formatted = ResponseFormatter.format_exam_info(fetched_data)
         else:
             formatted = ResponseFormatter.format_fallback()
     

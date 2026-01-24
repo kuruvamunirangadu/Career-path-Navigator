@@ -110,7 +110,7 @@ def classify_intent(query: str) -> Dict[str, any]:
         }
     
     # Exam information
-    if any(word in q for word in ['exam', 'neet', 'jee', 'entrance', 'test', 'competitive']):
+    if any(word in q for word in ['exam', 'neet', 'jee', 'entrance', 'test', 'competitive', 'cet', 'mset', 'mhcet', 'mhtcet']):
         return {
             'intent': 'exam_info',
             'entities': entities,
@@ -131,6 +131,14 @@ def classify_intent(query: str) -> Dict[str, any]:
             'intent': 'career_overview',
             'entities': entities,
             'confidence': 0.8
+        }
+
+    # If a specific career is mentioned but no action words, treat as overview
+    if entities.get('career'):
+        return {
+            'intent': 'career_overview',
+            'entities': entities,
+            'confidence': 0.75
         }
     
     # Comparison
@@ -222,7 +230,7 @@ def extract_entities(query: str) -> Dict[str, any]:
         entities['class_level'] = '12'
     
     # Exam detection
-    exams = ['neet', 'jee', 'ca foundation', 'ca intermediate', 'upsc', 'ssc']
+    exams = ['neet', 'jee', 'ca foundation', 'ca intermediate', 'upsc', 'ssc', 'cet', 'mset', 'mhcet', 'mhtcet']
     for exam in exams:
         if exam in query:
             entities['exam'] = exam

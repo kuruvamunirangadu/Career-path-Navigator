@@ -219,6 +219,27 @@ class ResponseFormatter:
             'what_to_study': streams_text,
             'answer': f"{why}\n\n{streams_text}\n\nUse our onboarding tool to find the best stream for your interests!"
         }
+
+    @staticmethod
+    def format_exam_info(data: Dict) -> Dict:
+        """Format basic exam information."""
+        if not data.get('available'):
+            return {
+                'type': 'error',
+                'answer': "I don't have verified details for that exam yet. Try asking about another exam or a career."
+            }
+
+        requires = ', '.join(data.get('requires', [])) or 'Not specified'
+        leads_to = ', '.join(data.get('leads_to', [])) or 'Not specified'
+
+        answer = [f"📝 **Exam: {data.get('exam_name', 'Exam')}**"]
+        answer.append(f"• Requires: {requires}")
+        answer.append(f"• Leads to: {leads_to}")
+        return {
+            'type': 'exam_info',
+            'exam_name': data.get('exam_name'),
+            'answer': "\n".join(answer)
+        }
     
     @staticmethod
     def format_fallback() -> Dict:
