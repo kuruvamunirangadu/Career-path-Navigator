@@ -178,8 +178,8 @@ export default function ActionChips({ careerId }) {
                       actionId={chip.id}
                       onNavigate={() => {
                         if (chip.id) {
-                          // Navigate to action detail page
-                          window.location.href = `/action/${chip.id}?career=${careerId}`
+                          // Navigate to action detail page using React Router
+                          nav(`/action/${chip.id}`)
                         }
                       }}
                     />

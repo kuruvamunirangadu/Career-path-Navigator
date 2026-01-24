@@ -428,7 +428,7 @@ const ACTION_METADATA = {
 }
 
 export default function ActionDetail() {
-  const { actionId, careerId } = useParams()
+  const { actionId } = useParams()
   const nav = useNavigate()
   const [metadata, setMetadata] = useState(null)
   const [loading, setLoading] = useState(true)
@@ -634,7 +634,7 @@ export default function ActionDetail() {
         <div
           style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))',
             gap: '12px',
             animation: 'fadeIn 0.8s ease'
           }}>
@@ -757,7 +757,7 @@ export default function ActionDetail() {
           <div
             style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))',
+              gridTemplateColumns: 'repeat(auto-fill, minmax(160px, 1fr))',
               gap: '12px'
             }}>
             {metadata.resources.map((resource, idx) => {

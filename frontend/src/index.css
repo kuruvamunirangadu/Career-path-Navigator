@@ -1015,6 +1015,18 @@ button[class*="border-"]:focus {
     width: 100%;
     text-align: center;
   }
+
+  /* Mobile: Button sizing */
+  .btn {
+    padding: 12px 24px;
+    font-size: 1rem;
+    min-height: 44px;
+  }
+
+  /* Mobile: Page container */
+  .page {
+    margin: 20px auto;
+  }
 }
 
 /* Chatbot Animations */
