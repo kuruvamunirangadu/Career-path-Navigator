@@ -23,6 +23,96 @@ const STEPS = [
   { num: 4, label: 'Results', icon: '🎯', helper: 'Review matched paths' }
 ]
 
+const BotHero = ({ step, interestsCount }) => (
+  <div className="bot-hero" aria-hidden>
+    <div className="bot-hero-blob" />
+    <svg
+      className="bot-hero-svg"
+      viewBox="0 0 260 260"
+      role="presentation"
+    >
+      <circle className="bot-halo" cx="130" cy="125" r="92" />
+      <rect className="bot-body" x="78" y="110" width="104" height="90" rx="18" />
+      <rect className="bot-screen" x="90" y="122" width="80" height="48" rx="10" />
+      <path className="bot-face" d="M112 148 q8 10 16 0 q8 10 16 0" />
+      <rect className="bot-neck" x="118" y="196" width="24" height="16" rx="6" />
+      <rect className="bot-base" x="100" y="210" width="60" height="18" rx="10" />
+      <rect className="bot-ear left" x="70" y="134" width="12" height="32" rx="6" />
+      <rect className="bot-ear right" x="178" y="134" width="12" height="32" rx="6" />
+      <circle className="bot-light" cx="136" cy="136" r="6" />
+      <path className="bot-arm left" d="M78 150 q-18 18 -10 36" />
+      <path className="bot-arm right" d="M182 150 q18 18 10 36" />
+      <circle className="bot-node" cx="62" cy="186" r="6" />
+      <circle className="bot-node" cx="198" cy="186" r="6" />
+    </svg>
+    <div className="bot-bubble bubble-main">
+      <span>Hi there! 👋</span>
+      <div className="bubble-dot" />
+      <div className="bubble-dot" />
+      <div className="bubble-dot" />
+    </div>
+    <div className="bot-bubble bubble-progress">{step}/4 steps</div>
+    <div className="bot-bubble bubble-pill">{interestsCount} interests set</div>
+  </div>
+)
+
+const CareerDecisionHero = () => (
+  <div className="career-decision-card">
+    <div className="cd-window">
+      <div className="cd-blind" />
+      <div className="cd-blind" />
+      <div className="cd-wall" />
+    </div>
+    <div className="cd-person">
+      <div className="cd-head" />
+      <div className="cd-body" />
+      <div className="cd-arm" />
+      <div className="cd-bag" />
+    </div>
+    <div className="cd-desk">
+      <div className="cd-monitor" />
+      <div className="cd-chair" />
+      <div className="cd-box-stack" />
+    </div>
+    <div className="cd-label">Career decision moment</div>
+  </div>
+)
+
+const DataAnalysisHero = () => (
+  <div className="data-hero-card">
+    <div className="data-dash">
+      <div className="data-tab">DATA</div>
+      <div className="data-tile tall" />
+      <div className="data-tile" />
+      <div className="data-tile small" />
+      <div className="data-chart" />
+      <div className="data-gear" />
+    </div>
+    <div className="data-plant" />
+    <div className="data-person" />
+    <div className="data-loop" />
+    <div className="data-label">Data analysis in action</div>
+  </div>
+)
+
+const CareerDecisionsHero = () => (
+  <div className="career-choices-card">
+    <div className="cc-ring" />
+    <div className="cc-path-arrow" />
+    <div className="cc-signpost">
+      <div className="cc-sign top" />
+      <div className="cc-sign mid" />
+      <div className="cc-sign bottom" />
+      <div className="cc-post" />
+    </div>
+    <div className="cc-chess" />
+    <div className="cc-coins" />
+    <div className="cc-briefcase" />
+    <div className="cc-question" />
+    <div className="cc-label">Career decisions</div>
+  </div>
+)
+
 export default function Onboarding(){
   const nav = useNavigate()
   const [step, setStep] = useState(1)
@@ -242,16 +332,22 @@ export default function Onboarding(){
             </button>
           </div>
         </div>
-        <div className="hero-stats glass-panel">
-          <p className="muted">Progress</p>
-          <div className="hero-progress">
-            <span className="hero-step">{step}</span>
-            <span className="muted">of 4 steps</span>
+        <div className="hero-visual">
+          <BotHero step={step} interestsCount={interests.length} />
+          <div className="hero-stats glass-panel">
+            <p className="muted">Progress</p>
+            <div className="hero-progress">
+              <span className="hero-step">{step}</span>
+              <span className="muted">of 4 steps</span>
+            </div>
+            <div className="chip-row">
+              <span className="tag">Board: {board}</span>
+              <span className="tag">{interests.length} interests</span>
+            </div>
           </div>
-          <div className="chip-row">
-            <span className="tag">Board: {board}</span>
-            <span className="tag">{interests.length} interests</span>
-          </div>
+          <CareerDecisionHero />
+          <DataAnalysisHero />
+          <CareerDecisionsHero />
         </div>
       </div>
 
