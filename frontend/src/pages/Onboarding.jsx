@@ -23,7 +23,7 @@ const STEPS = [
   { num: 4, label: 'Results', icon: '🎯', helper: 'Review matched paths' }
 ]
 
-const BotHero = ({ step, interestsCount }) => (
+export const BotHero = ({ step, interestsCount, message = "Hi there! 👋", stepLabel = "steps" }) => (
   <div className="bot-hero" aria-hidden>
     <div className="bot-hero-blob" />
     <svg
@@ -46,13 +46,13 @@ const BotHero = ({ step, interestsCount }) => (
       <circle className="bot-node" cx="198" cy="186" r="6" />
     </svg>
     <div className="bot-bubble bubble-main">
-      <span>Hi there! 👋</span>
+      <span>{message}</span>
       <div className="bubble-dot" />
       <div className="bubble-dot" />
       <div className="bubble-dot" />
     </div>
-    <div className="bot-bubble bubble-progress">{step}/4 steps</div>
-    <div className="bot-bubble bubble-pill">{interestsCount} interests set</div>
+    {step && <div className="bot-bubble bubble-progress">{step}/4 {stepLabel}</div>}
+    {interestsCount !== undefined && <div className="bot-bubble bubble-pill">{interestsCount} interests set</div>}
   </div>
 )
 

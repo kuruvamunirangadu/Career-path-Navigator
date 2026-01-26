@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import ActionChips from '../components/ActionChips'
 import CareerRoadmap from '../components/CareerRoadmap'
-import { addViewedCareer, isCareerViewed } from '../utils/userProgress'
+import { addViewedCareer, isCareerViewed, getUserProgress } from '../utils/userProgress'
 import { API_BASE } from '../utils/apiConfig'
+import { BotHero } from './Onboarding'
 
 export default function CareerDetail() {
   const { careerId } = useParams()
@@ -13,6 +14,7 @@ export default function CareerDetail() {
   const [error, setError] = useState(null)
   const [activeTab, setActiveTab] = useState('overview')
   const [isViewed, setIsViewed] = useState(false)
+  const [userProgress] = useState(getUserProgress())
 
   useEffect(() => {
     if (!careerId) return
@@ -174,6 +176,14 @@ export default function CareerDetail() {
 
   return (
     <div className="page">
+      {/* Bot Hero - User Progress */}
+      <div style={{ marginBottom: '24px', animation: 'fadeInDown 0.5s ease' }}>
+        <BotHero 
+          message="Exploring careers! 🚀"
+          interestsCount={userProgress.interests?.length || 0}
+        />
+      </div>
+
       {/* Navigation */}
       <div
         style={{

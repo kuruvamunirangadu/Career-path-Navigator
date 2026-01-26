@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
+import { getUserProgress } from '../utils/userProgress'
 import { API_BASE } from '../utils/apiConfig'
+import { BotHero } from './Onboarding'
 
 // Map action IDs to detailed metadata
 const ACTION_METADATA = {
@@ -432,6 +434,7 @@ export default function ActionDetail() {
   const nav = useNavigate()
   const [metadata, setMetadata] = useState(null)
   const [loading, setLoading] = useState(true)
+  const [userProgress] = useState(getUserProgress())
 
   useEffect(() => {
     if (!actionId) return
@@ -529,6 +532,14 @@ export default function ActionDetail() {
 
   return (
     <div className="page">
+      {/* Bot Hero - Action Progress */}
+      <div style={{ marginBottom: '24px', animation: 'fadeInDown 0.5s ease' }}>
+        <BotHero 
+          message="Taking action! ✅"
+          interestsCount={userProgress.interests?.length || 0}
+        />
+      </div>
+
       {/* Navigation */}
       <div
         style={{
