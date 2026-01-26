@@ -532,10 +532,19 @@ export default function ActionDetail() {
 
   return (
     <div className="page">
-      {/* Bot Hero - Action Progress */}
-      <div style={{ marginBottom: '24px', animation: 'fadeInDown 0.5s ease' }}>
+      {/* Bot Hero - Action Progress - Compact Corner */}
+      <div style={{ 
+        position: 'fixed',
+        top: '80px',
+        right: '20px',
+        zIndex: 100,
+        transform: 'scale(0.35)',
+        transformOrigin: 'top right',
+        animation: 'fadeIn 0.5s ease',
+        pointerEvents: 'none'
+      }}>
         <BotHero 
-          message="Taking action! ✅"
+          message="Action! ✅"
           interestsCount={userProgress.interests?.length || 0}
         />
       </div>

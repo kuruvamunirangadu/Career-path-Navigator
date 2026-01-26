@@ -176,10 +176,19 @@ export default function CareerDetail() {
 
   return (
     <div className="page">
-      {/* Bot Hero - User Progress */}
-      <div style={{ marginBottom: '24px', animation: 'fadeInDown 0.5s ease' }}>
+      {/* Bot Hero - User Progress - Compact Corner */}
+      <div style={{ 
+        position: 'fixed',
+        top: '80px',
+        right: '20px',
+        zIndex: 100,
+        transform: 'scale(0.35)',
+        transformOrigin: 'top right',
+        animation: 'fadeIn 0.5s ease',
+        pointerEvents: 'none'
+      }}>
         <BotHero 
-          message="Exploring careers! 🚀"
+          message="Exploring! 🚀"
           interestsCount={userProgress.interests?.length || 0}
         />
       </div>
