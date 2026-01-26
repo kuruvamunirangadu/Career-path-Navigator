@@ -1045,6 +1045,66 @@ button[class*="border-"]:focus {
   50% { transform: translateY(-8px); }
 }
 
+@keyframes windowShimmer {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+
+@keyframes personWalk {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(4px); }
+}
+
+@keyframes monitorGlow {
+  0%, 100% { box-shadow: 0 0 0 rgba(0, 217, 255, 0); }
+  50% { box-shadow: 0 0 15px rgba(0, 217, 255, 0.5); }
+}
+
+@keyframes tileGrow {
+  0%, 100% { transform: scaleY(1); }
+  50% { transform: scaleY(1.15); }
+}
+
+@keyframes gearSpin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes chartFlow {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+
+@keyframes signSwing {
+  0%, 100% { transform: translateX(-30px) rotate(-6deg); }
+  50% { transform: translateX(-30px) rotate(-10deg); }
+}
+
+@keyframes signSwingMid {
+  0%, 100% { transform: translateX(28px) rotate(4deg); }
+  50% { transform: translateX(28px) rotate(8deg); }
+}
+
+@keyframes signSwingBottom {
+  0%, 100% { transform: translateX(-24px) rotate(-4deg); }
+  50% { transform: translateX(-24px) rotate(-8deg); }
+}
+
+@keyframes ringPulse {
+  0%, 100% { transform: scale(1); opacity: 0.35; }
+  50% { transform: scale(1.05); opacity: 0.55; }
+}
+
+@keyframes arrowRotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes questionBounce {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
 .career-decision-card {
   position: relative;
   padding: 12px;
@@ -1073,7 +1133,11 @@ button[class*="border-"]:focus {
   border: 1px solid rgba(22, 228, 105, 0.6);
   border-radius: 10px;
   box-shadow: inset 0 0 12px rgba(0, 0, 0, 0.12);
+  animation: windowShimmer 3s ease-in-out infinite;
 }
+
+.cd-blind:nth-child(1) { animation-delay: 0s; }
+.cd-blind:nth-child(2) { animation-delay: 1.5s; }
 
 .cd-wall {
   grid-column: 1 / -1;
@@ -1090,7 +1154,7 @@ button[class*="border-"]:focus {
   display: grid;
   gap: 4px;
   justify-items: center;
-  animation: heroFloat 5.5s ease-in-out infinite;
+  animation: heroFloat 5.5s ease-in-out infinite, personWalk 2s ease-in-out infinite;
 }
 
 .cd-head {
@@ -1143,6 +1207,7 @@ button[class*="border-"]:focus {
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.35), rgba(210, 214, 219, 0.65));
   border-radius: 6px;
   margin: 8px auto 0;
+  animation: monitorGlow 2s ease-in-out infinite;
 }
 
 .cd-chair {
@@ -1212,7 +1277,12 @@ button[class*="border-"]:focus {
   border-radius: 8px;
   background: rgba(233, 213, 255, 0.28);
   border: 1px solid rgba(139, 92, 246, 0.35);
+  animation: tileGrow 3s ease-in-out infinite;
 }
+
+.data-tile:nth-child(2) { animation-delay: 0s; }
+.data-tile:nth-child(3) { animation-delay: 1s; }
+.data-tile:nth-child(4) { animation-delay: 2s; }
 
 .data-tile.tall { height: 64px; grid-row: span 2; }
 .data-tile.small { height: 20px; }
@@ -1221,9 +1291,11 @@ button[class*="border-"]:focus {
   grid-column: span 2;
   height: 40px;
   border-radius: 10px;
-  background: linear-gradient(135deg, rgba(56, 189, 248, 0.4), rgba(139, 92, 246, 0.4));
+  background: linear-gradient(90deg, rgba(56, 189, 248, 0.4), rgba(139, 92, 246, 0.4), rgba(56, 189, 248, 0.4));
+  background-size: 200% 100%;
   position: relative;
   overflow: hidden;
+  animation: chartFlow 3s linear infinite;
 }
 
 .data-chart::after {
@@ -1245,7 +1317,7 @@ button[class*="border-"]:focus {
   border: 2px solid rgba(233, 213, 255, 0.6);
   justify-self: center;
   align-self: center;
-  animation: spin 8s linear infinite;
+  animation: gearSpin 6s linear infinite;
 }
 
 .data-plant {
@@ -1313,6 +1385,7 @@ button[class*="border-"]:focus {
   border-radius: 50%;
   background: radial-gradient(circle, rgba(156, 163, 175, 0.35) 0%, rgba(156, 163, 175, 0.12) 60%, transparent 70%);
   filter: blur(0.4px);
+  animation: ringPulse 3s ease-in-out infinite;
 }
 
 .cc-path-arrow {
@@ -1321,6 +1394,7 @@ button[class*="border-"]:focus {
   border-radius: 50%;
   border: 2px dashed rgba(156, 163, 175, 0.6);
   clip-path: ellipse(70% 55% at 50% 50%);
+  animation: arrowRotate 20s linear infinite;
 }
 
 .cc-signpost {
@@ -1350,9 +1424,9 @@ button[class*="border-"]:focus {
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.16);
 }
 
-.cc-sign.top { transform: translateX(-30px) rotate(-6deg); }
-.cc-sign.mid { transform: translateX(28px) rotate(4deg); }
-.cc-sign.bottom { transform: translateX(-24px) rotate(-4deg); }
+.cc-sign.top { animation: signSwing 4s ease-in-out infinite; }
+.cc-sign.mid { animation: signSwingMid 4s ease-in-out infinite; }
+.cc-sign.bottom { animation: signSwingBottom 4s ease-in-out infinite; }
 
 .cc-chess {
   position: absolute;
@@ -1398,6 +1472,7 @@ button[class*="border-"]:focus {
   border-radius: 10px;
   background: rgba(139, 92, 246, 0.9);
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.22);
+  animation: questionBounce 2s ease-in-out infinite;
 }
 
 .cc-label {
