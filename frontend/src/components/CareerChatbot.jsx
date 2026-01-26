@@ -159,7 +159,7 @@ Or use our Onboarding Tool for personalized recommendations! ✓`
             display: 'flex',
             flexDirection: 'column',
             overflow: 'hidden',
-            animation: 'slideInUp 0.3s ease',
+            animation: 'chatbotEntrance 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), chatbotPulse 2s ease-in-out infinite',
             border: '1px solid rgba(255,255,255,0.1)'
           }}
         >
@@ -176,7 +176,10 @@ Or use our Onboarding Tool for personalized recommendations! ✓`
               gap: '10px'
             }}
           >
-            <span>💼</span>
+            <span style={{ 
+              display: 'inline-block',
+              animation: 'robotWave 1s ease-in-out 3'
+            }}>🤖</span>
             Career Assistant
           </div>
 
@@ -209,7 +212,7 @@ Or use our Onboarding Tool for personalized recommendations! ✓`
                   fontSize: '14px',
                   lineHeight: '1.5',
                   wordWrap: 'break-word',
-                  animation: 'fadeIn 0.3s ease',
+                  animation: `messageSlideIn 0.4s ease ${idx * 0.05}s backwards`,
                   whiteSpace: 'pre-wrap'
                 }}
               >

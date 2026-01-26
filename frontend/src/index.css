@@ -160,6 +160,47 @@ body::after {
   50% { transform: translateY(-8px); }
 }
 
+@keyframes chatbotEntrance {
+  0% {
+    opacity: 0;
+    transform: translateY(40px) scale(0.8);
+  }
+  60% {
+    opacity: 1;
+    transform: translateY(-10px) scale(1.05);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes chatbotPulse {
+  0%, 100% {
+    box-shadow: 0 8px 32px rgba(0,0,0,0.5), 0 0 0 0 rgba(0, 217, 255, 0.7);
+  }
+  50% {
+    box-shadow: 0 8px 32px rgba(0,0,0,0.5), 0 0 20px 10px rgba(0, 217, 255, 0);
+  }
+}
+
+@keyframes robotWave {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(14deg); }
+  75% { transform: rotate(-14deg); }
+}
+
+@keyframes messageSlideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
 @keyframes slideInLeft {
   from {
     opacity: 0;
