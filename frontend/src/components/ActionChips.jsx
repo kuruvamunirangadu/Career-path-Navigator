@@ -254,318 +254,43 @@ export default function ActionChips({ careerId }) {
   )
 }
 
-// Individual action chip component with image gallery modal
+// Individual action chip component - Direct navigation to action detail
 function ActionChip({ chip, color, onNavigate, delay = 0 }) {
-  const [showImageModal, setShowImageModal] = useState(false)
-  const [selectedImageIndex, setSelectedImageIndex] = useState(0)
-
-  // Mock images for demonstration - in production, fetch from API
-  const chipImages = [
-    { title: 'Guide 1', url: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300"%3E%3Crect fill="%2300D9FF" width="400" height="300"/%3E%3Ctext x="50%25" y="50%25" font-size="24" fill="white" text-anchor="middle" dominant-baseline="middle"%3EGuide 1%3C/text%3E%3C/svg%3E' },
-    { title: 'Guide 2', url: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300"%3E%3Crect fill="%23FF6B35" width="400" height="300"/%3E%3Ctext x="50%25" y="50%25" font-size="24" fill="white" text-anchor="middle" dominant-baseline="middle"%3EGuide 2%3C/text%3E%3C/svg%3E' },
-    { title: 'Guide 3', url: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300"%3E%3Crect fill="%234ECDC4" width="400" height="300"/%3E%3Ctext x="50%25" y="50%25" font-size="24" fill="white" text-anchor="middle" dominant-baseline="middle"%3EGuide 3%3C/text%3E%3C/svg%3E' },
-    { title: 'Guide 4', url: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300"%3E%3Crect fill="%23FFD460" width="400" height="300"/%3E%3Ctext x="50%25" y="50%25" font-size="24" fill="white" text-anchor="middle" dominant-baseline="middle"%3EGuide 4%3C/text%3E%3C/svg%3E' }
-  ]
-
-  const handleNextImage = () => {
-    setSelectedImageIndex((prev) => (prev + 1) % chipImages.length)
-  }
-
-  const handlePrevImage = () => {
-    setSelectedImageIndex((prev) => (prev - 1 + chipImages.length) % chipImages.length)
-  }
-
   return (
-    <>
-      <button
-        onClick={() => setShowImageModal(true)}
-        style={{
-          background: 'var(--bg-darker)',
-          border: `1.5px solid ${color}`,
-          color: 'var(--text-primary)',
-          padding: '8px 14px',
-          borderRadius: '20px',
-          cursor: 'pointer',
-          fontSize: '0.9rem',
-          fontWeight: '500',
-          transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-          display: 'flex',
-          alignItems: 'center',
-          gap: '6px',
-          whiteSpace: 'nowrap',
-          animation: `fadeInUp 0.5s ease-out ${delay}s backwards`
-        }}
-        onMouseEnter={(e) => {
-          e.currentTarget.style.background = color
-          e.currentTarget.style.color = 'var(--bg-darker)'
-          e.currentTarget.style.transform = 'translateY(-3px) scale(1.05)'
-          e.currentTarget.style.boxShadow = `0 6px 16px ${color}50`
-        }}
-        onMouseLeave={(e) => {
-          e.currentTarget.style.background = 'var(--bg-darker)'
-          e.currentTarget.style.color = 'var(--text-primary)'
-          e.currentTarget.style.transform = 'translateY(0) scale(1)'
-          e.currentTarget.style.boxShadow = 'none'
-        }}
-      >
-        <span style={{ fontSize: '1.1em' }}>{chip.icon || '→'}</span>
-        <span>{chip.title || chip.name || 'Action'}</span>
-        <span style={{ marginLeft: '2px' }}>→</span>
-      </button>
-
-      {/* Image Gallery Modal */}
-      {showImageModal && (
-        <div
-          style={{
-            position: 'fixed',
-            inset: 0,
-            background: 'rgba(0, 0, 0, 0.8)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            zIndex: 1000,
-            animation: 'fadeIn 0.3s ease'
-          }}
-          onClick={() => setShowImageModal(false)}
-        >
-          <div
-            style={{
-              background: 'var(--bg-darker)',
-              borderRadius: '16px',
-              padding: '24px',
-              maxWidth: '600px',
-              width: '90%',
-              maxHeight: '80vh',
-              overflow: 'auto',
-              animation: 'slideInUp 0.3s ease',
-              border: `2px solid ${color}`,
-              boxShadow: `0 20px 60px rgba(0, 0, 0, 0.3), 0 0 40px ${color}40`
-            }}
-            onClick={(e) => e.stopPropagation()}
-          >
-            {/* Header */}
-            <div
-              style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                marginBottom: '16px',
-                paddingBottom: '12px',
-                borderBottom: `1px solid ${color}40`
-              }}
-            >
-              <h3 style={{ color: color, margin: 0, fontSize: '1.25rem' }}>
-                {chip.title || 'Action Guides'}
-              </h3>
-              <button
-                onClick={() => setShowImageModal(false)}
-                style={{
-                  background: 'transparent',
-                  border: 'none',
-                  fontSize: '1.5rem',
-                  cursor: 'pointer',
-                  color: 'var(--text-secondary)',
-                  padding: '4px 8px',
-                  transition: 'all 0.2s ease'
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.color = color
-                  e.currentTarget.style.transform = 'scale(1.2) rotate(90deg)'
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.color = 'var(--text-secondary)'
-                  e.currentTarget.style.transform = 'scale(1) rotate(0deg)'
-                }}
-              >
-                ✕
-              </button>
-            </div>
-
-            {/* Image Display */}
-            <div
-              style={{
-                background: `${color}10`,
-                borderRadius: '12px',
-                padding: '16px',
-                marginBottom: '16px',
-                minHeight: '300px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                animation: 'imageSwap 0.4s ease'
-              }}
-            >
-              <img
-                src={chipImages[selectedImageIndex].url}
-                alt={chipImages[selectedImageIndex].title}
-                style={{
-                  maxWidth: '100%',
-                  maxHeight: '300px',
-                  borderRadius: '8px',
-                  animation: 'fadeIn 0.3s ease'
-                }}
-              />
-            </div>
-
-            {/* Image Counter and Navigation */}
-            <div
-              style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                marginBottom: '16px',
-                gap: '12px'
-              }}
-            >
-              <button
-                onClick={handlePrevImage}
-                style={{
-                  background: `${color}20`,
-                  border: `1px solid ${color}40`,
-                  color: color,
-                  padding: '8px 16px',
-                  borderRadius: '8px',
-                  cursor: 'pointer',
-                  fontWeight: '600',
-                  transition: 'all 0.3s ease',
-                  flex: 1
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.background = color
-                  e.currentTarget.style.color = 'var(--bg-darker)'
-                  e.currentTarget.style.transform = 'translateX(-4px)'
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.background = `${color}20`
-                  e.currentTarget.style.color = color
-                  e.currentTarget.style.transform = 'translateX(0)'
-                }}
-              >
-                ← Prev
-              </button>
-
-              <span style={{ color: 'var(--text-secondary)', fontWeight: '600', minWidth: '60px', textAlign: 'center' }}>
-                {selectedImageIndex + 1} / {chipImages.length}
-              </span>
-
-              <button
-                onClick={handleNextImage}
-                style={{
-                  background: `${color}20`,
-                  border: `1px solid ${color}40`,
-                  color: color,
-                  padding: '8px 16px',
-                  borderRadius: '8px',
-                  cursor: 'pointer',
-                  fontWeight: '600',
-                  transition: 'all 0.3s ease',
-                  flex: 1
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.background = color
-                  e.currentTarget.style.color = 'var(--bg-darker)'
-                  e.currentTarget.style.transform = 'translateX(4px)'
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.background = `${color}20`
-                  e.currentTarget.style.color = color
-                  e.currentTarget.style.transform = 'translateX(0)'
-                }}
-              >
-                Next →
-              </button>
-            </div>
-
-            {/* Thumbnail Navigation */}
-            <div
-              style={{
-                display: 'flex',
-                gap: '8px',
-                marginBottom: '16px',
-                justifyContent: 'center',
-                flexWrap: 'wrap'
-              }}
-            >
-              {chipImages.map((img, idx) => (
-                <button
-                  key={idx}
-                  onClick={() => setSelectedImageIndex(idx)}
-                  style={{
-                    width: '60px',
-                    height: '50px',
-                    border: selectedImageIndex === idx ? `2px solid ${color}` : `1px solid ${color}40`,
-                    borderRadius: '6px',
-                    cursor: 'pointer',
-                    background: 'transparent',
-                    padding: '2px',
-                    opacity: selectedImageIndex === idx ? 1 : 0.6,
-                    transition: 'all 0.3s ease',
-                    overflow: 'hidden',
-                    animation: `fadeInUp 0.${4 + (idx % 3)}s ease-out`,
-                    boxShadow: selectedImageIndex === idx ? `0 4px 12px ${color}40` : 'none'
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.opacity = '1'
-                    e.currentTarget.style.transform = 'scale(1.12)'
-                    if (selectedImageIndex !== idx) {
-                      e.currentTarget.style.borderColor = color
-                    }
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.transform = 'scale(1)'
-                    if (selectedImageIndex !== idx) {
-                      e.currentTarget.style.opacity = '0.6'
-                      e.currentTarget.style.borderColor = `${color}40`
-                    }
-                  }}
-                >
-                  <img
-                    src={img.url}
-                    alt={img.title}
-                    style={{
-                      width: '100%',
-                      height: '100%',
-                      objectFit: 'cover',
-                      borderRadius: '4px'
-                    }}
-                  />
-                </button>
-              ))}
-            </div>
-
-            {/* Action Button */}
-            <button
-              onClick={() => {
-                setShowImageModal(false)
-                onNavigate()
-              }}
-              style={{
-                width: '100%',
-                background: color,
-                color: 'var(--bg-darker)',
-                border: 'none',
-                padding: '12px 16px',
-                borderRadius: '8px',
-                cursor: 'pointer',
-                fontWeight: '600',
-                fontSize: '1rem',
-                transition: 'all 0.3s ease',
-                animation: 'slideInUp 0.4s ease'
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'translateY(-2px)'
-                e.currentTarget.style.boxShadow = `0 8px 20px ${color}60`
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = 'translateY(0)'
-                e.currentTarget.style.boxShadow = 'none'
-              }}
-            >
-              Learn More →
-            </button>
-          </div>
-        </div>
-      )}
-    </>
+    <button
+      onClick={onNavigate}
+      style={{
+        background: 'var(--bg-darker)',
+        border: `1.5px solid ${color}`,
+        color: 'var(--text-primary)',
+        padding: '8px 14px',
+        borderRadius: '20px',
+        cursor: 'pointer',
+        fontSize: '0.9rem',
+        fontWeight: '500',
+        transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+        display: 'flex',
+        alignItems: 'center',
+        gap: '6px',
+        whiteSpace: 'nowrap',
+        animation: `fadeInUp 0.5s ease-out ${delay}s backwards`
+      }}
+      onMouseEnter={(e) => {
+        e.currentTarget.style.background = color
+        e.currentTarget.style.color = 'var(--bg-darker)'
+        e.currentTarget.style.transform = 'translateY(-3px) scale(1.05)'
+        e.currentTarget.style.boxShadow = `0 6px 16px ${color}50`
+      }}
+      onMouseLeave={(e) => {
+        e.currentTarget.style.background = 'var(--bg-darker)'
+        e.currentTarget.style.color = 'var(--text-primary)'
+        e.currentTarget.style.transform = 'translateY(0) scale(1)'
+        e.currentTarget.style.boxShadow = 'none'
+      }}
+    >
+      <span style={{ fontSize: '1.1em' }}>{chip.icon || '→'}</span>
+      <span>{chip.title || chip.name || 'Action'}</span>
+      <span style={{ marginLeft: '2px' }}>→</span>
+    </button>
   )
 }
