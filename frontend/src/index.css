@@ -902,6 +902,21 @@ button[class*="border-"]:focus {
   align-content: center;
 }
 
+.hero-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 12px;
+  margin-top: 12px;
+  animation: fadeInUp 0.6s ease;
+}
+
+@media (max-width: 768px) {
+  .hero-cards-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+}
+
 .bot-hero {
   position: relative;
   min-height: 260px;
@@ -1111,7 +1126,7 @@ button[class*="border-"]:focus {
   border-radius: 16px;
   background: linear-gradient(135deg, rgba(22, 228, 105, 0.12), rgba(255, 255, 255, 0.02));
   border: 1px solid rgba(22, 228, 105, 0.45);
-  min-height: 180px;
+  min-height: 160px;
   overflow: hidden;
   box-shadow: 0 18px 36px rgba(0, 0, 0, 0.22);
 }
@@ -1245,7 +1260,7 @@ button[class*="border-"]:focus {
   border-radius: 16px;
   background: linear-gradient(135deg, rgba(139, 92, 246, 0.15), rgba(255, 255, 255, 0.02));
   border: 1px solid rgba(139, 92, 246, 0.4);
-  min-height: 190px;
+  min-height: 160px;
   overflow: hidden;
   box-shadow: 0 16px 34px rgba(0, 0, 0, 0.2);
 }
@@ -1374,7 +1389,7 @@ button[class*="border-"]:focus {
   border-radius: 16px;
   background: linear-gradient(135deg, rgba(233, 213, 255, 0.08), rgba(255, 255, 255, 0.02));
   border: 1px solid rgba(139, 92, 246, 0.35);
-  min-height: 190px;
+  min-height: 160px;
   overflow: hidden;
   box-shadow: 0 16px 34px rgba(0, 0, 0, 0.2);
 }

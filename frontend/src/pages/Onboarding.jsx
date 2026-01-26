@@ -345,9 +345,11 @@ export default function Onboarding(){
               <span className="tag">{interests.length} interests</span>
             </div>
           </div>
-          <CareerDecisionHero />
-          <DataAnalysisHero />
-          <CareerDecisionsHero />
+          <div className="hero-cards-grid">
+            <CareerDecisionHero />
+            <DataAnalysisHero />
+            <CareerDecisionsHero />
+          </div>
         </div>
       </div>
 
